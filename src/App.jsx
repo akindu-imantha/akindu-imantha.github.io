@@ -88,16 +88,22 @@ const projects = [
     description:
       'A personal portfolio built to showcase skills, achievements, and projects with a responsive layout and modern visual style.',
     liveUrl: 'https://12345akindu.github.io/A.I_Rupasingha_Portpolio/',
-    linkLabel: 'Live portfolio',
+    primaryLinkLabel: 'Live portfolio',
+    secondaryUrl: 'https://github.com/12345akindu/akindu-portfolio',
+    secondaryLinkLabel: 'GitHub repository',
   },
   {
     title: 'Hospital Management System',
     stack: 'C#, MS SQL',
     description:
       'A management system for patient registration, appointment scheduling, and medical records, focused on clean workflows and practical database structure.',
-    liveUrl:
-      'https://drive.google.com/drive/folders/1oYBgPRLslH09uX4R93d4o8oGfmCn2whF?usp=sharing',
-    linkLabel: 'Project resources',
+    liveUrl: 'https://github.com/12345akindu/hospital_Management_System_C-',
+    primaryLinkLabel: 'GitHub repository',
+    secondaryUrl:
+      'https://drive.google.com/file/d/1Za2u6upxxo6r7JycLeYuEjog8EDa7Rm4/view?usp=sharing',
+    secondaryLinkLabel: 'Demo video',
+    previewImage: './images/projects/hospital-management-thumbnail.png',
+    previewAlt: 'Thumbnail preview for the Hospital Management System demo video.',
   },
   {
     title: 'School Management System',
@@ -105,7 +111,7 @@ const projects = [
     description:
       'A school management system built to track student attendance efficiently and help parents stay updated with their childrens daily attendance records through a structured digital workflow.',
     liveUrl: '#',
-    linkLabel: 'Project details',
+    primaryLinkLabel: 'Project details',
   },
 ];
 
@@ -247,9 +253,28 @@ function App() {
                   <p className="project-stack">{project.stack}</p>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <a className="project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
-                    {project.linkLabel}
-                  </a>
+                  {project.previewImage ? (
+                    <a
+                      className="project-preview"
+                      href={project.secondaryUrl ?? project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${project.title} demo preview`}
+                    >
+                      <img src={project.previewImage} alt={project.previewAlt ?? `${project.title} preview`} loading="lazy" />
+                      <span className="project-preview-badge">Watch Demo</span>
+                    </a>
+                  ) : null}
+                  <div className="project-actions">
+                    <a className="project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                      {project.primaryLinkLabel}
+                    </a>
+                    {project.secondaryUrl ? (
+                      <a className="project-link secondary" href={project.secondaryUrl} target="_blank" rel="noreferrer">
+                        {project.secondaryLinkLabel}
+                      </a>
+                    ) : null}
+                  </div>
                 </article>
               ))}
             </div>
@@ -418,9 +443,28 @@ function App() {
                   <p className="project-stack">{project.stack}</p>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <a className="project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
-                    {project.linkLabel}
-                  </a>
+                  {project.previewImage ? (
+                    <a
+                      className="project-preview"
+                      href={project.secondaryUrl ?? project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${project.title} demo preview`}
+                    >
+                      <img src={project.previewImage} alt={project.previewAlt ?? `${project.title} preview`} loading="lazy" />
+                      <span className="project-preview-badge">Watch Demo</span>
+                    </a>
+                  ) : null}
+                  <div className="project-actions">
+                    <a className="project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                      {project.primaryLinkLabel}
+                    </a>
+                    {project.secondaryUrl ? (
+                      <a className="project-link secondary" href={project.secondaryUrl} target="_blank" rel="noreferrer">
+                        {project.secondaryLinkLabel}
+                      </a>
+                    ) : null}
+                  </div>
                 </motion.article>
               ))}
             </div>
