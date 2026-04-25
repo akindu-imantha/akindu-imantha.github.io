@@ -87,7 +87,7 @@ const projects = [
     stack: 'React, Vite, Frontend UI',
     description:
       'A personal portfolio built to showcase skills, achievements, and projects with a responsive layout and modern visual style.',
-    liveUrl: 'https://12345akindu.github.io/A.I_Rupasingha_Portpolio/',
+    liveUrl: 'https://12345akindu.github.io/akindu-portfolio/',
     primaryLinkLabel: 'Live portfolio',
     secondaryUrl: 'https://github.com/12345akindu/akindu-portfolio',
     secondaryLinkLabel: 'GitHub repository',
