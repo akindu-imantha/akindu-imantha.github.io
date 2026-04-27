@@ -1,11 +1,17 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { useCallback, useState } from 'react';
 import { creativeProfile, technicalSkills, tools } from '../../data/portfolioData';
 import { SkillMeter, SkillOrb, SkillPill } from '../../utils/skillIcons';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
 export default function SkillsTab() {
+  const [animationCycle, setAnimationCycle] = useState(0);
+  const restartSkillAnimation = useCallback(() => {
+    setAnimationCycle((cycle) => cycle + 1);
+  }, []);
+
   return (
     <motion.div
       key="skills"
@@ -21,12 +27,16 @@ export default function SkillsTab() {
         text="This section focuses on the technical skills, tools, and software I use across development and creative work."
       />
 
-      <div className="skills-layout">
+      <motion.div
+        className="skills-layout"
+        onViewportEnter={restartSkillAnimation}
+        viewport={{ amount: 0.35, once: false }}
+      >
         <motion.article variants={fadeInUp} className="about-card console-card">
           <h3>Programming and web</h3>
           <div className="skill-meter-list">
-            {technicalSkills.map((skill) => (
-              <SkillMeter key={skill} label={skill} />
+            {technicalSkills.map((skill, index) => (
+              <SkillMeter key={`${skill}-${animationCycle}`} label={skill} index={index} />
             ))}
           </div>
         </motion.article>
@@ -34,12 +44,12 @@ export default function SkillsTab() {
         <motion.article variants={fadeInUp} className="about-card console-card">
           <h3>Tools and creative software</h3>
           <div className="skill-orb-grid">
-            {tools.map((tool) => (
-              <SkillOrb key={tool} label={tool} />
+            {tools.map((tool, index) => (
+              <SkillOrb key={`${tool}-${animationCycle}`} label={tool} index={index} />
             ))}
           </div>
         </motion.article>
-      </div>
+      </motion.div>
 
       <motion.article variants={fadeInUp} className="about-card console-card creative-profile-card">
         <div className="creative-profile-copy">

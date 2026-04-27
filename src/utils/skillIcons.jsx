@@ -72,12 +72,15 @@ export function SkillPill({ label }) {
   );
 }
 
-export function SkillMeter({ label }) {
+export function SkillMeter({ label, index = 0 }) {
   const Icon = skillIconMap[label];
   const level = skillLevelMap[label] ?? 50;
 
   return (
-    <div className="skill-meter" style={{ '--skill-level': `${level}%` }}>
+    <div
+      className="skill-meter"
+      style={{ '--skill-level': `${level}%`, '--skill-delay': `${index * 55}ms` }}
+    >
       <div className="skill-meter-label">
         <span className="skill-meter-name">
           {Icon && <Icon size={16} aria-hidden="true" />}
@@ -92,12 +95,15 @@ export function SkillMeter({ label }) {
   );
 }
 
-export function SkillOrb({ label }) {
+export function SkillOrb({ label, index = 0 }) {
   const Icon = skillIconMap[label];
   const level = skillLevelMap[label] ?? 50;
 
   return (
-    <div className="skill-orb" style={{ '--skill-level': `${level * 3.6}deg` }}>
+    <div
+      className="skill-orb"
+      style={{ '--skill-level': `${level * 3.6}deg`, '--skill-delay': `${index * 70}ms` }}
+    >
       <div className="skill-orb-ring">
         <div className="skill-orb-core">
           {Icon && <Icon size={20} aria-hidden="true" />}
