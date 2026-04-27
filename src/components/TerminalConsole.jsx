@@ -28,9 +28,16 @@ export default function TerminalConsole() {
   const ActiveTab = tabComponents[activeTab] ?? AboutTab;
 
   useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 640px)');
     let lastScrollY = window.pageYOffset;
 
     const handleScroll = () => {
+      if (!mobileQuery.matches) {
+        setHideSidebar(false);
+        lastScrollY = window.pageYOffset;
+        return;
+      }
+
       const currentScrollY = window.pageYOffset;
       const isScrollingDown = currentScrollY > lastScrollY + 8;
       const isScrollingUp = currentScrollY < lastScrollY - 8;
@@ -44,8 +51,19 @@ export default function TerminalConsole() {
       lastScrollY = currentScrollY;
     };
 
+    const handleViewportChange = () => {
+      if (!mobileQuery.matches) {
+        setHideSidebar(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    mobileQuery.addEventListener('change', handleViewportChange);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      mobileQuery.removeEventListener('change', handleViewportChange);
+    };
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { creativeProfile, technicalSkills, tools } from '../../data/portfolioData';
+import { SkillPill } from '../../utils/skillIcons';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -25,9 +26,7 @@ export default function SkillsTab() {
           <h3>Programming and web</h3>
           <div className="skill-list">
             {technicalSkills.map((skill) => (
-              <span key={skill} className="skill-pill">
-                {skill}
-              </span>
+              <SkillPill key={skill} label={skill} />
             ))}
           </div>
         </motion.article>
@@ -36,9 +35,7 @@ export default function SkillsTab() {
           <h3>Tools and creative software</h3>
           <div className="skill-list">
             {tools.map((tool) => (
-              <span key={tool} className="skill-pill">
-                {tool}
-              </span>
+              <SkillPill key={tool} label={tool} />
             ))}
           </div>
         </motion.article>
@@ -54,9 +51,7 @@ export default function SkillsTab() {
         <div className="creative-profile-actions">
           <div className="skill-list">
             {creativeProfile.highlights.map((item) => (
-              <span key={item} className="skill-pill">
-                {item}
-              </span>
+              <SkillPill key={item} label={item} />
             ))}
           </div>
 

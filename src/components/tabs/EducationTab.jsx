@@ -21,10 +21,21 @@ export default function EducationTab() {
 
       <div className="project-grid">
         {education.map((item) => (
-          <motion.article key={item.title} variants={fadeInUp} className="project-card console-card">
-            <p className="project-stack">{item.subtitle}</p>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+          <motion.article
+            key={item.title}
+            variants={fadeInUp}
+            className="project-card console-card education-card"
+          >
+            {item.logo && (
+              <div className="education-logo-wrap">
+                <img src={item.logo} alt={item.logoAlt} className="education-logo" />
+              </div>
+            )}
+            <div className="education-card-copy">
+              <p className="project-stack">{item.subtitle}</p>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
           </motion.article>
         ))}
       </div>

@@ -96,16 +96,22 @@ export const education = [
     title: 'Bachelor of Information Technology',
     subtitle: 'University of Moratuwa',
     text: 'Undergraduate level studies completed through first year diploma level and second year higher diploma level coursework.',
+    logo: './images/education/university-of-moratuwa-logo.png',
+    logoAlt: 'University of Moratuwa logo',
   },
   {
     title: 'G.C.E. A/L Examination 2022',
     subtitle: 'Prince College',
     text: 'Accounting, Business Studies, and Information and Communication Technology.',
+    logo: './images/education/prince-college-logo-transparent.png',
+    logoAlt: 'Prince College logo',
   },
   {
     title: 'G.C.E. O/L Examination 2018',
     subtitle: 'Prince College',
     text: 'Completed a broad subject base including ICT, mathematics, science, history, Sinhala, English, art, and civic studies.',
+    logo: './images/education/prince-college-logo-transparent.png',
+    logoAlt: 'Prince College logo',
   },
 ];
 

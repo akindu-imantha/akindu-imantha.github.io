@@ -11,6 +11,7 @@ import ExperienceCard from './ExperienceCard';
 import ProjectCard from './ProjectCard';
 import SectionTitle from './SectionTitle';
 import { fadeInUp, staggerContainer } from './motionVariants';
+import { SkillPill } from '../utils/skillIcons';
 
 export default function SearchResults({ searchQuery }) {
   const query = searchQuery.trim().toLowerCase();
@@ -85,14 +86,10 @@ export default function SearchResults({ searchQuery }) {
               <h3>Matching Skills & Tools</h3>
               <div className="skill-list">
                 {matchedSkills.map((skill) => (
-                  <span key={skill} className="skill-pill">
-                    {skill}
-                  </span>
+                  <SkillPill key={skill} label={skill} />
                 ))}
                 {matchedTools.map((tool) => (
-                  <span key={tool} className="skill-pill">
-                    {tool}
-                  </span>
+                  <SkillPill key={tool} label={tool} />
                 ))}
               </div>
             </article>
