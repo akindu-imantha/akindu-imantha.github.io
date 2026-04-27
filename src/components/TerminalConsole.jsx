@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { tabs } from '../data/portfolioData';
 import AboutTab from './tabs/AboutTab';
 import ContactTab from './tabs/ContactTab';
@@ -23,48 +23,8 @@ const tabComponents = {
 export default function TerminalConsole() {
   const [activeTab, setActiveTab] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');
-  const [hideSidebar, setHideSidebar] = useState(false);
 
   const ActiveTab = tabComponents[activeTab] ?? AboutTab;
-
-  useEffect(() => {
-    const mobileQuery = window.matchMedia('(max-width: 640px)');
-    let lastScrollY = window.pageYOffset;
-
-    const handleScroll = () => {
-      if (!mobileQuery.matches) {
-        setHideSidebar(false);
-        lastScrollY = window.pageYOffset;
-        return;
-      }
-
-      const currentScrollY = window.pageYOffset;
-      const isScrollingDown = currentScrollY > lastScrollY + 8;
-      const isScrollingUp = currentScrollY < lastScrollY - 8;
-
-      if (isScrollingDown && currentScrollY > 80) {
-        setHideSidebar(true);
-      } else if (isScrollingUp) {
-        setHideSidebar(false);
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    const handleViewportChange = () => {
-      if (!mobileQuery.matches) {
-        setHideSidebar(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    mobileQuery.addEventListener('change', handleViewportChange);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      mobileQuery.removeEventListener('change', handleViewportChange);
-    };
-  }, []);
 
   return (
     <main id="console" className="console-wrapper">
@@ -90,7 +50,6 @@ export default function TerminalConsole() {
         <div className="console-body">
           <ConsoleSidebar
             activeTab={activeTab}
-            isHidden={hideSidebar}
             onTabChange={(tabId) => {
               setActiveTab(tabId);
               setSearchQuery('');

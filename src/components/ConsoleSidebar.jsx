@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function ConsoleSidebar({
   activeTab,
-  isHidden,
   onTabChange,
   onSearchChange,
   searchQuery,
@@ -39,7 +38,7 @@ export default function ConsoleSidebar({
   }, [tabs.length]);
 
   return (
-    <div className={`console-sidebar ${isHidden ? 'is-hidden' : ''}`}>
+    <div className="console-sidebar">
       <div className="search-bar-container">
         <Search size={16} className="search-icon" />
         <input
