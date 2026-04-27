@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tabs } from '../data/portfolioData';
 import AboutTab from './tabs/AboutTab';
 import ContactTab from './tabs/ContactTab';
@@ -23,8 +23,30 @@ const tabComponents = {
 export default function TerminalConsole() {
   const [activeTab, setActiveTab] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');
+  const [hideSidebar, setHideSidebar] = useState(false);
 
   const ActiveTab = tabComponents[activeTab] ?? AboutTab;
+
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset;
+      const isScrollingDown = currentScrollY > lastScrollY + 8;
+      const isScrollingUp = currentScrollY < lastScrollY - 8;
+
+      if (isScrollingDown && currentScrollY > 80) {
+        setHideSidebar(true);
+      } else if (isScrollingUp) {
+        setHideSidebar(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <main id="console" className="console-wrapper">
@@ -50,6 +72,7 @@ export default function TerminalConsole() {
         <div className="console-body">
           <ConsoleSidebar
             activeTab={activeTab}
+            isHidden={hideSidebar}
             onTabChange={(tabId) => {
               setActiveTab(tabId);
               setSearchQuery('');
