@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { education } from '../../data/portfolioData';
+import { certifications, education } from '../../data/portfolioData';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -16,7 +16,7 @@ export default function EducationTab() {
       <SectionTitle
         eyebrow="./education.sh"
         title="Academic background"
-        text="My studies combine school qualifications with undergraduate IT learning and module-based practical training."
+        text="My studies combine school qualifications, undergraduate IT learning, and completed courses or certifications that support my technical foundation."
       />
 
       <div className="project-grid">
@@ -28,6 +28,22 @@ export default function EducationTab() {
           </motion.article>
         ))}
       </div>
+
+      <motion.article variants={fadeInUp} className="about-card console-card" style={{ marginTop: '1.25rem' }}>
+        <h3>Courses and certifications</h3>
+        <div className="skill-list">
+          {certifications.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <span key={item.name} className="skill-pill">
+                <Icon size={16} />
+                <span>{item.name}</span>
+              </span>
+            );
+          })}
+        </div>
+      </motion.article>
     </motion.div>
   );
 }

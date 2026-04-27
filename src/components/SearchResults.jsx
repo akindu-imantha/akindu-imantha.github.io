@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import {
   certifications,
+  contactLinks,
   experience,
   projects,
   technicalSkills,
@@ -29,13 +30,17 @@ export default function SearchResults({ searchQuery }) {
     (item) =>
       item.title.toLowerCase().includes(query) || item.text.toLowerCase().includes(query),
   );
+  const matchedContactLinks = contactLinks.filter(
+    (item) => item.label.toLowerCase().includes(query) || item.href.toLowerCase().includes(query),
+  );
 
   const hasResults =
     matchedSkills.length > 0 ||
     matchedTools.length > 0 ||
     matchedCertifications.length > 0 ||
     matchedProjects.length > 0 ||
-    matchedExperience.length > 0;
+    matchedExperience.length > 0 ||
+    matchedContactLinks.length > 0;
 
   if (!hasResults) {
     return (
@@ -128,6 +133,29 @@ export default function SearchResults({ searchQuery }) {
             {matchedExperience.map((item) => (
               <ExperienceCard key={item.title} item={item} />
             ))}
+          </div>
+        </motion.div>
+      )}
+
+      {matchedContactLinks.length > 0 && (
+        <motion.div variants={fadeInUp} style={{ marginTop: '2rem' }}>
+          <h3 style={{ marginBottom: '1rem', color: '#fff' }}>Matching Links</h3>
+          <div className="contact-links console-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
+            {matchedContactLinks.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
+                  className="contact-link-item"
+                >
+                  <Icon size={20} /> {item.label}
+                </a>
+              );
+            })}
           </div>
         </motion.div>
       )}

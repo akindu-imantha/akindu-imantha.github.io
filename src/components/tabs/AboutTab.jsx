@@ -15,8 +15,8 @@ export default function AboutTab() {
     >
       <SectionTitle
         eyebrow="./about.sh"
-        title="A practical portfolio built around real CV details."
-        text="This site introduces my academic background, projects, technical skills, and the experience I have built through both study and community work."
+        title="A broader profile beyond only frontend development."
+        text="This section introduces my academic path, technical range, project mindset, and the wider experience I have built through both study and community work."
       />
 
       <div className="about-grid">

@@ -19,7 +19,7 @@ export const heroData = {
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
   primaryAction: { href: '#console', label: 'View Details' },
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
-  profileImage: './images/profile.jpg',
+  profileImage: './images/profile-hero.png',
   profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
@@ -38,12 +38,22 @@ export const aboutCards = [
   {
     title: 'Current direction',
     text:
-      'I am growing as an IT undergraduate with interest in frontend development, modern responsive websites, and application design that is both useful and presentable.',
+      'I am building as an IT undergraduate with interest in practical software solutions, clear interfaces, and systems that solve real user and workflow needs.',
   },
   {
-    title: 'Core strengths',
+    title: 'Technical range',
     text:
-      'I bring a mix of web fundamentals, programming exposure, creative design tools, and clear communication skills that help me work across both technical and presentation-focused tasks.',
+      'My experience covers frontend development, desktop application work, database-backed systems, and web technologies including React, C#, PHP, Laravel, and MySQL.',
+  },
+  {
+    title: 'Project approach',
+    text:
+      'I focus on building work that is structured, usable, and easy to present, with attention to layout quality, clean workflows, and practical implementation.',
+  },
+  {
+    title: 'Broader strengths',
+    text:
+      'Alongside coding, I bring graphic tool familiarity, documentation ability, and community project experience that support both technical execution and communication.',
   },
 ];
 
@@ -69,6 +79,17 @@ export const tools = [
   'Visual Studio',
   'GitHub',
 ];
+
+export const creativeProfile = {
+  title: 'Graphic design presence',
+  text:
+    'I also publish visual work through Behance, including layout-focused design pieces and creative work that supports my broader presentation skills.',
+  highlights: ['Behance portfolio', 'Design-focused work', 'Visual presentation'],
+  link: {
+    href: 'https://www.behance.net/akinduimantha',
+    label: 'View Behance profile',
+  },
+};
 
 export const education = [
   {
@@ -98,34 +119,81 @@ export const certifications = [
 
 export const projects = [
   {
-    title: 'Personal Portfolio Website',
-    stack: 'React, Vite, Frontend UI',
+    title: 'E-Waste Management Platform',
+    stack: 'React, Node.js',
+    category: 'Featured project',
+    featured: true,
+    featuredRank: 1,
     description:
-      'A personal portfolio built to showcase skills, achievements, and projects with a responsive layout and modern visual style.',
-    liveUrl: 'https://12345akindu.github.io/akindu-portfolio/',
-    primaryLinkLabel: 'Live portfolio',
-    secondaryUrl: 'https://github.com/12345akindu/akindu-portfolio',
-    secondaryLinkLabel: 'GitHub repository',
+      'Operations-focused platform for e-waste collection, item tracking, and workflow management.',
+    statusText: 'In development',
+    statusTone: 'development',
+    actions: [
+      { label: 'Case study soon', disabled: true, variant: 'primary' },
+      { label: 'Private build', disabled: true, variant: 'secondary' },
+    ],
   },
   {
     title: 'Hospital Management System',
     stack: 'C#, MS SQL',
+    category: 'Featured project',
+    featured: true,
+    featuredRank: 2,
     description:
-      'A management system for patient registration, appointment scheduling, and medical records, focused on clean workflows and practical database structure.',
-    liveUrl: 'https://github.com/12345akindu/hospital_Management_System_C-',
-    primaryLinkLabel: 'GitHub repository',
-    secondaryUrl: 'https://drive.google.com/file/d/1Za2u6upxxo6r7JycLeYuEjog8EDa7Rm4/view?usp=sharing',
-    secondaryLinkLabel: 'Demo video',
+      'Desktop system for patient registration, appointments, and medical record handling.',
+    statusText: 'Demo available',
+    statusTone: 'live',
+    previewUrl: 'https://drive.google.com/file/d/1Za2u6upxxo6r7JycLeYuEjog8EDa7Rm4/view?usp=sharing',
+    actions: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/12345akindu/hospital_Management_System_C-',
+        variant: 'primary',
+      },
+      {
+        label: 'Demo video',
+        href: 'https://drive.google.com/file/d/1Za2u6upxxo6r7JycLeYuEjog8EDa7Rm4/view?usp=sharing',
+        variant: 'secondary',
+      },
+    ],
     previewImage: './images/projects/hospital-management-thumbnail.png',
     previewAlt: 'Thumbnail preview for the Hospital Management System demo video.',
   },
   {
+    title: 'Personal Portfolio Website',
+    stack: 'React, Vite, Frontend UI',
+    category: 'Featured project',
+    featured: true,
+    featuredRank: 3,
+    description:
+      'Responsive portfolio interface for presenting skills, project work, and experience clearly.',
+    statusText: 'Live project',
+    statusTone: 'live',
+    actions: [
+      {
+        label: 'Live portfolio',
+        href: 'https://12345akindu.github.io/akindu-portfolio/',
+        variant: 'primary',
+      },
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/12345akindu/akindu-portfolio',
+        variant: 'secondary',
+      },
+    ],
+  },
+  {
     title: 'School Management System',
     stack: 'Laravel, PHP, MySQL',
+    category: 'Supporting project',
     description:
-      'A school management system built to track student attendance efficiently and help parents stay updated with their childrens daily attendance records through a structured digital workflow.',
-    liveUrl: '#',
-    primaryLinkLabel: 'Project details',
+      'Attendance-focused school system built for parent updates and daily record tracking.',
+    statusText: 'Private project',
+    statusTone: 'private',
+    actions: [
+      { label: 'Private build', disabled: true, variant: 'primary' },
+      { label: 'Details on request', disabled: true, variant: 'secondary' },
+    ],
   },
 ];
 
@@ -178,6 +246,12 @@ export const contactLinks = [
     href: 'https://www.linkedin.com/in/akindu-rupasingha-96839a315',
     label: 'linkedin.com/in/akindu-rupasingha-96839a315',
     icon: Network,
+    external: true,
+  },
+  {
+    href: 'https://www.behance.net/akinduimantha',
+    label: 'behance.net/akinduimantha',
+    icon: PenTool,
     external: true,
   },
 ];

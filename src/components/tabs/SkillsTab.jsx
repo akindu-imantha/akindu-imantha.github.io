@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { certifications, technicalSkills, tools } from '../../data/portfolioData';
+import { ExternalLink } from 'lucide-react';
+import { creativeProfile, technicalSkills, tools } from '../../data/portfolioData';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -16,7 +17,7 @@ export default function SkillsTab() {
       <SectionTitle
         eyebrow="./skills.sh"
         title="Technical capabilities"
-        text="My CV shows a mixed skill base across programming, office productivity, design tools, and web development."
+        text="This section focuses on the technical skills, tools, and software I use across development and creative work."
       />
 
       <div className="skills-layout">
@@ -43,18 +44,33 @@ export default function SkillsTab() {
         </motion.article>
       </div>
 
-      <motion.div variants={fadeInUp} className="skill-list" style={{ marginTop: '1.25rem' }}>
-        {certifications.map((item) => {
-          const Icon = item.icon;
+      <motion.article variants={fadeInUp} className="about-card console-card creative-profile-card">
+        <div className="creative-profile-copy">
+          <p className="project-kicker">Creative profile</p>
+          <h3>{creativeProfile.title}</h3>
+          <p>{creativeProfile.text}</p>
+        </div>
 
-          return (
-            <span key={item.name} className="skill-pill">
-              <Icon size={16} />
-              <span>{item.name}</span>
-            </span>
-          );
-        })}
-      </motion.div>
+        <div className="creative-profile-actions">
+          <div className="skill-list">
+            {creativeProfile.highlights.map((item) => (
+              <span key={item} className="skill-pill">
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <a
+            className="project-link creative-profile-link"
+            href={creativeProfile.link.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {creativeProfile.link.label}
+            <ExternalLink size={16} />
+          </a>
+        </div>
+      </motion.article>
     </motion.div>
   );
 }
