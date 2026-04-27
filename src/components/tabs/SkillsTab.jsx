@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { creativeProfile, technicalSkills, tools } from '../../data/portfolioData';
-import { SkillPill } from '../../utils/skillIcons';
+import { SkillMeter, SkillOrb, SkillPill } from '../../utils/skillIcons';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -24,18 +24,18 @@ export default function SkillsTab() {
       <div className="skills-layout">
         <motion.article variants={fadeInUp} className="about-card console-card">
           <h3>Programming and web</h3>
-          <div className="skill-list">
+          <div className="skill-meter-list">
             {technicalSkills.map((skill) => (
-              <SkillPill key={skill} label={skill} />
+              <SkillMeter key={skill} label={skill} />
             ))}
           </div>
         </motion.article>
 
         <motion.article variants={fadeInUp} className="about-card console-card">
           <h3>Tools and creative software</h3>
-          <div className="skill-list">
+          <div className="skill-orb-grid">
             {tools.map((tool) => (
-              <SkillPill key={tool} label={tool} />
+              <SkillOrb key={tool} label={tool} />
             ))}
           </div>
         </motion.article>
