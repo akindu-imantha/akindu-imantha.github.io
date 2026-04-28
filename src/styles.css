@@ -617,6 +617,15 @@ a {
   gap: 0.85rem;
 }
 
+.education-text-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.education-text-list p {
+  margin: 0;
+}
+
 .project-stack {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
@@ -1790,6 +1799,18 @@ a {
     font-size: 0.96rem;
     color: #fff;
     line-height: 1.25;
+  }
+
+  [data-theme='light'] .console-sidebar {
+    background: rgba(248, 250, 252, 0.96);
+  }
+
+  [data-theme='light'] .mobile-console-kicker {
+    color: #4f46e5;
+  }
+
+  [data-theme='light'] .mobile-console-meta strong {
+    color: #111827;
   }
 
   .cmd-list {

@@ -42,7 +42,15 @@ export default function EducationTab({ data = {} }) {
             <div className="education-card-copy">
               <p className="project-stack">{item.subtitle}</p>
               <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              {Array.isArray(item.text) ? (
+                <div className="education-text-list">
+                  {item.text.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </div>
+              ) : (
+                <p>{item.text}</p>
+              )}
             </div>
           </motion.article>
         ))}
