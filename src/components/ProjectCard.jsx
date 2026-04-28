@@ -55,6 +55,7 @@ export default function ProjectCard({
             src={project.previewImage}
             alt={project.previewAlt ?? `${project.title} preview`}
             loading="lazy"
+            decoding="async"
           />
           <span className="project-preview-badge">{project.previewLabel ?? 'Watch Demo'}</span>
         </a>

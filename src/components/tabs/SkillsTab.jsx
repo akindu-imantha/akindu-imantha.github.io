@@ -38,7 +38,7 @@ export default function SkillsTab({ data = {} }) {
       <motion.div
         className="skills-layout"
         onViewportEnter={restartSkillAnimation}
-        viewport={{ amount: 0.35, once: false }}
+        viewport={{ amount: 0.35, once: true }}
       >
         <motion.article variants={fadeInUp} className="about-card console-card">
           <h3>{data.ui?.programmingTitle ?? 'Programming and web'}</h3>

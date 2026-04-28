@@ -86,6 +86,10 @@ export default function Hero({
               src={hero.profileImage}
               alt={hero.profileImageAlt}
               className="profile-image"
+              width="720"
+              height="720"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="profile-glow"></div>
           </div>

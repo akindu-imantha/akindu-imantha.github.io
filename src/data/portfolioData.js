@@ -19,7 +19,7 @@ export const heroData = {
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
   primaryAction: { href: '#console', label: 'View Details' },
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
-  profileImage: './images/profile-hero-cutout.png',
+  profileImage: './images/optimized/profile-hero-cutout-720.png',
   profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
@@ -103,14 +103,14 @@ export const education = [
     title: 'G.C.E. A/L Examination 2022',
     subtitle: 'Prince College',
     text: 'Accounting, Business Studies, and Information and Communication Technology.',
-    logo: './images/education/prince-college-logo-transparent.png',
+    logo: './images/optimized/prince-college-logo-transparent-360.png',
     logoAlt: 'Prince College logo',
   },
   {
     title: 'G.C.E. O/L Examination 2018',
     subtitle: 'Prince College',
     text: 'Completed a broad subject base including ICT, mathematics, science, history, Sinhala, English, art, and civic studies.',
-    logo: './images/education/prince-college-logo-transparent.png',
+    logo: './images/optimized/prince-college-logo-transparent-360.png',
     logoAlt: 'Prince College logo',
   },
 ];
@@ -162,7 +162,7 @@ export const projects = [
         variant: 'secondary',
       },
     ],
-    previewImage: './images/projects/hospital-management-thumbnail.png',
+    previewImage: './images/optimized/hospital-management-thumbnail-900.jpg',
     previewAlt: 'Thumbnail preview for the Hospital Management System demo video.',
   },
   {
@@ -214,7 +214,7 @@ export const experience = [
         alt: 'Akindu Imantha as Animator at Sarvodaya Rathnapura.',
       },
       {
-        src: './images/experience/unicef-cash-plus-poster.png',
+        src: './images/optimized/unicef-cash-plus-poster-900.jpg',
         alt: 'UNICEF Cash Plus Project poster for Rathnapura Division.',
       },
     ],
@@ -225,11 +225,11 @@ export const experience = [
     text: 'Took part in the British Council climate action programme to build knowledge, skills, and collaboration for sustainable projects.',
     images: [
       {
-        src: './images/experience/ylca-team.jpg',
+        src: './images/optimized/ylca-team-1200.jpg',
         alt: 'Akindu Imantha with the Youth Leadership for Climate Action team.',
       },
       {
-        src: './images/experience/ylca-poster.png',
+        src: './images/optimized/ylca-poster-900.jpg',
         alt: 'Youth Leadership for Climate Action project poster about enhancing waste recycling for a cleaner city.',
       },
     ],

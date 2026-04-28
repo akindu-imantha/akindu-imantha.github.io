@@ -8,7 +8,7 @@ export default function ExperienceCard({ item, Component = 'article', ...rest })
         <div className="experience-gallery">
           {item.images.map((image) => (
             <figure key={image.src} className="experience-media">
-              <img src={image.src} alt={image.alt} loading="lazy" />
+              <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
             </figure>
           ))}
         </div>
