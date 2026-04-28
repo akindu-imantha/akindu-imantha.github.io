@@ -7,6 +7,7 @@ export default function ConsoleSidebar({
   onSearchChange,
   searchQuery,
   tabs,
+  ui = {},
 }) {
   const listRef = useRef(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
@@ -46,8 +47,8 @@ export default function ConsoleSidebar({
           id="console-search"
           name="search"
           className="console-search"
-          placeholder="grep -i 'search...'"
-          aria-label="Search portfolio content"
+          placeholder={ui.searchPlaceholder ?? "grep -i 'search...'"}
+          aria-label={ui.searchLabel ?? 'Search portfolio content'}
           inputMode="search"
           enterKeyHint="search"
           value={searchQuery}
@@ -56,8 +57,8 @@ export default function ConsoleSidebar({
       </div>
 
       <div className="mobile-console-meta">
-        <span className="mobile-console-kicker">Now viewing</span>
-        <strong>{searchQuery.trim() ? 'Search results' : activeTabData?.label ?? 'About'}</strong>
+        <span className="mobile-console-kicker">{ui.nowViewing ?? 'Now viewing'}</span>
+        <strong>{searchQuery.trim() ? ui.searchResults ?? 'Search results' : activeTabData?.label ?? 'About'}</strong>
       </div>
 
       <div className="cmd-list-shell">
@@ -84,7 +85,7 @@ export default function ConsoleSidebar({
           className={`cmd-scroll-hint ${showScrollHint ? '' : 'is-hidden'}`}
           aria-hidden="true"
         >
-          <span>More</span>
+          <span>{ui.more ?? 'More'}</span>
           <ChevronRight size={14} />
         </div>
       </div>

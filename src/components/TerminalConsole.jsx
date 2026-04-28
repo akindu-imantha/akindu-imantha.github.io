@@ -1,6 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { tabs } from '../data/portfolioData';
+import {
+  certifications,
+  contactLinks,
+  experience,
+  portfolioContent,
+  projects,
+  tabs,
+  technicalSkills,
+  tools,
+} from '../data/portfolioData';
 import AboutTab from './tabs/AboutTab';
 import ContactTab from './tabs/ContactTab';
 import EducationTab from './tabs/EducationTab';
@@ -20,11 +29,25 @@ const tabComponents = {
   contact: ContactTab,
 };
 
-export default function TerminalConsole() {
+export default function TerminalConsole({ content = portfolioContent.en }) {
   const [activeTab, setActiveTab] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');
 
   const ActiveTab = tabComponents[activeTab] ?? AboutTab;
+  const data = {
+    certifications: content.certifications ?? certifications,
+    contactLinks: content.contactLinks ?? contactLinks,
+    experience: content.experience ?? experience,
+    projects: content.projects ?? projects,
+    tabs: content.tabs ?? tabs,
+    technicalSkills: content.technicalSkills ?? technicalSkills,
+    tools: content.tools ?? tools,
+    creativeProfile: content.creativeProfile,
+    education: content.education,
+    aboutCards: content.aboutCards,
+    sections: content.sections,
+    ui: content.ui,
+  };
 
   return (
     <main id="console" className="console-wrapper">
@@ -56,13 +79,18 @@ export default function TerminalConsole() {
             }}
             onSearchChange={setSearchQuery}
             searchQuery={searchQuery}
-            tabs={tabs}
+            tabs={data.tabs}
+            ui={data.ui}
           />
 
           <div className="console-content-area">
             <div className="scanlines"></div>
             <AnimatePresence mode="wait">
-              {searchQuery.trim() ? <SearchResults searchQuery={searchQuery} /> : <ActiveTab />}
+              {searchQuery.trim() ? (
+                <SearchResults searchQuery={searchQuery} data={data} />
+              ) : (
+                <ActiveTab data={data} />
+              )}
             </AnimatePresence>
           </div>
         </div>

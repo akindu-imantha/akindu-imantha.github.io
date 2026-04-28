@@ -4,11 +4,17 @@ import ProjectCard from '../ProjectCard';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
-export default function ProjectsTab() {
-  const featuredProjects = projects
+export default function ProjectsTab({ data = {} }) {
+  const projectItems = data.projects ?? projects;
+  const section = data.sections?.projects ?? {
+    eyebrow: './projects.sh',
+    title: 'Selected work',
+    text: 'The strongest builds are highlighted first, while private and supporting work stays visible in a cleaner secondary layout.',
+  };
+  const featuredProjects = projectItems
     .filter((project) => project.featured)
     .sort((left, right) => (left.featuredRank ?? 99) - (right.featuredRank ?? 99));
-  const supportingProjects = projects.filter((project) => !project.featured);
+  const supportingProjects = projectItems.filter((project) => !project.featured);
 
   return (
     <motion.div
@@ -20,9 +26,9 @@ export default function ProjectsTab() {
       className="console-section"
     >
       <SectionTitle
-        eyebrow="./projects.sh"
-        title="Selected work"
-        text="The strongest builds are highlighted first, while private and supporting work stays visible in a cleaner secondary layout."
+        eyebrow={section.eyebrow}
+        title={section.title}
+        text={section.text}
       />
 
       <div className="projects-layout">
@@ -41,11 +47,11 @@ export default function ProjectsTab() {
         {supportingProjects.length > 0 ? (
           <motion.section variants={fadeInUp} className="project-archive console-card">
             <div className="project-archive-copy">
-              <p className="eyebrow">Additional work</p>
-              <h3>Supporting and private builds</h3>
+              <p className="eyebrow">{data.ui?.additionalWork ?? 'Additional work'}</p>
+              <h3>{data.ui?.supportingBuilds ?? 'Supporting and private builds'}</h3>
               <p>
-                Smaller or non-public projects stay grouped separately, so the main work gets a
-                stronger first impression.
+                {data.ui?.supportingBuildsText ??
+                  'Smaller or non-public projects stay grouped separately, so the main work gets a stronger first impression.'}
               </p>
             </div>
 

@@ -6,8 +6,16 @@ import { SkillMeter, SkillOrb, SkillPill } from '../../utils/skillIcons';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
-export default function SkillsTab() {
+export default function SkillsTab({ data = {} }) {
   const [animationCycle, setAnimationCycle] = useState(0);
+  const skills = data.technicalSkills ?? technicalSkills;
+  const toolItems = data.tools ?? tools;
+  const profile = data.creativeProfile ?? creativeProfile;
+  const section = data.sections?.skills ?? {
+    eyebrow: './skills.sh',
+    title: 'Technical capabilities',
+    text: 'This section focuses on the technical skills, tools, and software I use across development and creative work.',
+  };
   const restartSkillAnimation = useCallback(() => {
     setAnimationCycle((cycle) => cycle + 1);
   }, []);
@@ -22,9 +30,9 @@ export default function SkillsTab() {
       className="console-section"
     >
       <SectionTitle
-        eyebrow="./skills.sh"
-        title="Technical capabilities"
-        text="This section focuses on the technical skills, tools, and software I use across development and creative work."
+        eyebrow={section.eyebrow}
+        title={section.title}
+        text={section.text}
       />
 
       <motion.div
@@ -33,18 +41,18 @@ export default function SkillsTab() {
         viewport={{ amount: 0.35, once: false }}
       >
         <motion.article variants={fadeInUp} className="about-card console-card">
-          <h3>Programming and web</h3>
+          <h3>{data.ui?.programmingTitle ?? 'Programming and web'}</h3>
           <div className="skill-meter-list">
-            {technicalSkills.map((skill, index) => (
+            {skills.map((skill, index) => (
               <SkillMeter key={`${skill}-${animationCycle}`} label={skill} index={index} />
             ))}
           </div>
         </motion.article>
 
         <motion.article variants={fadeInUp} className="about-card console-card">
-          <h3>Tools and creative software</h3>
+          <h3>{data.ui?.toolsTitle ?? 'Tools and creative software'}</h3>
           <div className="skill-orb-grid">
-            {tools.map((tool, index) => (
+            {toolItems.map((tool, index) => (
               <SkillOrb key={`${tool}-${animationCycle}`} label={tool} index={index} />
             ))}
           </div>
@@ -53,25 +61,25 @@ export default function SkillsTab() {
 
       <motion.article variants={fadeInUp} className="about-card console-card creative-profile-card">
         <div className="creative-profile-copy">
-          <p className="project-kicker">Creative profile</p>
-          <h3>{creativeProfile.title}</h3>
-          <p>{creativeProfile.text}</p>
+          <p className="project-kicker">{data.ui?.creativeProfile ?? 'Creative profile'}</p>
+          <h3>{profile.title}</h3>
+          <p>{profile.text}</p>
         </div>
 
         <div className="creative-profile-actions">
           <div className="skill-list">
-            {creativeProfile.highlights.map((item) => (
+            {profile.highlights.map((item) => (
               <SkillPill key={item} label={item} />
             ))}
           </div>
 
           <a
             className="project-link creative-profile-link"
-            href={creativeProfile.link.href}
+            href={profile.link.href}
             target="_blank"
             rel="noreferrer"
           >
-            {creativeProfile.link.label}
+            {profile.link.label}
             <ExternalLink size={16} />
           </a>
         </div>

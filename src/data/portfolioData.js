@@ -19,7 +19,7 @@ export const heroData = {
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
   primaryAction: { href: '#console', label: 'View Details' },
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
-  profileImage: './images/profile-hero.png',
+  profileImage: './images/profile-hero-cutout.png',
   profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
@@ -249,8 +249,8 @@ export const contactLinks = [
     external: true,
   },
   {
-    href: 'https://www.linkedin.com/in/akindu-rupasingha-96839a315',
-    label: 'linkedin.com/in/akindu-rupasingha-96839a315',
+    href: 'https://www.linkedin.com/in/akindu-rupasingha',
+    label: 'linkedin.com/in/akindu-rupasingha',
     icon: Network,
     external: true,
   },
@@ -270,3 +270,284 @@ export const tabs = [
   { id: 'experience', icon: Briefcase, command: './experience.sh', label: 'Experience' },
   { id: 'contact', icon: Mail, command: './contact.sh', label: 'Contact' },
 ];
+
+const englishContent = {
+  heroData,
+  focusAreas,
+  aboutCards,
+  technicalSkills,
+  tools,
+  creativeProfile,
+  education,
+  certifications,
+  projects,
+  experience,
+  contactLinks,
+  tabs,
+  sections: {
+    about: {
+      eyebrow: './about.sh',
+      title: 'A broader profile beyond only frontend development.',
+      text:
+        'This section introduces my academic path, technical range, project mindset, and the wider experience I have built through both study and community work.',
+    },
+    education: {
+      eyebrow: './education.sh',
+      title: 'Academic background',
+      text:
+        'My studies combine school qualifications, undergraduate IT learning, and completed courses or certifications that support my technical foundation.',
+    },
+    skills: {
+      eyebrow: './skills.sh',
+      title: 'Technical capabilities',
+      text:
+        'This section focuses on the technical skills, tools, and software I use across development and creative work.',
+    },
+    projects: {
+      eyebrow: './projects.sh',
+      title: 'Selected work',
+      text:
+        'The strongest builds are highlighted first, while private and supporting work stays visible in a cleaner secondary layout.',
+    },
+    experience: {
+      eyebrow: './experience.sh',
+      title: 'Leadership and community involvement',
+      text:
+        'My background also includes programme participation and field-based work that developed communication and coordination skills.',
+    },
+    contact: {
+      eyebrow: './contact.sh',
+      title: 'Get in touch',
+      text: 'Open for opportunities, collaboration, and portfolio discussions.',
+    },
+  },
+  ui: {
+    terminal: 'Terminal',
+    languageToggleLabel: 'Switch to Sinhala',
+    themeToggleLabel: 'Toggle light and dark mode',
+    searchPlaceholder: "grep -i 'search...'",
+    searchLabel: 'Search portfolio content',
+    nowViewing: 'Now viewing',
+    search: 'Search',
+    searchResults: 'Search results',
+    noResults: 'No results found',
+    noResultsText: 'Could not find anything matching',
+    resultsFor: 'Results for',
+    resultsText: 'Here is everything matching your query across all sections.',
+    matchingSkills: 'Matching Skills & Tools',
+    matchingProjects: 'Matching Projects',
+    matchingExperience: 'Matching Experience',
+    matchingLinks: 'Matching Links',
+    more: 'More',
+    scrollHint: 'More below',
+    coursesTitle: 'Courses and certifications',
+    programmingTitle: 'Programming and web',
+    toolsTitle: 'Tools and creative software',
+    creativeProfile: 'Creative profile',
+    additionalWork: 'Additional work',
+    supportingBuilds: 'Supporting and private builds',
+    supportingBuildsText:
+      'Smaller or non-public projects stay grouped separately, so the main work gets a stronger first impression.',
+  },
+};
+
+const sinhalaContent = {
+  ...englishContent,
+  heroData: {
+    ...heroData,
+    eyebrow: 'ෆුල් ස්ටැක් ඩිවලොපර් පෝර්ට්ෆෝලියෝ',
+    intro:
+      'ප්‍රායෝගික වෙබ් අතුරුමුහුණත්, backend presentation, සහ web/desktop application development පිළිබඳ අවධානයක් ඇති Information Technology undergraduate කෙනෙක්.',
+    primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
+    secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
+    profileLabel: 'ප්‍රොෆයිල් සාරාංශය',
+    profileTitle: 'Online presentation එකකට පැහැදිලි, polish කරපු වැඩ නිර්මාණය කිරීම',
+    profileText:
+      'මගේ පසුබිම academic IT study, graphic tools, web development foundations, සහ hands-on project work එකට එකතු වෙනවා.',
+  },
+  focusAreas: [
+    'React portfolio interfaces',
+    'Responsive web design',
+    'C# desktop application development',
+    'HTML, CSS, JavaScript, සහ PHP',
+  ],
+  aboutCards: [
+    {
+      title: 'වර්තමාන දිශාව',
+      text:
+        'IT undergraduate කෙනෙක් විදිහට practical software solutions, clear interfaces, සහ real user workflows විසඳන systems ගොඩනැගීමට මම අවධානය දෙමි.',
+    },
+    {
+      title: 'තාක්ෂණික පරාසය',
+      text:
+        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, සහ MySQL මගේ experience එකට ඇතුළත් වේ.',
+    },
+    {
+      title: 'Project approach',
+      text:
+        'මම structured, usable, සහ present කරන්න පහසු වැඩ ගොඩනගන අතර layout quality, clean workflows, practical implementation ගැන අවධානය දෙමි.',
+    },
+    {
+      title: 'වෙනත් ශක්තීන්',
+      text:
+        'Coding වලට අමතරව graphic tools, documentation, සහ community project experience මගේ technical execution සහ communication එකට සහාය දක්වයි.',
+    },
+  ],
+  creativeProfile: {
+    ...creativeProfile,
+    title: 'Graphic design presence',
+    text:
+      'Behance හරහා මම visual work publish කරන අතර layout-focused design pieces සහ creative presentation skills එහි දැකගත හැක.',
+    highlights: ['Behance portfolio', 'Design-focused work', 'Visual presentation'],
+    link: { ...creativeProfile.link, label: 'Behance profile බලන්න' },
+  },
+  education: [
+    {
+      ...education[0],
+      text:
+        'First year diploma level සහ second year higher diploma level coursework හරහා undergraduate level studies සම්පූර්ණ කර ඇත.',
+    },
+    {
+      ...education[1],
+      text: 'Accounting, Business Studies, සහ Information and Communication Technology.',
+    },
+    {
+      ...education[2],
+      text:
+        'ICT, mathematics, science, history, Sinhala, English, art, සහ civic studies ඇතුළු පුළුල් subject base එකක් සම්පූර්ණ කර ඇත.',
+    },
+  ],
+  projects: [
+    {
+      ...projects[0],
+      category: 'ප්‍රධාන project',
+      description:
+        'E-waste collection, item tracking, සහ workflow management සඳහා operations-focused platform එකක්.',
+      statusText: 'Development වෙමින්',
+      actions: [
+        { label: 'Case study soon', disabled: true, variant: 'primary' },
+        { label: 'Private build', disabled: true, variant: 'secondary' },
+      ],
+    },
+    {
+      ...projects[1],
+      category: 'ප්‍රධාන project',
+      description:
+        'Patient registration, appointments, සහ medical record handling සඳහා desktop system එකක්.',
+      statusText: 'Demo තිබේ',
+      actions: [
+        { ...projects[1].actions[0], label: 'GitHub repository' },
+        { ...projects[1].actions[1], label: 'Demo video' },
+      ],
+      previewLabel: 'Demo බලන්න',
+    },
+    {
+      ...projects[2],
+      category: 'ප්‍රධාන project',
+      description:
+        'Skills, project work, සහ experience පැහැදිලිව පෙන්වීමට responsive portfolio interface එකක්.',
+      statusText: 'Live project',
+      actions: [
+        { ...projects[2].actions[0], label: 'Live portfolio' },
+        { ...projects[2].actions[1], label: 'GitHub repository' },
+      ],
+    },
+    {
+      ...projects[3],
+      category: 'Supporting project',
+      description:
+        'Parent updates සහ daily record tracking සඳහා attendance-focused school system එකක්.',
+      statusText: 'Private project',
+    },
+  ],
+  experience: [
+    {
+      ...experience[0],
+      text:
+        'Humanitarian cash transfer programme එකක් සඳහා community-based nutrition promotion, monitoring, සහ capacity development වලට සහාය විය.',
+    },
+    {
+      ...experience[1],
+      text:
+        'Sustainable projects සඳහා knowledge, skills, සහ collaboration ගොඩනැගීමට British Council climate action programme එකට සහභාගී විය.',
+    },
+  ],
+  tabs: [
+    { ...tabs[0], label: 'මා ගැන' },
+    { ...tabs[1], label: 'අධ්‍යාපනය' },
+    { ...tabs[2], label: 'Skills' },
+    { ...tabs[3], label: 'Projects' },
+    { ...tabs[4], label: 'Experience' },
+    { ...tabs[5], label: 'Contact' },
+  ],
+  sections: {
+    about: {
+      eyebrow: './about.sh',
+      title: 'Frontend development වලට වඩා පුළුල් profile එකක්.',
+      text:
+        'මෙම කොටස මගේ academic path, technical range, project mindset, සහ study/community work හරහා ගොඩනැගූ experience පෙන්වයි.',
+    },
+    education: {
+      eyebrow: './education.sh',
+      title: 'අධ්‍යාපන පසුබිම',
+      text:
+        'School qualifications, undergraduate IT learning, සහ completed courses/certifications මගේ technical foundation එකට සහාය දක්වයි.',
+    },
+    skills: {
+      eyebrow: './skills.sh',
+      title: 'තාක්ෂණික හැකියාවන්',
+      text:
+        'Development සහ creative work සඳහා මම භාවිතා කරන technical skills, tools, සහ software මෙහි පෙන්වයි.',
+    },
+    projects: {
+      eyebrow: './projects.sh',
+      title: 'තෝරාගත් වැඩ',
+      text:
+        'ශක්තිමත් builds ඉහළින් පෙන්වා, private සහ supporting work වෙනම layout එකකින් පෙන්වා ඇත.',
+    },
+    experience: {
+      eyebrow: './experience.sh',
+      title: 'Leadership සහ community involvement',
+      text:
+        'Communication සහ coordination skills වර්ධනය කළ programme participation සහ field-based work මගේ පසුබිමට ඇතුළත් වේ.',
+    },
+    contact: {
+      eyebrow: './contact.sh',
+      title: 'සම්බන්ධ වන්න',
+      text: 'Opportunities, collaboration, සහ portfolio discussions සඳහා සම්බන්ධ විය හැක.',
+    },
+  },
+  ui: {
+    ...englishContent.ui,
+    terminal: 'ටර්මිනල්',
+    languageToggleLabel: 'Switch to English',
+    searchPlaceholder: "grep -i 'සොයන්න...'",
+    searchLabel: 'Portfolio content සොයන්න',
+    nowViewing: 'දැනට බලන්නේ',
+    search: 'සෙවීම',
+    searchResults: 'Search results',
+    noResults: 'ප්‍රතිඵල නැත',
+    noResultsText: 'මෙයට ගැලපෙන කිසිවක් හමු නොවීය',
+    resultsFor: 'ප්‍රතිඵල',
+    resultsText: 'ඔබේ search එකට ගැලපෙන සියලු කොටස් මෙහි දැක්වේ.',
+    matchingSkills: 'ගැලපෙන Skills සහ Tools',
+    matchingProjects: 'ගැලපෙන Projects',
+    matchingExperience: 'ගැලපෙන Experience',
+    matchingLinks: 'ගැලපෙන Links',
+    more: 'තව',
+    scrollHint: 'තව පහළට',
+    coursesTitle: 'Courses සහ certifications',
+    programmingTitle: 'Programming සහ web',
+    toolsTitle: 'Tools සහ creative software',
+    creativeProfile: 'Creative profile',
+    additionalWork: 'අමතර වැඩ',
+    supportingBuilds: 'Supporting සහ private builds',
+    supportingBuildsText:
+      'කුඩා හෝ non-public projects වෙනම group කර ඇති නිසා main work එකට පැහැදිලි first impression එකක් ලැබේ.',
+  },
+};
+
+export const portfolioContent = {
+  en: englishContent,
+  si: sinhalaContent,
+};

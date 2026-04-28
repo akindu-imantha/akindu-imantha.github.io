@@ -1,8 +1,20 @@
 import { motion } from 'framer-motion';
+import { Globe2, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
-export default function Hero() {
+export default function Hero({
+  content = { heroData, focusAreas, ui: { terminal: 'Terminal' } },
+  language = 'en',
+  theme = 'dark',
+  onLanguageToggle,
+  onThemeToggle,
+}) {
+  const hero = content.heroData ?? heroData;
+  const areas = content.focusAreas ?? focusAreas;
+  const ui = content.ui ?? {};
+  const ThemeIcon = theme === 'dark' ? Sun : Moon;
+
   return (
     <header className="hero">
       <motion.nav
@@ -13,7 +25,25 @@ export default function Hero() {
       >
         <div className="brand">Akindu Imantha</div>
         <div className="nav-links">
-          <a href="#console">Terminal</a>
+          <a href="#console">{ui.terminal ?? 'Terminal'}</a>
+          <button
+            type="button"
+            className="nav-toggle"
+            onClick={onLanguageToggle}
+            aria-label={ui.languageToggleLabel ?? 'Toggle language'}
+          >
+            <Globe2 size={16} />
+            <span>{language === 'en' ? 'සිං' : 'EN'}</span>
+          </button>
+          <button
+            type="button"
+            className="nav-toggle nav-toggle--icon"
+            onClick={onThemeToggle}
+            aria-label={ui.themeToggleLabel ?? 'Toggle theme'}
+          >
+            <ThemeIcon size={16} />
+            <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
         </div>
       </motion.nav>
 
@@ -25,15 +55,15 @@ export default function Hero() {
       >
         <div className="hero-copy">
           <motion.p variants={fadeInUp} className="eyebrow">
-            {heroData.eyebrow}
+            {hero.eyebrow}
           </motion.p>
-          <motion.h1 variants={fadeInUp}>{heroData.name}</motion.h1>
+          <motion.h1 variants={fadeInUp}>{hero.name}</motion.h1>
           <motion.p variants={fadeInUp} className="intro">
-            {heroData.intro}
+            {hero.intro}
           </motion.p>
 
           <motion.div variants={fadeInUp} className="hero-meta">
-            {heroData.meta.map((item) => (
+            {hero.meta.map((item) => (
               <span key={item} className="hero-meta-item">
                 {item}
               </span>
@@ -41,11 +71,11 @@ export default function Hero() {
           </motion.div>
 
           <motion.div variants={fadeInUp} className="hero-actions">
-            <a href={heroData.primaryAction.href} className="primary-button">
-              {heroData.primaryAction.label}
+            <a href={hero.primaryAction.href} className="primary-button">
+              {hero.primaryAction.label}
             </a>
-            <a href={heroData.secondaryAction.href} className="secondary-button">
-              {heroData.secondaryAction.label}
+            <a href={hero.secondaryAction.href} className="secondary-button">
+              {hero.secondaryAction.label}
             </a>
           </motion.div>
         </div>
@@ -53,19 +83,19 @@ export default function Hero() {
         <motion.div variants={fadeInUp} className="hero-card profile-card">
           <div className="profile-image-container">
             <img
-              src={heroData.profileImage}
-              alt={heroData.profileImageAlt}
+              src={hero.profileImage}
+              alt={hero.profileImageAlt}
               className="profile-image"
             />
             <div className="profile-glow"></div>
           </div>
           <div className="profile-card-content">
-            <div className="card-label">{heroData.profileLabel}</div>
-            <h3>{heroData.profileTitle}</h3>
-            <p>{heroData.profileText}</p>
+            <div className="card-label">{hero.profileLabel}</div>
+            <h3>{hero.profileTitle}</h3>
+            <p>{hero.profileText}</p>
 
             <ul>
-              {focusAreas.map((item) => (
+              {areas.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>

@@ -9,6 +9,15 @@ npm install
 npm run dev
 ```
 
+Run the contact email server in a second terminal:
+
+```bash
+npm run server
+```
+
+Copy `.env.example` to `.env`, then set `SMTP_PASS` to a new Gmail app password.
+Do not commit `.env`.
+
 ## Build
 
 ```bash

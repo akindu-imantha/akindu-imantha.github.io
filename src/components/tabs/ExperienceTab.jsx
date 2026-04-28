@@ -4,7 +4,14 @@ import ExperienceCard from '../ExperienceCard';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
-export default function ExperienceTab() {
+export default function ExperienceTab({ data = {} }) {
+  const experienceItems = data.experience ?? experience;
+  const section = data.sections?.experience ?? {
+    eyebrow: './experience.sh',
+    title: 'Leadership and community involvement',
+    text: 'My background also includes programme participation and field-based work that developed communication and coordination skills.',
+  };
+
   return (
     <motion.div
       key="experience"
@@ -15,13 +22,13 @@ export default function ExperienceTab() {
       className="console-section"
     >
       <SectionTitle
-        eyebrow="./experience.sh"
-        title="Leadership and community involvement"
-        text="My background also includes programme participation and field-based work that developed communication and coordination skills."
+        eyebrow={section.eyebrow}
+        title={section.title}
+        text={section.text}
       />
 
       <div className="timeline">
-        {experience.map((item) => (
+        {experienceItems.map((item) => (
           <ExperienceCard
             key={item.title}
             Component={motion.article}

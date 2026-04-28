@@ -3,7 +3,15 @@ import { certifications, education } from '../../data/portfolioData';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
-export default function EducationTab() {
+export default function EducationTab({ data = {} }) {
+  const educationItems = data.education ?? education;
+  const certificationItems = data.certifications ?? certifications;
+  const section = data.sections?.education ?? {
+    eyebrow: './education.sh',
+    title: 'Academic background',
+    text: 'My studies combine school qualifications, undergraduate IT learning, and completed courses or certifications that support my technical foundation.',
+  };
+
   return (
     <motion.div
       key="education"
@@ -14,13 +22,13 @@ export default function EducationTab() {
       className="console-section"
     >
       <SectionTitle
-        eyebrow="./education.sh"
-        title="Academic background"
-        text="My studies combine school qualifications, undergraduate IT learning, and completed courses or certifications that support my technical foundation."
+        eyebrow={section.eyebrow}
+        title={section.title}
+        text={section.text}
       />
 
       <div className="project-grid">
-        {education.map((item) => (
+        {educationItems.map((item) => (
           <motion.article
             key={item.title}
             variants={fadeInUp}
@@ -41,9 +49,9 @@ export default function EducationTab() {
       </div>
 
       <motion.article variants={fadeInUp} className="about-card console-card" style={{ marginTop: '1.25rem' }}>
-        <h3>Courses and certifications</h3>
+        <h3>{data.ui?.coursesTitle ?? 'Courses and certifications'}</h3>
         <div className="skill-list">
-          {certifications.map((item) => {
+          {certificationItems.map((item) => {
             const Icon = item.icon;
 
             return (

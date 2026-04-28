@@ -13,25 +13,32 @@ import SectionTitle from './SectionTitle';
 import { fadeInUp, staggerContainer } from './motionVariants';
 import { SkillPill } from '../utils/skillIcons';
 
-export default function SearchResults({ searchQuery }) {
+export default function SearchResults({ searchQuery, data = {} }) {
   const query = searchQuery.trim().toLowerCase();
+  const skillItems = data.technicalSkills ?? technicalSkills;
+  const toolItems = data.tools ?? tools;
+  const certificationItems = data.certifications ?? certifications;
+  const projectItems = data.projects ?? projects;
+  const experienceItems = data.experience ?? experience;
+  const contactItems = data.contactLinks ?? contactLinks;
+  const ui = data.ui ?? {};
 
-  const matchedSkills = technicalSkills.filter((skill) => skill.toLowerCase().includes(query));
-  const matchedTools = tools.filter((tool) => tool.toLowerCase().includes(query));
-  const matchedCertifications = certifications.filter((item) =>
+  const matchedSkills = skillItems.filter((skill) => skill.toLowerCase().includes(query));
+  const matchedTools = toolItems.filter((tool) => tool.toLowerCase().includes(query));
+  const matchedCertifications = certificationItems.filter((item) =>
     item.name.toLowerCase().includes(query),
   );
-  const matchedProjects = projects.filter(
+  const matchedProjects = projectItems.filter(
     (project) =>
       project.title.toLowerCase().includes(query) ||
       project.stack.toLowerCase().includes(query) ||
       project.description.toLowerCase().includes(query),
   );
-  const matchedExperience = experience.filter(
+  const matchedExperience = experienceItems.filter(
     (item) =>
       item.title.toLowerCase().includes(query) || item.text.toLowerCase().includes(query),
   );
-  const matchedContactLinks = contactLinks.filter(
+  const matchedContactLinks = contactItems.filter(
     (item) => item.label.toLowerCase().includes(query) || item.href.toLowerCase().includes(query),
   );
 
@@ -54,9 +61,9 @@ export default function SearchResults({ searchQuery }) {
         className="console-section"
       >
         <SectionTitle
-          eyebrow="Search"
-          title="No results found"
-          text={`Could not find anything matching "${searchQuery}".`}
+          eyebrow={ui.search ?? 'Search'}
+          title={ui.noResults ?? 'No results found'}
+          text={`${ui.noResultsText ?? 'Could not find anything matching'} "${searchQuery}".`}
         />
       </motion.div>
     );
@@ -72,9 +79,9 @@ export default function SearchResults({ searchQuery }) {
       className="console-section"
     >
       <SectionTitle
-        eyebrow="Search Results"
-        title={`Results for "${searchQuery}"`}
-        text="Here is everything matching your query across all sections."
+        eyebrow={ui.searchResults ?? 'Search Results'}
+        title={`${ui.resultsFor ?? 'Results for'} "${searchQuery}"`}
+        text={ui.resultsText ?? 'Here is everything matching your query across all sections.'}
       />
 
       {(matchedSkills.length > 0 ||
@@ -83,7 +90,7 @@ export default function SearchResults({ searchQuery }) {
         <motion.div variants={fadeInUp} className="skills-layout" style={{ marginBottom: '2rem' }}>
           {(matchedSkills.length > 0 || matchedTools.length > 0) && (
             <article className="about-card console-card">
-              <h3>Matching Skills & Tools</h3>
+              <h3>{ui.matchingSkills ?? 'Matching Skills & Tools'}</h3>
               <div className="skill-list">
                 {matchedSkills.map((skill) => (
                   <SkillPill key={skill} label={skill} />
@@ -114,7 +121,7 @@ export default function SearchResults({ searchQuery }) {
 
       {matchedProjects.length > 0 && (
         <motion.div variants={fadeInUp} style={{ marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1rem', color: '#fff' }}>Matching Projects</h3>
+          <h3 style={{ marginBottom: '1rem', color: 'var(--heading-color)' }}>{ui.matchingProjects ?? 'Matching Projects'}</h3>
           <div className="project-grid">
             {matchedProjects.map((project) => (
               <ProjectCard key={project.title} project={project} />
@@ -125,7 +132,7 @@ export default function SearchResults({ searchQuery }) {
 
       {matchedExperience.length > 0 && (
         <motion.div variants={fadeInUp}>
-          <h3 style={{ marginBottom: '1rem', color: '#fff' }}>Matching Experience</h3>
+          <h3 style={{ marginBottom: '1rem', color: 'var(--heading-color)' }}>{ui.matchingExperience ?? 'Matching Experience'}</h3>
           <div className="timeline">
             {matchedExperience.map((item) => (
               <ExperienceCard key={item.title} item={item} />
@@ -136,7 +143,7 @@ export default function SearchResults({ searchQuery }) {
 
       {matchedContactLinks.length > 0 && (
         <motion.div variants={fadeInUp} style={{ marginTop: '2rem' }}>
-          <h3 style={{ marginBottom: '1rem', color: '#fff' }}>Matching Links</h3>
+          <h3 style={{ marginBottom: '1rem', color: 'var(--heading-color)' }}>{ui.matchingLinks ?? 'Matching Links'}</h3>
           <div className="contact-links console-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
             {matchedContactLinks.map((item) => {
               const Icon = item.icon;

@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-export default function ScrollHint() {
+export default function ScrollHint({ label = 'More below' }) {
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
@@ -28,9 +28,9 @@ export default function ScrollHint() {
       type="button"
       className={`scroll-hint ${showHint ? '' : 'is-hidden'}`}
       onClick={() => window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' })}
-      aria-label="Scroll down"
+      aria-label={label}
     >
-      <span>More below</span>
+      <span>{label}</span>
       <ChevronDown size={18} />
     </button>
   );
