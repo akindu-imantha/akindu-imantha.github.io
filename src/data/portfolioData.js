@@ -19,6 +19,7 @@ export const heroData = {
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
   primaryAction: { href: '#console', label: 'View Details' },
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
+  tertiaryAction: { href: 'https://github.com/akindu-imantha', label: 'GitHub' },
   profileImage: './images/optimized/profile-hero-cutout-720.png',
   profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
@@ -89,6 +90,11 @@ export const creativeProfile = {
     href: 'https://www.behance.net/akinduimantha',
     label: 'View Behance profile',
   },
+};
+
+export const githubActivity = {
+  username: 'akindu-imantha',
+  title: 'GitHub contribution activity',
 };
 
 export const education = [
@@ -483,8 +489,8 @@ export const contactLinks = [
     icon: Mail,
   },
   {
-    href: 'https://github.com/12345akindu',
-    label: 'github.com/12345akindu',
+    href: 'https://github.com/akindu-imantha',
+    label: 'github.com/akindu-imantha',
     icon: Code,
     external: true,
   },
@@ -518,6 +524,7 @@ const englishContent = {
   technicalSkills,
   tools,
   creativeProfile,
+  githubActivity,
   education,
   academicGrades,
   certifications,
@@ -591,6 +598,11 @@ const englishContent = {
     programmingTitle: 'Programming and web',
     toolsTitle: 'Tools and creative software',
     creativeProfile: 'Creative profile',
+    githubEyebrow: 'github activity',
+    githubProfileLink: 'View GitHub',
+    githubLoading: 'Loading latest GitHub activity...',
+    githubUnavailable:
+      'Live GitHub contributions need the backend GitHub API settings to be configured.',
     additionalWork: 'Additional work',
     supportingBuilds: 'Supporting and private builds',
     supportingBuildsText:
@@ -647,6 +659,10 @@ const sinhalaContent = {
       'Behance à·„à¶»à·„à· à¶¸à¶¸ visual work publish à¶šà¶»à¶± à¶…à¶­à¶» layout-focused design pieces à·ƒà·„ creative presentation skills à¶‘à·„à·’ à¶¯à·à¶šà¶œà¶­ à·„à·à¶š.',
     highlights: ['Behance portfolio', 'Design-focused work', 'Visual presentation'],
     link: { ...creativeProfile.link, label: 'Behance profile à¶¶à¶½à¶±à·Šà¶±' },
+  },
+  githubActivity: {
+    ...githubActivity,
+    title: 'GitHub contribution activity',
   },
   education: [
     {
@@ -804,6 +820,7 @@ const cleanSinhalaContent = {
       'ප්‍රායෝගික web interfaces, backend presentation, සහ web/desktop application development ගැන අවධානය දෙන Information Technology undergraduate කෙනෙක්.',
     primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
     secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
+    tertiaryAction: { ...heroData.tertiaryAction, label: 'GitHub' },
     profileLabel: 'Profile සාරාංශය',
     profileTitle: 'Online presentation එකකට පැහැදිලි, polish කළ වැඩ නිර්මාණය කිරීම',
     profileText:
@@ -1002,6 +1019,11 @@ const cleanSinhalaContent = {
     programmingTitle: 'Programming සහ web',
     toolsTitle: 'Tools සහ creative software',
     creativeProfile: 'Creative profile',
+    githubEyebrow: 'github activity',
+    githubProfileLink: 'GitHub බලන්න',
+    githubLoading: 'Latest GitHub activity load වෙමින්...',
+    githubUnavailable:
+      'Live GitHub contributions පෙන්වීමට backend GitHub API settings configure කළ යුතුයි.',
     additionalWork: 'අමතර වැඩ',
     supportingBuilds: 'Supporting සහ private builds',
     supportingBuildsText:

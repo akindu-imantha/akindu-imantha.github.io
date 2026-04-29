@@ -42,6 +42,7 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
     technicalSkills: content.technicalSkills ?? technicalSkills,
     tools: content.tools ?? tools,
     creativeProfile: content.creativeProfile,
+    githubActivity: content.githubActivity,
     education: content.education,
     aboutCards: content.aboutCards,
     sections: content.sections,

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Globe2, Moon, Sun } from 'lucide-react';
+import { Github, Globe2, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
+import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
 export default function Hero({
@@ -77,6 +78,25 @@ export default function Hero({
             <a href={hero.secondaryAction.href} className="secondary-button">
               {hero.secondaryAction.label}
             </a>
+            {hero.tertiaryAction ? (
+              <a
+                href={hero.tertiaryAction.href}
+                className="secondary-button icon-button-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Github size={18} />
+                <span>{hero.tertiaryAction.label}</span>
+              </a>
+            ) : null}
+          </motion.div>
+
+          <motion.div variants={fadeInUp} className="hero-github-panel">
+            <GitHubContributions
+              data={content.githubActivity}
+              ui={content.ui}
+              className="github-card--hero"
+            />
           </motion.div>
         </div>
 

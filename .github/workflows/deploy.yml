@@ -33,6 +33,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          VITE_GITHUB_CONTRIBUTIONS_API_URL: ${{ vars.VITE_GITHUB_CONTRIBUTIONS_API_URL }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

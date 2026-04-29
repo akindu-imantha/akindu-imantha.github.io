@@ -12,6 +12,7 @@ app.use(cors({ origin: allowedOrigin }));
 app.use(express.json({ limit: '20kb' }));
 
 const requiredEnv = ['SMTP_USER', 'SMTP_PASS', 'CONTACT_TO_EMAIL'];
+const contributionCache = new Map();
 
 function getMissingEnv() {
   return requiredEnv.filter((key) => !process.env[key]);
@@ -27,6 +28,95 @@ function clean(value) {
 
 app.get('/api/health', (_request, response) => {
   response.json({ ok: true });
+});
+
+app.get('/api/github/contributions', async (request, response) => {
+  const username = clean(request.query.username ?? process.env.GITHUB_USERNAME);
+  const year = Number(request.query.year ?? new Date().getFullYear());
+
+  if (!username || !process.env.GITHUB_TOKEN) {
+    response.status(500).json({ message: 'GitHub contributions are not configured.' });
+    return;
+  }
+
+  if (!Number.isInteger(year) || year < 2008 || year > 2100) {
+    response.status(400).json({ message: 'Invalid contribution year.' });
+    return;
+  }
+
+  const cacheKey = `${username}-${year}`;
+  const cached = contributionCache.get(cacheKey);
+
+  if (cached && cached.expiresAt > Date.now()) {
+    response.json(cached.data);
+    return;
+  }
+
+  const from = `${year}-01-01T00:00:00Z`;
+  const to = `${year}-12-31T23:59:59Z`;
+
+  try {
+    const githubResponse = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
+          query Contributions($username: String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $username) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      color
+                      contributionCount
+                      date
+                      weekday
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: { username, from, to },
+      }),
+    });
+
+    const payload = await githubResponse.json();
+
+    if (!githubResponse.ok || payload.errors?.length) {
+      response.status(502).json({ message: 'GitHub contributions could not be loaded.' });
+      return;
+    }
+
+    const calendar = payload.data?.user?.contributionsCollection?.contributionCalendar;
+
+    if (!calendar) {
+      response.status(404).json({ message: 'GitHub user contributions were not found.' });
+      return;
+    }
+
+    const data = {
+      username,
+      year,
+      totalContributions: calendar.totalContributions,
+      weeks: calendar.weeks,
+    };
+
+    contributionCache.set(cacheKey, {
+      data,
+      expiresAt: Date.now() + 1000 * 60 * 60,
+    });
+
+    response.json(data);
+  } catch (error) {
+    console.error('GitHub contributions failed:', error);
+    response.status(500).json({ message: 'GitHub contributions could not be loaded.' });
+  }
 });
 
 app.post('/api/contact', async (request, response) => {
