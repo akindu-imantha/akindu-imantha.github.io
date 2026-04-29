@@ -51,6 +51,11 @@ export default function EducationTab({ data = {} }) {
               ) : (
                 <p>{item.text}</p>
               )}
+              {item.gradeLink ? (
+                <a href={item.gradeLink} className="project-link education-card-link">
+                  {item.gradeButtonLabel ?? data.ui?.gradesButton ?? 'View subjects and grades'}
+                </a>
+              ) : null}
             </div>
           </motion.article>
         ))}

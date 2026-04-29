@@ -626,6 +626,23 @@ a {
   margin: 0;
 }
 
+.education-action-row {
+  display: flex;
+  justify-content: flex-start;
+  margin: -0.45rem 0 1.25rem;
+}
+
+.education-grades-link {
+  width: fit-content;
+  min-width: min(100%, 220px);
+}
+
+.education-card-link {
+  width: fit-content;
+  min-width: min(100%, 180px);
+  margin-top: 0.25rem;
+}
+
 .project-stack {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
@@ -1003,6 +1020,173 @@ a {
   color: #64748b;
   border-color: rgba(15, 23, 42, 0.14);
   background: rgba(241, 245, 249, 0.78);
+}
+
+.grades-page {
+  min-height: 100svh;
+  padding: clamp(1rem, 3vw, 2rem) 0 4rem;
+}
+
+.grades-page-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grades-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  min-height: 42px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--heading-color);
+  font-weight: 650;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.grades-back-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(139, 92, 246, 0.32);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+[data-theme='light'] .grades-back-link {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.grades-section {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.grades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 1.25rem;
+}
+
+.grades-search-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.grades-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: min(100%, 420px);
+  padding: 0.7rem 0.95rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .grades-search-box {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+.grades-search-icon {
+  color: var(--text-muted);
+}
+
+.grades-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--heading-color);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+}
+
+.grades-search-empty {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.grades-card {
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.grades-card-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.grades-card-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--accent-soft);
+}
+
+.grades-card h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.grades-summary {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.grades-table {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.grades-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 0.32fr);
+  gap: 1rem;
+  align-items: center;
+  min-height: 46px;
+  padding: 0.78rem 0.95rem;
+  border-top: 1px solid var(--border);
+}
+
+.grades-row:first-child {
+  border-top: none;
+}
+
+.grades-row--head {
+  min-height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent-soft);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+[data-theme='light'] .grades-row--head {
+  background: rgba(37, 99, 235, 0.07);
+}
+
+.grades-row strong {
+  justify-self: end;
+  color: var(--heading-color);
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 .project-status {
@@ -1587,6 +1771,19 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .grades-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grades-card-header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .grades-card-header .project-status {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
   .console-sidebar {
     width: clamp(150px, 24vw, 190px);
     border-right: 1px solid var(--border);
@@ -1671,6 +1868,13 @@ a {
   .contact-links a {
     width: 100%;
     text-align: center;
+  }
+
+  .education-action-row,
+  .education-grades-link,
+  .education-card-link,
+  .grades-back-link {
+    width: 100%;
   }
 
   .hero-grid {
@@ -1975,6 +2179,20 @@ a {
 
   .project-actions {
     grid-template-columns: 1fr;
+  }
+
+  .grades-page {
+    padding-top: 0.75rem;
+  }
+
+  .grades-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .grades-row strong {
+    justify-self: start;
+    text-align: left;
   }
 }
 

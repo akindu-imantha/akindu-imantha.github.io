@@ -29,8 +29,7 @@ const tabComponents = {
   contact: ContactTab,
 };
 
-export default function TerminalConsole({ content = portfolioContent.en }) {
-  const [activeTab, setActiveTab] = useState('about');
+export default function TerminalConsole({ content = portfolioContent.en, activeTab = 'about', onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const ActiveTab = tabComponents[activeTab] ?? AboutTab;
@@ -74,7 +73,7 @@ export default function TerminalConsole({ content = portfolioContent.en }) {
           <ConsoleSidebar
             activeTab={activeTab}
             onTabChange={(tabId) => {
-              setActiveTab(tabId);
+              onTabChange?.(tabId);
               setSearchQuery('');
             }}
             onSearchChange={setSearchQuery}

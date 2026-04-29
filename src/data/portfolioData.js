@@ -98,13 +98,17 @@ export const education = [
     text: 'Undergraduate level studies completed through first year diploma level and second year higher diploma level coursework.',
     logo: './images/education/university-of-moratuwa-logo.png',
     logoAlt: 'University of Moratuwa logo',
+    gradeLink: '#grades-uom',
+    gradeButtonLabel: 'View Moratuwa grades',
   },
   {
     title: 'Bachelor of Science Honours in Cyber Security',
     subtitle: 'Sri Lanka Technology Campus',
-    text: 'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations.',
+    text: 'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations. Semester 1 is complete and official results will be added once available.',
     logo: './images/education/sltc-crest.png',
     logoAlt: 'SLTC logo',
+    gradeLink: '#grades-sltc',
+    gradeButtonLabel: 'View SLTC grades',
   },
   {
     title: 'School qualifications',
@@ -115,6 +119,112 @@ export const education = [
     ],
     logo: './images/optimized/prince-college-logo-transparent-360.png',
     logoAlt: 'Prince College logo',
+  },
+];
+
+export const academicGrades = [
+  {
+    id: 'uom',
+    program: 'Bachelor of Information Technology',
+    institution: 'University of Moratuwa',
+    status: 'Completed coursework',
+    summary:
+      'Official University of Moratuwa results for semesters 1-5 are shown below; semester 6 grades are pending.',
+    subjects: [
+      { name: 'Semester 1 – ITE1112 Visual Application Programming', grade: 'B-' },
+      { name: 'Semester 1 – ITE1712 Web Design', grade: 'A-' },
+      { name: 'Semester 1 – ITE1812 Mathematics for IT', grade: 'C+' },
+      { name: 'Semester 1 – ITE1912 Communication Skills Development', grade: 'A-' },
+      { name: 'Semester 1 – ITE1922 ICT Applications', grade: 'B' },
+      { name: 'Semester 2 – ITE1122 Fundamentals of Programming', grade: 'B' },
+      { name: 'Semester 2 – ITE1212 Computer Systems', grade: 'A-' },
+      { name: 'Semester 2 – ITE1222 System Analysis & Design', grade: 'B' },
+      { name: 'Semester 2 – ITE1412 Information Management', grade: 'C' },
+      { name: 'Semester 2 – ITE1932 Technical Writing', grade: 'C' },
+      { name: 'Semester 2 – ITE1942 ICT Project', grade: 'A+' },
+      { name: 'Semester 3 – ITE2132 Object Oriented Programming', grade: 'B+' },
+      { name: 'Semester 3 – ITE2142 Data Structures and Algorithms', grade: 'C' },
+      { name: 'Semester 3 – ITE2232 Computer Networks & Operating Systems', grade: 'B-' },
+      { name: 'Semester 3 – ITE2422 Database Management Systems', grade: 'A-' },
+      { name: 'Semester 3 – ITE2722 Web Programming', grade: 'B+' },
+      { name: 'Semester 4 – ITE2152 Mobile Application Development', grade: 'B' },
+      { name: 'Semester 4 – ITE2162 Software Engineering', grade: 'C+' },
+      { name: 'Semester 4 – ITE2312 IT Quality Assurance', grade: 'B+' },
+      { name: 'Semester 4 – ITE2612 IT Project Management', grade: 'C+' },
+      { name: 'Semester 4 – ITE2732 Multimedia Development', grade: 'B' },
+      { name: 'Semester 4 – ITE2952 Programming Group Project', grade: 'A+' },
+      { name: 'Semester 5 – ITE3242 Information Security', grade: 'C+' },
+      { name: 'Semester 5 – ITE3322 Professional Practice', grade: 'C+' },
+      { name: 'Semester 5 – ITE3512 Fundamentals of Artificial Intelligence', grade: 'A-' },
+      { name: 'Semester 5 – ITE3752 Human Computer Interaction', grade: 'A' },
+      { name: 'Semester 5 – ITE3822 Discrete Mathematics', grade: 'B' },
+      { name: 'Semester 6 – ITE3332 Quality Assurance in Practice', grade: 'Pending' },
+      { name: 'Semester 6 – ITE3642 Marketing', grade: 'Pending' },
+      { name: 'Semester 6 – ITE3652 Organizational Behavior', grade: 'Pending' },
+      { name: 'Semester 6 – ITE3742 Web Services', grade: 'Pending' },
+      { name: 'Semester 6 – ITE3962 Project', grade: 'Pending' },
+    ],
+  },
+  {
+    id: 'sltc',
+    program: 'Bachelor of Science Honours in Cyber Security',
+    institution: 'Sri Lanka Technology Campus',
+    status: 'Currently studying',
+    summary:
+      'SLTC degree modules are listed here. Semester 1 is complete and the official grades will be added once results are available.',
+    subjects: [
+      { name: 'Level 1 Semester 1 – Programming Concepts (CCS1300)', grade: 'Pending' },
+      { name: 'Level 1 Semester 1 – Computer Systems (CCS1301)', grade: 'A-' },
+      { name: 'Level 1 Semester 1 – Internet Technologies (CCS1302)', grade: 'Pending' },
+      { name: 'Level 1 Semester 1 – Mathematics for Computing (with Programming) (CCS1303)', grade: 'B-' },
+      { name: 'Level 1 Semester 1 – Introductory Calculus (SMA2302)', grade: 'A' },
+      { name: 'Level 1 Semester 2 – Object Oriented Programming', grade: 'Pending' },
+      { name: 'Level 1 Semester 2 – Data Technologies', grade: 'Pending' },
+      { name: 'Level 1 Semester 2 – Entrepreneurship & Start-up Culture', grade: 'Pending' },
+      { name: 'Level 1 Semester 2 – Professional Practice', grade: 'Pending' },
+      { name: 'Level 1 Semester 2 – Business Analysis and Software Design', grade: 'Pending' },
+      { name: 'Level 2 Semester 1 – Communication Protocols and Models', grade: 'Pending' },
+      { name: 'Level 2 Semester 1 – Data Structures and Algorithms', grade: 'Pending' },
+      { name: 'Level 2 Semester 1 – Operating Systems and Platforms', grade: 'Pending' },
+      { name: 'Level 2 Semester 1 – Programming with Vectors and Matrices', grade: 'Pending' },
+      { name: 'Level 2 Semester 1 – Effective Communication', grade: 'Pending' },
+      { name: 'Level 2 Semester 2 – Information Security', grade: 'Pending' },
+      { name: 'Level 2 Semester 2 – Cloud Computing Fundamentals', grade: 'Pending' },
+      { name: 'Level 2 Semester 2 – Human Factors in Computer Systems', grade: 'Pending' },
+      { name: 'Level 2 Semester 2 – Project Management', grade: 'Pending' },
+      { name: 'Level 2 Semester 2 – Probability & Statistics', grade: 'Pending' },
+    ],
+  },
+  {
+    id: 'al',
+    program: 'Advanced Level - 2022',
+    institution: 'Prince College',
+    status: 'School qualification',
+    summary:
+      'A/L subjects are useful to show because they connect business knowledge with ICT.',
+    subjects: [
+      { name: 'Accounting', grade: 'Add grade' },
+      { name: 'Business Studies', grade: 'Add grade' },
+      { name: 'ICT', grade: 'Add grade' },
+    ],
+  },
+  {
+    id: 'ol',
+    program: 'Ordinary Level - 2018',
+    institution: 'Prince College',
+    status: 'School qualification',
+    summary:
+      'O/L subjects can stay on the detailed page so the main portfolio remains clean.',
+    subjects: [
+      { name: 'ICT', grade: 'Add grade' },
+      { name: 'Mathematics', grade: 'Add grade' },
+      { name: 'Science', grade: 'Add grade' },
+      { name: 'English', grade: 'Add grade' },
+      { name: 'Sinhala', grade: 'Add grade' },
+      { name: 'History', grade: 'Add grade' },
+      { name: 'Art', grade: 'Add grade' },
+      { name: 'Civic Studies', grade: 'Add grade' },
+    ],
   },
 ];
 
@@ -282,6 +392,7 @@ const englishContent = {
   tools,
   creativeProfile,
   education,
+  academicGrades,
   certifications,
   projects,
   experience,
@@ -344,6 +455,12 @@ const englishContent = {
     more: 'More',
     scrollHint: 'More below',
     coursesTitle: 'Courses and certifications',
+    gradesButton: 'View subjects and grades',
+    gradesBack: 'Back to portfolio',
+    gradesEyebrow: './grades.sh',
+    gradesTitle: 'Subjects and grades',
+    gradesText:
+      'A detailed academic view for visitors who want to check completed subjects and results without crowding the main education section.',
     programmingTitle: 'Programming and web',
     toolsTitle: 'Tools and creative software',
     creativeProfile: 'Creative profile',
@@ -413,7 +530,7 @@ const sinhalaContent = {
     {
       ...education[1],
       text:
-        'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations.',
+        'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations. Semester 1 is complete and official results will be added once available.',
     },
     {
       ...education[2],
@@ -605,11 +722,13 @@ const cleanSinhalaContent = {
       ...education[0],
       text:
         'First year diploma level සහ second year higher diploma level coursework හරහා undergraduate level studies සම්පූර්ණ කර ඇත.',
+      gradeButtonLabel: 'Moratuwa grades බලන්න',
     },
     {
       ...education[1],
       text:
         'Secure systems, networking, සහ practical information security foundations ගැන අවධානය දෙන cyber security degree studies කරමින් සිටී.',
+      gradeButtonLabel: 'SLTC grades බලන්න',
     },
     {
       ...education[2],
@@ -617,6 +736,28 @@ const cleanSinhalaContent = {
         'A/L 2022: Accounting, Business Studies, සහ ICT.',
         'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, සහ Civic Studies.',
       ],
+    },
+  ],
+  academicGrades: [
+    {
+      ...academicGrades[0],
+      summary:
+        'Official results confirm කළාම subjects සහ grades මෙහි පෙන්විය හැක.',
+    },
+    {
+      ...academicGrades[1],
+      summary:
+        'Current degree modules in-progress ලෙස පෙන්වා, results release වූ පසු grades update කරන්න.',
+    },
+    {
+      ...academicGrades[2],
+      summary:
+        'A/L subjects business knowledge සහ ICT background එක පෙන්වීමට useful වේ.',
+    },
+    {
+      ...academicGrades[3],
+      summary:
+        'Main portfolio එක clean තබාගෙන O/L subjects detailed page එකේ පෙන්විය හැක.',
     },
   ],
   projects: [
@@ -725,6 +866,12 @@ const cleanSinhalaContent = {
     more: 'තව',
     scrollHint: 'තව පහළට',
     coursesTitle: 'Courses සහ certifications',
+    gradesButton: 'Subjects සහ grades බලන්න',
+    gradesBack: 'Portfolio එකට ආපසු',
+    gradesEyebrow: './grades.sh',
+    gradesTitle: 'Subjects සහ grades',
+    gradesText:
+      'Main education section එක crowd නොකර, visitors ලට completed subjects සහ results බලන්න වෙනම academic view එකක්.',
     programmingTitle: 'Programming සහ web',
     toolsTitle: 'Tools සහ creative software',
     creativeProfile: 'Creative profile',

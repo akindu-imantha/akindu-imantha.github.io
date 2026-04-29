@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import GradesPage from './components/GradesPage';
 import Hero from './components/Hero';
 import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
@@ -7,7 +8,13 @@ import { portfolioContent } from './data/portfolioData';
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') ?? 'dark');
+  const [currentHash, setCurrentHash] = useState(() => window.location.hash);
+  const [activeTab, setActiveTab] = useState(() =>
+    window.location.hash.startsWith('#grades') ? 'education' : 'about',
+  );
   const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
+  const isGradesPage = currentHash.startsWith('#grades');
+  const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -19,6 +26,32 @@ function App() {
     localStorage.setItem('portfolio-language', language);
   }, [language]);
 
+  useEffect(() => {
+    const syncHash = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#grades')) {
+        setActiveTab('education');
+      }
+      setCurrentHash(hash);
+    };
+
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
+  }, []);
+
+  useEffect(() => {
+    if (currentHash === '#console') {
+      requestAnimationFrame(() => {
+        const consoleElement = document.getElementById('console');
+        if (consoleElement) {
+          consoleElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+      });
+    }
+  }, [currentHash]);
+
   const toggleLanguage = () => {
     setLanguage((currentLanguage) => (currentLanguage === 'en' ? 'si' : 'en'));
   };
@@ -29,15 +62,25 @@ function App() {
 
   return (
     <div className="page-shell">
-      <Hero
-        content={content}
-        language={language}
-        theme={theme}
-        onLanguageToggle={toggleLanguage}
-        onThemeToggle={toggleTheme}
-      />
-      <TerminalConsole content={content} />
-      <ScrollHint label={content.ui.scrollHint} />
+      {isGradesPage ? (
+        <GradesPage content={content} activeGradeId={activeGradeId} />
+      ) : (
+        <>
+          <Hero
+            content={content}
+            language={language}
+            theme={theme}
+            onLanguageToggle={toggleLanguage}
+            onThemeToggle={toggleTheme}
+          />
+          <TerminalConsole
+            content={content}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
+          <ScrollHint label={content.ui.scrollHint} />
+        </>
+      )}
     </div>
   );
 }
