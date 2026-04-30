@@ -12,6 +12,20 @@ const initialForm = {
   message: '',
 };
 
+function getContactApiUrl() {
+  const configuredUrl = import.meta.env.VITE_CONTACT_API_URL;
+
+  if (
+    import.meta.env.PROD &&
+    configuredUrl &&
+    /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredUrl)
+  ) {
+    return '/api/contact';
+  }
+
+  return configuredUrl || '/api/contact';
+}
+
 export default function ContactTab({ data = {} }) {
   const links = data.contactLinks ?? contactLinks;
   const section = data.sections?.contact ?? {
@@ -23,7 +37,7 @@ export default function ContactTab({ data = {} }) {
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL || '/api/contact';
+  const contactApiUrl = getContactApiUrl();
 
   const updateField = (event) => {
     const { name, value } = event.target;
