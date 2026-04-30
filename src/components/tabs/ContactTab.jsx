@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { useState } from 'react';
-import { send } from '@emailjs/browser';
 import { contactLinks } from '../../data/portfolioData';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
@@ -24,20 +23,7 @@ export default function ContactTab({ data = {} }) {
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const emailConfig = {
-    apiUrl: import.meta.env.VITE_CONTACT_API_URL,
-    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-    toEmail: import.meta.env.VITE_CONTACT_TO_EMAIL,
-  };
-  const isBackendConfigured = Boolean(emailConfig.apiUrl);
-  const isEmailJsConfigured = Boolean(
-    emailConfig.serviceId &&
-      emailConfig.templateId &&
-      emailConfig.publicKey &&
-      emailConfig.toEmail,
-  );
+  const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL || '/api/contact';
 
   const updateField = (event) => {
     const { name, value } = event.target;
@@ -47,49 +33,25 @@ export default function ContactTab({ data = {} }) {
   const sendMessage = async (event) => {
     event.preventDefault();
 
-    if (!isBackendConfigured && !isEmailJsConfigured) {
-      setStatus({
-        type: 'error',
-        message:
-          'Email service is not configured yet. Add EmailJS values or VITE_CONTACT_API_URL to your .env file.',
-      });
-      return;
-    }
-
     setIsSubmitting(true);
     setStatus({ type: 'idle', message: '' });
 
     try {
-      if (isEmailJsConfigured) {
-        await send(
-          emailConfig.serviceId,
-          emailConfig.templateId,
-          {
-            from_name: form.name,
-            from_email: form.email,
-            subject: form.subject,
-            message: form.message,
-            to_email: emailConfig.toEmail,
-          },
-          emailConfig.publicKey,
-        );
-      } else {
-        const response = await fetch(emailConfig.apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            subject: form.subject,
-            message: form.message,
-          }),
-        });
+      const response = await fetch(contactApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
+      });
 
-        if (!response.ok) {
-          throw new Error('Email send failed');
-        }
+      if (!response.ok) {
+        throw new Error('Email send failed');
       }
 
       setForm(initialForm);
