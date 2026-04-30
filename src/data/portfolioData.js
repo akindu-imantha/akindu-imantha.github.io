@@ -617,68 +617,68 @@ const cleanSinhalaContent = {
     ...heroData,
     eyebrow: 'Full Stack Developer Portfolio',
     intro:
-      '?????????? web interfaces, backend presentation, ?? web/desktop application development ??? ?????? ??? Information Technology undergraduate ??????.',
-    primaryAction: { ...heroData.primaryAction, label: '?????? ?????' },
-    secondaryAction: { ...heroData.secondaryAction, label: 'CV ??????' },
+      'ප්‍රායෝගික web interfaces, backend presentation, සහ web/desktop application development ගැන අවධානය දෙන Information Technology undergraduate කෙනෙක්.',
+    primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
+    secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
     tertiaryAction: { ...heroData.tertiaryAction, label: 'GitHub' },
-    profileLabel: 'Profile ???????',
-    profileTitle: 'Online presentation ???? ????????, polish ?? ??? ???????? ?????',
+    profileLabel: 'Profile සාරාංශය',
+    profileTitle: 'Online presentation එකකට පැහැදිලි, polish කළ වැඩ නිර්මාණය කිරීම',
     profileText:
-      '??? ?????? academic IT study, graphic tools, web development foundations, ?? hands-on project work ??? ???? ?????.',
+      'මගේ පසුබිම academic IT study, graphic tools, web development foundations, සහ hands-on project work එකට එකතු වෙනවා.',
   },
   focusAreas: [
     'React portfolio interfaces',
     'Responsive web design',
     'C# desktop application development',
-    'HTML, CSS, JavaScript, ?? PHP',
+    'HTML, CSS, JavaScript, සහ PHP',
   ],
   aboutCards: [
     {
-      title: '??????? ?????',
+      title: 'වර්තමාන දිශාව',
       text:
-        'IT undergraduate ?????? ?????? practical software solutions, clear interfaces, ?? real user workflows ????? systems ???????? ??? ?????? ????.',
+        'IT undergraduate කෙනෙක් විදිහට practical software solutions, clear interfaces, සහ real user workflows විසඳන systems ගොඩනැගීම ගැන අවධානය දෙමි.',
     },
     {
-      title: '???????? ?????',
+      title: 'තාක්ෂණික පරාසය',
       text:
-        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, ?? MySQL ??? experience ??? ?????? ??.',
+        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, සහ MySQL මගේ experience එකට ඇතුළත් වේ.',
     },
     {
       title: 'Project approach',
       text:
-        '?? structured, usable, ?? present ????? ???? ??? ?????? ??? layout quality, clean workflows, ?? practical implementation ??? ?????? ????.',
+        'මම structured, usable, සහ present කරන්න පහසු වැඩ ගොඩනගන අතර layout quality, clean workflows, සහ practical implementation ගැන අවධානය දෙමි.',
     },
     {
-      title: '????? ???????',
+      title: 'වෙනත් ශක්තීන්',
       text:
-        'Coding ??? ????? graphic tools, documentation, ?? community project experience ??? technical execution ?? communication ??? ???? ??????.',
+        'Coding වලට අමතරව graphic tools, documentation, සහ community project experience මගේ technical execution සහ communication එකට සහාය දක්වයි.',
     },
   ],
   creativeProfile: {
     ...creativeProfile,
     title: 'Graphic design presence',
     text:
-      'Behance ???? ?? visual work publish ??? ??? layout-focused design pieces ?? creative presentation skills ??? ????? ???.',
-    link: { ...creativeProfile.link, label: 'Behance profile ?????' },
+      'Behance හරහා මම visual work publish කරන අතර layout-focused design pieces සහ creative presentation skills එහි දැකගත හැක.',
+    link: { ...creativeProfile.link, label: 'Behance profile බලන්න' },
   },
   education: [
     {
       ...education[0],
       text:
-        'First year diploma level ?? second year higher diploma level coursework ???? undergraduate level studies ???????? ?? ??.',
-      gradeButtonLabel: 'Moratuwa grades ?????',
+        'First year diploma level සහ second year higher diploma level coursework හරහා undergraduate level studies සම්පූර්ණ කර ඇත.',
+      gradeButtonLabel: 'Moratuwa grades බලන්න',
     },
     {
       ...education[1],
       text:
-        'Secure systems, networking, ?? practical information security foundations ??? ?????? ??? cyber security degree studies ?????? ????.',
-      gradeButtonLabel: 'SLTC grades ?????',
+        'Secure systems, networking, සහ practical information security foundations ගැන අවධානය දෙන cyber security degree studies කරමින් සිටී.',
+      gradeButtonLabel: 'SLTC grades බලන්න',
     },
     {
       ...education[2],
       text: [
-        'A/L 2022: Accounting, Business Studies, ?? ICT.',
-        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, ?? Civic Studies.',
+        'A/L 2022: Accounting, Business Studies, සහ ICT.',
+        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, සහ Civic Studies.',
       ],
     },
   ],
@@ -686,68 +686,68 @@ const cleanSinhalaContent = {
     {
       ...academicGrades[0],
       summary:
-        'Official results confirm ???? subjects ?? grades ???? ??????? ???.',
+        'Official results confirm කළාම subjects සහ grades මෙහි පෙන්විය හැක.',
     },
     {
       ...academicGrades[1],
       summary:
-        'Current degree modules in-progress ??? ??????, results release ?? ??? grades update ?????.',
+        'Current degree modules in-progress ලෙස පෙන්වා, results release වූ පසු grades update කරන්න.',
     },
     {
       ...academicGrades[2],
       summary:
-        'A/L subjects business knowledge ?? ICT background ?? ???????? useful ??.',
+        'A/L subjects business knowledge සහ ICT background එක පෙන්වීමට useful වේ.',
     },
     {
       ...academicGrades[3],
       summary:
-        'Main portfolio ?? clean ?????? O/L subjects detailed page ??? ??????? ???.',
+        'Main portfolio එක clean තබාගෙන O/L subjects detailed page එකේ පෙන්විය හැක.',
     },
   ],
   projects: [
     {
       ...projects[0],
-      category: '??????? project',
+      category: 'ප්‍රධාන project',
       description:
-        'E-waste collection, item tracking, ?? workflow management ???? operations-focused platform ????.',
-      statusText: 'Development ??????',
+        'E-waste collection, item tracking, සහ workflow management සඳහා operations-focused platform එකක්.',
+      statusText: 'Development වෙමින්',
     },
     {
       ...projects[1],
-      category: '??????? project',
+      category: 'ප්‍රධාන project',
       description:
-        'Patient registration, appointments, ?? medical record handling ???? desktop system ????.',
-      statusText: 'Demo ????',
-      previewLabel: 'Demo ?????',
+        'Patient registration, appointments, සහ medical record handling සඳහා desktop system එකක්.',
+      statusText: 'Demo තිබේ',
+      previewLabel: 'Demo බලන්න',
     },
     {
       ...projects[2],
-      category: '??????? project',
+      category: 'ප්‍රධාන project',
       description:
-        'Skills, project work, ?? experience ????????? ???????? responsive portfolio interface ????.',
+        'Skills, project work, සහ experience පැහැදිලිව පෙන්වීමට responsive portfolio interface එකක්.',
     },
     {
       ...projects[3],
       category: 'Supporting project',
       description:
-        'Parent updates ?? daily record tracking ???? attendance-focused school system ????.',
+        'Parent updates සහ daily record tracking සඳහා attendance-focused school system එකක්.',
     },
   ],
   experience: [
     {
       ...experience[0],
       text:
-        'Humanitarian cash transfer programme ???? ???? community-based nutrition promotion, monitoring, ?? capacity development ??? ???? ???.',
+        'Humanitarian cash transfer programme එකක් සඳහා community-based nutrition promotion, monitoring, සහ capacity development වලට සහාය විය.',
     },
     {
       ...experience[1],
       text:
-        'Sustainable projects ???? knowledge, skills, ?? collaboration ????????? British Council climate action programme ??? ?????? ???.',
+        'Sustainable projects සඳහා knowledge, skills, සහ collaboration ගොඩනැගීමට British Council climate action programme එකට සහභාගී විය.',
     },
   ],
   tabs: [
-    { ...tabs[0], label: '?? ???' },
-    { ...tabs[1], label: '?????????' },
+    { ...tabs[0], label: 'මා ගැන' },
+    { ...tabs[1], label: 'අධ්‍යාපනය' },
     { ...tabs[2], label: 'Skills' },
     { ...tabs[3], label: 'Projects' },
     { ...tabs[4], label: 'Experience' },
@@ -756,78 +756,78 @@ const cleanSinhalaContent = {
   sections: {
     about: {
       eyebrow: './about.sh',
-      title: 'Frontend development ??? ??? ?????? profile ????.',
+      title: 'Frontend development වලට වඩා පුළුල් profile එකක්.',
       text:
-        '??? ???? ??? academic path, technical range, project mindset, ?? study/community work ???? ??????? experience ???????.',
+        'මෙම කොටස මගේ academic path, technical range, project mindset, සහ study/community work හරහා ගොඩනැගූ experience පෙන්වයි.',
     },
     education: {
       eyebrow: './education.sh',
-      title: '???????? ??????',
+      title: 'අධ්‍යාපන පසුබිම',
       text:
-        'School qualifications, undergraduate IT learning, ?? completed courses/certifications ??? technical foundation ??? ???? ??????.',
+        'School qualifications, undergraduate IT learning, සහ completed courses/certifications මගේ technical foundation එකට සහාය දක්වයි.',
     },
     skills: {
       eyebrow: './skills.sh',
-      title: '???????? ?????????',
+      title: 'තාක්ෂණික හැකියාවන්',
       text:
-        'Development ?? creative work ???? ?? ?????? ??? technical skills, tools, ?? software ???? ???????.',
+        'Development සහ creative work සඳහා මම භාවිතා කරන technical skills, tools, සහ software මෙහි පෙන්වයි.',
     },
     projects: {
       eyebrow: './projects.sh',
-      title: '??????? ???',
+      title: 'තෝරාගත් වැඩ',
       text:
-        '???????? builds ?????? ??????, private ?? supporting work ???? layout ?????? ?????? ??.',
+        'ශක්තිමත් builds ඉහළින් පෙන්වා, private සහ supporting work වෙනම layout එකකින් පෙන්වා ඇත.',
     },
     experience: {
       eyebrow: './experience.sh',
-      title: 'Leadership ?? community involvement',
+      title: 'Leadership සහ community involvement',
       text:
-        'Communication ?? coordination skills ?????? ?? programme participation ?? field-based work ??? ??????? ?????? ??.',
+        'Communication සහ coordination skills වර්ධනය කළ programme participation සහ field-based work මගේ පසුබිමට ඇතුළත් වේ.',
     },
     contact: {
       eyebrow: './contact.sh',
-      title: '??????? ????',
-      text: 'Opportunities, collaboration, ?? portfolio discussions ???? ??????? ??? ???.',
+      title: 'සම්බන්ධ වන්න',
+      text: 'Opportunities, collaboration, සහ portfolio discussions සඳහා සම්බන්ධ විය හැක.',
     },
   },
   ui: {
     ...englishContent.ui,
-    terminal: '????????',
+    terminal: 'ටර්මිනල්',
     languageToggleLabel: 'Switch to English',
-    searchPlaceholder: "grep -i '??????...'",
-    searchLabel: 'Portfolio content ??????',
-    nowViewing: '???? ??????',
-    search: '?????',
+    searchPlaceholder: "grep -i 'සොයන්න...'",
+    searchLabel: 'Portfolio content සොයන්න',
+    nowViewing: 'දැනට බලන්නේ',
+    search: 'සෙවීම',
     searchResults: 'Search results',
-    noResults: '???????? ???',
-    noResultsText: '???? ?????? ??????? ??? ?????',
-    resultsFor: '????????',
-    resultsText: '??? search ??? ?????? ????? ????? ???? ??????.',
-    matchingSkills: '?????? Skills ?? Tools',
-    matchingProjects: '?????? Projects',
-    matchingExperience: '?????? Experience',
-    matchingLinks: '?????? Links',
-    more: '??',
-    scrollHint: '?? ????',
-    coursesTitle: 'Courses ?? certifications',
-    gradesButton: 'Subjects ?? grades ?????',
-    gradesBack: 'Portfolio ??? ????',
+    noResults: 'ප්‍රතිඵල නැත',
+    noResultsText: 'මෙයට ගැලපෙන කිසිවක් හමු නොවීය',
+    resultsFor: 'ප්‍රතිඵල',
+    resultsText: 'ඔබේ search එකට ගැලපෙන සියලු කොටස් මෙහි දැක්වේ.',
+    matchingSkills: 'ගැලපෙන Skills සහ Tools',
+    matchingProjects: 'ගැලපෙන Projects',
+    matchingExperience: 'ගැලපෙන Experience',
+    matchingLinks: 'ගැලපෙන Links',
+    more: 'තව',
+    scrollHint: 'තව පහළට',
+    coursesTitle: 'Courses සහ certifications',
+    gradesButton: 'Subjects සහ grades බලන්න',
+    gradesBack: 'Portfolio එකට ආපසු',
     gradesEyebrow: './grades.sh',
-    gradesTitle: 'Subjects ?? grades',
+    gradesTitle: 'Subjects සහ grades',
     gradesText:
-      'Main education section ?? crowd ????, visitors ?? completed subjects ?? results ????? ???? academic view ????.',
-    programmingTitle: 'Programming ?? web',
-    toolsTitle: 'Tools ?? creative software',
+      'Main education section එක crowd නොකර, visitors ලට completed subjects සහ results බලන්න වෙනම academic view එකක්.',
+    programmingTitle: 'Programming සහ web',
+    toolsTitle: 'Tools සහ creative software',
     creativeProfile: 'Creative profile',
     githubEyebrow: 'github activity',
-    githubProfileLink: 'GitHub ?????',
-    githubLoading: 'Latest GitHub activity load ??????...',
+    githubProfileLink: 'GitHub බලන්න',
+    githubLoading: 'Latest GitHub activity load වෙමින්...',
     githubUnavailable:
-      'Live GitHub contributions ???????? backend GitHub API settings configure ?? ??????.',
-    additionalWork: '???? ???',
-    supportingBuilds: 'Supporting ?? private builds',
+      'Live GitHub contributions පෙන්වීමට backend GitHub API settings configure කළ යුතුයි.',
+    additionalWork: 'අමතර වැඩ',
+    supportingBuilds: 'Supporting සහ private builds',
     supportingBuildsText:
-      '???? ?? non-public projects ???? group ?? ??? ???? main work ??? ???????? first impression ???? ????.',
+      'කුඩා හෝ non-public projects වෙනම group කර ඇති නිසා main work එකට පැහැදිලි first impression එකක් ලැබේ.',
   },
 };
 
