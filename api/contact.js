@@ -31,6 +31,18 @@ function clean(value) {
   return String(value ?? '').trim();
 }
 
+function getEmailErrorMessage(error) {
+  if (error?.code === 'EAUTH') {
+    return 'Gmail SMTP authentication failed. Check SMTP_USER and SMTP_PASS in Vercel.';
+  }
+
+  if (error?.code === 'ECONNECTION' || error?.code === 'ETIMEDOUT') {
+    return 'Email server connection failed. Please try again shortly.';
+  }
+
+  return 'Email could not be sent.';
+}
+
 export default async function handler(request, response) {
   setCorsHeaders(request, response);
 
@@ -89,6 +101,6 @@ export default async function handler(request, response) {
     sendJson(response, 200, { ok: true });
   } catch (error) {
     console.error('Email send failed:', error);
-    sendJson(response, 500, { message: 'Email could not be sent.' });
+    sendJson(response, 500, { message: getEmailErrorMessage(error) });
   }
 }

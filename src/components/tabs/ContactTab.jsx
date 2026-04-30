@@ -65,15 +65,19 @@ export default function ContactTab({ data = {} }) {
       });
 
       if (!response.ok) {
-        throw new Error('Email send failed');
+        const errorPayload = await response.json().catch(() => null);
+        throw new Error(errorPayload?.message || 'Email send failed');
       }
 
       setForm(initialForm);
       setStatus({ type: 'success', message: 'Message sent successfully.' });
-    } catch {
+    } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Message could not be sent. Please try again or email me directly.',
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Message could not be sent. Please try again or email me directly.',
       });
     } finally {
       setIsSubmitting(false);
