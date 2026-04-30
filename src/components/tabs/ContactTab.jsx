@@ -65,8 +65,19 @@ export default function ContactTab({ data = {} }) {
       });
 
       if (!response.ok) {
-        const errorPayload = await response.json().catch(() => null);
-        throw new Error(errorPayload?.message || 'Email send failed');
+        const responseText = await response.text();
+        let errorMessage = `Contact API failed (${response.status})`;
+
+        try {
+          const errorPayload = JSON.parse(responseText);
+          errorMessage = errorPayload?.message || errorMessage;
+        } catch {
+          if (responseText) {
+            errorMessage = `${errorMessage}: ${responseText.slice(0, 120)}`;
+          }
+        }
+
+        throw new Error(errorMessage);
       }
 
       setForm(initialForm);
