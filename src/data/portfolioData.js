@@ -110,7 +110,7 @@ export const education = [
   {
     title: 'Bachelor of Science Honours in Cyber Security',
     subtitle: 'Sri Lanka Technology Campus',
-    text: 'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations. Semester 1 is complete and official results will be added once available.',
+    text: 'Currently pursuing cyber security degree studies with focus on secure systems, networking, and practical information security foundations. Level 1 Semester 1 results are published in the grades section.',
     logo: './images/education/sltc-crest.png',
     logoAlt: 'SLTC logo',
     gradeLink: '#grades-sltc',
@@ -256,9 +256,9 @@ export const academicGrades = [
         title: 'Level 1 Semester 1',
         subjects: [
           { code: 'CCS1300', name: 'Programming Concepts', grade: 'A', credits: 3 },
-          { code: 'CCS1301', name: 'Computer Systems', grade: 'A-', credits: 3 },
+          { code: 'CCS1301', name: 'Computer Systems', grade: 'A+', credits: 3 },
           { code: 'CCS1302', name: 'Internet Technologies', grade: 'A', credits: 3 },
-          { code: 'CCS1311', name: 'Mathematics for Computing (with Programming)', grade: 'B-', credits: 4 },
+          { code: 'CCS1311', name: 'Mathematics for Computing (with Programming)', grade: 'A-', credits: 4 },
           { code: 'SMA0302', name: 'Introductory Calculus', grade: 'A', credits: 3 },
         ],
       },
