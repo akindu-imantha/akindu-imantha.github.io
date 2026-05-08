@@ -3,10 +3,13 @@ import nodemailer from 'nodemailer';
 const requiredEnv = ['SMTP_USER', 'SMTP_PASS', 'CONTACT_TO_EMAIL'];
 
 function setCorsHeaders(request, response) {
-  const allowedOrigin = process.env.CORS_ORIGIN;
+  const allowedOrigins = String(process.env.CORS_ORIGIN ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
   const origin = request.headers.origin;
 
-  if (!allowedOrigin || !origin || origin !== allowedOrigin) {
+  if (!origin || !allowedOrigins.includes(origin)) {
     return;
   }
 

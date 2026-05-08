@@ -12,7 +12,10 @@ import {
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
 
-const allowedOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
+const allowedOrigin = (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(cors({ origin: allowedOrigin }));
 app.use(express.json({ limit: '20kb' }));
