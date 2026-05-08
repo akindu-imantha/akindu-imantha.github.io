@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
+import AnalyticsPage from './components/AnalyticsPage';
 import GradesPage from './components/GradesPage';
 import Hero from './components/Hero';
 import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
+import { trackPageView } from './utils/analytics';
 
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
@@ -14,6 +16,7 @@ function App() {
   );
   const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
   const isGradesPage = currentHash.startsWith('#grades');
+  const isAnalyticsPage = currentHash.startsWith('#analytics');
   const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
 
   useEffect(() => {
@@ -40,6 +43,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    trackPageView(window.location.pathname + currentHash);
+  }, [currentHash]);
+
+  useEffect(() => {
     if (currentHash === '#console') {
       requestAnimationFrame(() => {
         const consoleElement = document.getElementById('console');
@@ -62,7 +69,9 @@ function App() {
 
   return (
     <div className="page-shell">
-      {isGradesPage ? (
+      {isAnalyticsPage ? (
+        <AnalyticsPage />
+      ) : isGradesPage ? (
         <GradesPage content={content} activeGradeId={activeGradeId} />
       ) : (
         <>

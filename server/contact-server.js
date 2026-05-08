@@ -2,6 +2,12 @@ import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import nodemailer from 'nodemailer';
+import {
+  getAnalyticsSummary,
+  hasValidAnalyticsToken,
+  isAnalyticsConfigured,
+  recordAnalyticsVisit,
+} from './analytics-store.js';
 
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
@@ -28,6 +34,39 @@ function clean(value) {
 
 app.get('/api/health', (_request, response) => {
   response.json({ ok: true });
+});
+
+app.get('/api/analytics', async (request, response) => {
+  if (!isAnalyticsConfigured()) {
+    response.status(503).json({ message: 'Analytics storage is not configured.' });
+    return;
+  }
+
+  if (!hasValidAnalyticsToken(request)) {
+    response.status(401).json({ message: 'Analytics token is required.' });
+    return;
+  }
+
+  try {
+    response.json(await getAnalyticsSummary());
+  } catch (error) {
+    console.error('Analytics summary failed:', error);
+    response.status(500).json({ message: 'Analytics request failed.' });
+  }
+});
+
+app.post('/api/analytics', async (request, response) => {
+  if (!isAnalyticsConfigured()) {
+    response.status(503).json({ message: 'Analytics storage is not configured.' });
+    return;
+  }
+
+  try {
+    response.json(await recordAnalyticsVisit(request, request.body));
+  } catch (error) {
+    console.error('Analytics tracking failed:', error);
+    response.status(500).json({ message: 'Analytics request failed.' });
+  }
 });
 
 app.get('/api/github/contributions', async (request, response) => {
