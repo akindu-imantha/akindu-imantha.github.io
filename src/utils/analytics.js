@@ -1,6 +1,6 @@
 const VISITOR_ID_KEY = 'portfolio-visitor-id';
 const VISITOR_SEEN_KEY = 'portfolio-visitor-seen';
-const DEFAULT_ENDPOINT = '/api/analytics';
+const DEFAULT_ENDPOINT = 'https://akindu-portfolio-api.vercel.app/api/analytics';
 
 function getAnalyticsEndpoint() {
   return import.meta.env.VITE_ANALYTICS_API_URL || DEFAULT_ENDPOINT;
