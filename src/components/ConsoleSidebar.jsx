@@ -13,6 +13,24 @@ export default function ConsoleSidebar({
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [showMobileTabbar, setShowMobileTabbar] = useState(false);
   const activeTabData = tabs.find((tab) => tab.id === activeTab);
+  const scrollConsoleIntoView = () => {
+    const consoleElement = document.getElementById('console');
+
+    if (!consoleElement) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    consoleElement.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  };
+
+  const handleMobileTabChange = (tabId) => {
+    onTabChange(tabId);
+    requestAnimationFrame(scrollConsoleIntoView);
+  };
 
   useEffect(() => {
     const listElement = listRef.current;
@@ -131,7 +149,7 @@ export default function ConsoleSidebar({
                 key={tab.id}
                 type="button"
                 className={`mobile-tabbar-btn ${activeTab === tab.id && !searchQuery ? 'active' : ''}`}
-                onClick={() => onTabChange(tab.id)}
+                onClick={() => handleMobileTabChange(tab.id)}
                 aria-label={tab.label}
                 aria-current={activeTab === tab.id && !searchQuery ? 'page' : undefined}
               >
