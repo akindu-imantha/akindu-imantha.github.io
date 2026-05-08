@@ -36,18 +36,18 @@ function sendAnalyticsPayload(payload) {
   const endpoint = getAnalyticsEndpoint();
   const body = JSON.stringify(payload);
 
-  if (navigator.sendBeacon) {
-    const blob = new Blob([body], { type: 'application/json' });
-    navigator.sendBeacon(endpoint, blob);
-    return;
-  }
-
   fetch(endpoint, {
     method: 'POST',
+    mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
     body,
     keepalive: true,
-  }).catch(() => {});
+  }).catch(() => {
+    if (navigator.sendBeacon) {
+      const blob = new Blob([body], { type: 'application/json' });
+      navigator.sendBeacon(endpoint, blob);
+    }
+  });
 }
 
 export function trackPageView(path = window.location.pathname + window.location.hash) {
