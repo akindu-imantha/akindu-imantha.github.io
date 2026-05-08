@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import nodemailer from 'nodemailer';
 import {
+  clearAnalyticsSummary,
   getAnalyticsSummary,
   hasValidAnalyticsToken,
   isAnalyticsConfigured,
@@ -68,6 +69,25 @@ app.post('/api/analytics', async (request, response) => {
     response.json(await recordAnalyticsVisit(request, request.body));
   } catch (error) {
     console.error('Analytics tracking failed:', error);
+    response.status(500).json({ message: 'Analytics request failed.' });
+  }
+});
+
+app.delete('/api/analytics', async (request, response) => {
+  if (!isAnalyticsConfigured()) {
+    response.status(503).json({ message: 'Analytics storage is not configured.' });
+    return;
+  }
+
+  if (!hasValidAnalyticsToken(request)) {
+    response.status(401).json({ message: 'Analytics token is required.' });
+    return;
+  }
+
+  try {
+    response.json(await clearAnalyticsSummary());
+  } catch (error) {
+    console.error('Analytics clear failed:', error);
     response.status(500).json({ message: 'Analytics request failed.' });
   }
 });

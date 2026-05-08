@@ -1,4 +1,5 @@
 import {
+  clearAnalyticsSummary,
   getAnalyticsSummary,
   hasValidAnalyticsToken,
   isAnalyticsConfigured,
@@ -17,7 +18,7 @@ function setCorsHeaders(request, response) {
   }
 
   response.setHeader('Access-Control-Allow-Origin', origin);
-  response.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  response.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
   response.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Analytics-Token');
 }
 
@@ -53,6 +54,17 @@ export default async function handler(request, response) {
 
       const summary = await getAnalyticsSummary();
       sendJson(response, 200, summary);
+      return;
+    }
+
+    if (request.method === 'DELETE') {
+      if (!hasValidAnalyticsToken(request)) {
+        sendJson(response, 401, { message: 'Analytics token is required.' });
+        return;
+      }
+
+      const result = await clearAnalyticsSummary();
+      sendJson(response, 200, result);
       return;
     }
 

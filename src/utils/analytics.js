@@ -141,3 +141,20 @@ export async function fetchAnalyticsSummary(token) {
 
   return data;
 }
+
+export async function clearAnalyticsSummary(token) {
+  const response = await fetch(getAnalyticsEndpoint(), {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Analytics could not be cleared.');
+  }
+
+  return data;
+}

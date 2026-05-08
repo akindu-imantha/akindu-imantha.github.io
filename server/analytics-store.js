@@ -262,6 +262,29 @@ export async function getAnalyticsSummary() {
   };
 }
 
+export async function clearAnalyticsSummary() {
+  await redisPipeline([
+    ['DEL', 'analytics:pageviews:total'],
+    ['DEL', 'analytics:visitors:all'],
+    ['DEL', 'analytics:pageviews:by-day'],
+    ['DEL', 'analytics:pageviews:by-path'],
+    ['DEL', 'analytics:devices'],
+    ['DEL', 'analytics:browsers'],
+    ['DEL', 'analytics:os'],
+    ['DEL', 'analytics:countries'],
+    ['DEL', 'analytics:recent'],
+    ['DEL', 'analytics:events:total'],
+    ['DEL', 'analytics:events:by-name'],
+    ['DEL', 'analytics:events:by-label'],
+    ['DEL', 'analytics:events:by-day'],
+    ['DEL', 'analytics:time:seconds:total'],
+    ['DEL', 'analytics:time:seconds:by-path'],
+    ['DEL', 'analytics:returning:all'],
+  ]);
+
+  return { ok: true };
+}
+
 export function hasValidAnalyticsToken(request) {
   const adminToken = process.env.ANALYTICS_ADMIN_TOKEN;
 

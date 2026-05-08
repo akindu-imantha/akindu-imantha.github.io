@@ -2054,6 +2054,21 @@ a {
   cursor: pointer;
 }
 
+.analytics-clear {
+  border-color: rgba(248, 113, 113, 0.28);
+  color: #fecaca;
+  cursor: pointer;
+}
+
+.analytics-clear:hover {
+  border-color: rgba(248, 113, 113, 0.42);
+  background: rgba(248, 113, 113, 0.12);
+}
+
+[data-theme='light'] .analytics-clear {
+  color: #b91c1c;
+}
+
 .analytics-state {
   margin: 0;
   padding: 0.9rem 1rem;
@@ -2728,7 +2743,8 @@ a {
   }
 
   .analytics-auth .primary-button,
-  .analytics-refresh {
+  .analytics-refresh,
+  .analytics-clear {
     width: 100%;
   }
 

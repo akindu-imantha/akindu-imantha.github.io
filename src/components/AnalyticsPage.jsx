@@ -1,6 +1,6 @@
 import { BarChart3, Clock3, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { fetchAnalyticsSummary } from '../utils/analytics';
+import { clearAnalyticsSummary, fetchAnalyticsSummary } from '../utils/analytics';
 
 const TOKEN_KEY = 'portfolio-analytics-token';
 
@@ -103,6 +103,28 @@ export default function AnalyticsPage() {
     loadSummary(nextToken);
   };
 
+  const handleClear = async () => {
+    if (!token) {
+      setStatus('locked');
+      return;
+    }
+
+    const shouldClear = window.confirm('Clear all analytics data? This cannot be undone.');
+
+    if (!shouldClear) return;
+
+    setStatus('loading');
+    setError('');
+
+    try {
+      await clearAnalyticsSummary(token);
+      await loadSummary(token);
+    } catch (clearError) {
+      setError(clearError.message);
+      setStatus('error');
+    }
+  };
+
   return (
     <main className="analytics-page">
       <header className="analytics-header">
@@ -134,6 +156,9 @@ export default function AnalyticsPage() {
         <button type="button" className="secondary-button analytics-refresh" onClick={() => loadSummary()}>
           <RefreshCw size={16} />
           <span>Refresh</span>
+        </button>
+        <button type="button" className="secondary-button analytics-clear" onClick={handleClear}>
+          Clear
         </button>
       </form>
 
