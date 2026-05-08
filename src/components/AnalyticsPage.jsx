@@ -1,4 +1,4 @@
-import { BarChart3, Lock, MonitorSmartphone, RefreshCw, Users } from 'lucide-react';
+import { BarChart3, Clock3, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { fetchAnalyticsSummary } from '../utils/analytics';
 
@@ -46,6 +46,16 @@ function formatTime(value) {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value));
+}
+
+function formatDuration(seconds = 0) {
+  const totalSeconds = Number(seconds) || 0;
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = totalSeconds % 60;
+
+  if (minutes <= 0) return `${remainingSeconds}s`;
+
+  return `${minutes}m ${remainingSeconds}s`;
 }
 
 export default function AnalyticsPage() {
@@ -136,9 +146,15 @@ export default function AnalyticsPage() {
             <MetricCard icon={BarChart3} label="Total page views" value={summary.totalPageviews} />
             <MetricCard icon={Users} label="Unique visitors" value={summary.uniqueVisitors} />
             <MetricCard icon={MonitorSmartphone} label="Today views" value={latestDayCount} />
+            <MetricCard icon={Repeat2} label="Returning visitors" value={summary.returningVisitors ?? 0} />
+            <MetricCard icon={MousePointerClick} label="Tracked events" value={summary.totalEvents ?? 0} />
+            <MetricCard icon={Clock3} label="Total time" value={formatDuration(summary.totalTimeSeconds)} />
           </section>
 
           <section className="analytics-grid">
+            <RankingList title="Event types" items={summary.events} />
+            <RankingList title="Event details" items={summary.eventDetails} />
+            <RankingList title="Time by page" items={summary.timeByPage} />
             <RankingList title="Top pages" items={summary.topPages} />
             <RankingList title="Devices" items={summary.devices} />
             <RankingList title="Browsers" items={summary.browsers} />

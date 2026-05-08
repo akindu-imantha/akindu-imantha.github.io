@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Github, Globe2, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
+import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
@@ -26,7 +27,9 @@ export default function Hero({
       >
         <div className="brand">Akindu Imantha</div>
         <div className="nav-links">
-          <a href="#console">{ui.terminal ?? 'Terminal'}</a>
+          <a href="#console" onClick={() => trackEvent('nav_click', { label: 'Terminal' })}>
+            {ui.terminal ?? 'Terminal'}
+          </a>
           <button
             type="button"
             className="nav-toggle"
@@ -72,10 +75,18 @@ export default function Hero({
           </motion.div>
 
           <motion.div variants={fadeInUp} className="hero-actions">
-            <a href={hero.primaryAction.href} className="primary-button">
+            <a
+              href={hero.primaryAction.href}
+              className="primary-button"
+              onClick={() => trackEvent('hero_action_click', { label: hero.primaryAction.label })}
+            >
               {hero.primaryAction.label}
             </a>
-            <a href={hero.secondaryAction.href} className="secondary-button">
+            <a
+              href={hero.secondaryAction.href}
+              className="secondary-button"
+              onClick={() => trackEvent('cv_download', { label: hero.secondaryAction.href })}
+            >
               {hero.secondaryAction.label}
             </a>
             {hero.tertiaryAction ? (
@@ -84,6 +95,7 @@ export default function Hero({
                 className="secondary-button icon-button-link"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('external_link_click', { label: hero.tertiaryAction.href })}
               >
                 <Github size={18} />
                 <span>{hero.tertiaryAction.label}</span>

@@ -1,4 +1,5 @@
 const VISITOR_ID_KEY = 'portfolio-visitor-id';
+const VISITOR_SEEN_KEY = 'portfolio-visitor-seen';
 const DEFAULT_ENDPOINT = '/api/analytics';
 
 function getAnalyticsEndpoint() {
@@ -15,6 +16,12 @@ function getVisitorId() {
   return id;
 }
 
+function isReturningVisitor() {
+  const hasSeenBefore = localStorage.getItem(VISITOR_SEEN_KEY) === 'true';
+  localStorage.setItem(VISITOR_SEEN_KEY, 'true');
+  return hasSeenBefore;
+}
+
 function getDeviceType() {
   const width = window.screen?.width ?? window.innerWidth;
   const hasTouch = navigator.maxTouchPoints > 0;
@@ -25,21 +32,8 @@ function getDeviceType() {
   return 'desktop';
 }
 
-export function trackPageView(path = window.location.pathname + window.location.hash) {
-  if (path.startsWith('/#analytics') || window.location.hash.startsWith('#analytics')) {
-    return;
-  }
-
+function sendAnalyticsPayload(payload) {
   const endpoint = getAnalyticsEndpoint();
-  const payload = {
-    visitorId: getVisitorId(),
-    path,
-    referrer: document.referrer,
-    language: navigator.language,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    device: getDeviceType(),
-    screen: `${window.screen?.width ?? 0}x${window.screen?.height ?? 0}`,
-  };
   const body = JSON.stringify(payload);
 
   if (navigator.sendBeacon) {
@@ -54,6 +48,82 @@ export function trackPageView(path = window.location.pathname + window.location.
     body,
     keepalive: true,
   }).catch(() => {});
+}
+
+export function trackPageView(path = window.location.pathname + window.location.hash) {
+  if (path.startsWith('/#analytics') || window.location.hash.startsWith('#analytics')) {
+    return;
+  }
+
+  const payload = {
+    visitorId: getVisitorId(),
+    isReturning: isReturningVisitor(),
+    path,
+    referrer: document.referrer,
+    language: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    device: getDeviceType(),
+    screen: `${window.screen?.width ?? 0}x${window.screen?.height ?? 0}`,
+  };
+
+  sendAnalyticsPayload(payload);
+}
+
+export function trackEvent(eventName, details = {}) {
+  if (window.location.hash.startsWith('#analytics')) {
+    return;
+  }
+
+  sendAnalyticsPayload({
+    type: 'event',
+    visitorId: getVisitorId(),
+    isReturning: localStorage.getItem(VISITOR_SEEN_KEY) === 'true',
+    eventName,
+    path: window.location.pathname + window.location.hash,
+    label: details.label,
+    value: details.value,
+    referrer: document.referrer,
+    language: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    device: getDeviceType(),
+  });
+}
+
+export function startTimeOnPageTracking() {
+  let startedAt = Date.now();
+  let lastPath = window.location.pathname + window.location.hash;
+
+  const flush = () => {
+    const seconds = Math.round((Date.now() - startedAt) / 1000);
+
+    if (seconds >= 3) {
+      trackEvent('time_on_page', {
+        label: lastPath,
+        value: seconds,
+      });
+    }
+
+    startedAt = Date.now();
+    lastPath = window.location.pathname + window.location.hash;
+  };
+
+  const handleVisibility = () => {
+    if (document.visibilityState === 'hidden') {
+      flush();
+    } else {
+      startedAt = Date.now();
+      lastPath = window.location.pathname + window.location.hash;
+    }
+  };
+
+  window.addEventListener('pagehide', flush);
+  document.addEventListener('visibilitychange', handleVisibility);
+
+  return () => {
+    flush();
+    window.removeEventListener('pagehide', flush);
+    document.removeEventListener('visibilitychange', handleVisibility);
+  };
 }
 
 export async function fetchAnalyticsSummary(token) {

@@ -1,3 +1,5 @@
+import { trackEvent } from '../utils/analytics';
+
 function getProjectActions(project) {
   if (project.actions?.length) {
     return project.actions;
@@ -50,6 +52,7 @@ export default function ProjectCard({
           target="_blank"
           rel="noreferrer"
           aria-label={`${project.title} demo preview`}
+          onClick={() => trackEvent('project_preview_click', { label: project.title })}
         >
           <img
             src={project.previewImage}
@@ -87,6 +90,11 @@ export default function ProjectCard({
                 href={action.href}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  trackEvent('project_link_click', {
+                    label: `${project.title} - ${action.label}`,
+                  })
+                }
               >
                 {action.label}
               </a>

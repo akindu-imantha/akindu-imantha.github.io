@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
-import { trackPageView } from './utils/analytics';
+import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
 
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
@@ -45,6 +45,8 @@ function App() {
   useEffect(() => {
     trackPageView(window.location.pathname + currentHash);
   }, [currentHash]);
+
+  useEffect(() => startTimeOnPageTracking(), []);
 
   useEffect(() => {
     if (currentHash === '#console') {

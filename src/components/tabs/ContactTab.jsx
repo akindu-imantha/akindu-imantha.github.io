@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { contactLinks } from '../../data/portfolioData';
+import { trackEvent } from '../../utils/analytics';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -49,6 +50,7 @@ export default function ContactTab({ data = {} }) {
 
     setIsSubmitting(true);
     setStatus({ type: 'idle', message: '' });
+    trackEvent('contact_form_submit', { label: form.subject || 'No subject' });
 
     try {
       const response = await fetch(contactApiUrl, {
@@ -82,7 +84,9 @@ export default function ContactTab({ data = {} }) {
 
       setForm(initialForm);
       setStatus({ type: 'success', message: 'Message sent successfully.' });
+      trackEvent('contact_form_success', { label: form.subject || 'No subject' });
     } catch (error) {
+      trackEvent('contact_form_error', { label: form.subject || 'No subject' });
       setStatus({
         type: 'error',
         message:
@@ -125,6 +129,7 @@ export default function ContactTab({ data = {} }) {
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noreferrer' : undefined}
                 className="contact-link-item"
+                onClick={() => trackEvent('contact_link_click', { label: item.href })}
               >
                 <Icon size={20} /> {item.label}
               </a>

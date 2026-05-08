@@ -23,6 +23,14 @@ function clampText(value, maxLength = 180) {
   return clean(value).slice(0, maxLength);
 }
 
+function clampNumber(value, min = 0, max = 86400) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) return min;
+
+  return Math.min(Math.max(Math.round(number), min), max);
+}
+
 function getRequestIp(request) {
   const forwardedFor = request.headers['x-forwarded-for'];
   const firstForwardedIp = Array.isArray(forwardedFor)
@@ -133,10 +141,16 @@ export async function recordAnalyticsVisit(request, payload = {}) {
   const ipHash = hashValue(getRequestIp(request));
   const visitorId = hashValue(clean(payload.visitorId, ipHash));
   const path = clampText(payload.path ?? '/');
+  const eventType = clampText(payload.type, 40);
+  const eventName = clampText(payload.eventName, 80);
+  const eventLabel = clampText(payload.label, 180);
+  const eventValue = clampNumber(payload.value);
   const device = normalizeDevice(payload.device, userAgent);
   const browser = detectBrowser(userAgent);
   const os = detectOs(userAgent);
   const country = clean(request.headers['x-vercel-ip-country'] ?? request.headers['cf-ipcountry'], 'Unknown');
+  const isEvent = eventType === 'event';
+  const isReturningVisitor = payload.isReturning === true;
 
   const recentVisit = {
     at: now.toISOString(),
@@ -150,19 +164,48 @@ export async function recordAnalyticsVisit(request, payload = {}) {
     referrer: clampText(payload.referrer, 220),
   };
 
-  await redisPipeline([
-    ['INCR', 'analytics:pageviews:total'],
+  const commands = [
     ['PFADD', 'analytics:visitors:all', visitorId],
     ['PFADD', `analytics:visitors:${day}`, visitorId],
-    ['HINCRBY', 'analytics:pageviews:by-day', day, 1],
-    ['HINCRBY', 'analytics:pageviews:by-path', path, 1],
-    ['HINCRBY', 'analytics:devices', device, 1],
-    ['HINCRBY', 'analytics:browsers', browser, 1],
-    ['HINCRBY', 'analytics:os', os, 1],
-    ['HINCRBY', 'analytics:countries', country, 1],
-    ['LPUSH', 'analytics:recent', JSON.stringify(recentVisit)],
-    ['LTRIM', 'analytics:recent', 0, MAX_RECENT_VISITS - 1],
-  ]);
+  ];
+
+  if (isReturningVisitor) {
+    commands.push(['PFADD', 'analytics:returning:all', visitorId]);
+  }
+
+  if (isEvent) {
+    const name = eventName || 'unknown_event';
+    const label = eventLabel || path;
+    const combinedEvent = `${name}: ${label}`.slice(0, 220);
+
+    commands.push(
+      ['INCR', 'analytics:events:total'],
+      ['HINCRBY', 'analytics:events:by-name', name, 1],
+      ['HINCRBY', 'analytics:events:by-label', combinedEvent, 1],
+      ['HINCRBY', 'analytics:events:by-day', day, 1],
+    );
+
+    if (name === 'time_on_page') {
+      commands.push(
+        ['HINCRBY', 'analytics:time:seconds:total', 'value', eventValue],
+        ['HINCRBY', 'analytics:time:seconds:by-path', path, eventValue],
+      );
+    }
+  } else {
+    commands.push(
+      ['INCR', 'analytics:pageviews:total'],
+      ['HINCRBY', 'analytics:pageviews:by-day', day, 1],
+      ['HINCRBY', 'analytics:pageviews:by-path', path, 1],
+      ['HINCRBY', 'analytics:devices', device, 1],
+      ['HINCRBY', 'analytics:browsers', browser, 1],
+      ['HINCRBY', 'analytics:os', os, 1],
+      ['HINCRBY', 'analytics:countries', country, 1],
+      ['LPUSH', 'analytics:recent', JSON.stringify(recentVisit)],
+      ['LTRIM', 'analytics:recent', 0, MAX_RECENT_VISITS - 1],
+    );
+  }
+
+  await redisPipeline(commands);
 
   return { ok: true };
 }
@@ -178,6 +221,12 @@ export async function getAnalyticsSummary() {
     ['HGETALL', 'analytics:os'],
     ['HGETALL', 'analytics:countries'],
     ['LRANGE', 'analytics:recent', 0, MAX_RECENT_VISITS - 1],
+    ['GET', 'analytics:events:total'],
+    ['HGETALL', 'analytics:events:by-name'],
+    ['HGETALL', 'analytics:events:by-label'],
+    ['HGETALL', 'analytics:time:seconds:total'],
+    ['HGETALL', 'analytics:time:seconds:by-path'],
+    ['PFCOUNT', 'analytics:returning:all'],
   ]);
 
   const days = toObject(results[2]?.result);
@@ -194,6 +243,9 @@ export async function getAnalyticsSummary() {
   return {
     totalPageviews: Number(results[0]?.result) || 0,
     uniqueVisitors: Number(results[1]?.result) || 0,
+    returningVisitors: Number(results[14]?.result) || 0,
+    totalEvents: Number(results[9]?.result) || 0,
+    totalTimeSeconds: Number(toObject(results[12]?.result).value) || 0,
     daily: Object.entries(days)
       .sort(([left], [right]) => left.localeCompare(right))
       .slice(-14)
@@ -203,6 +255,9 @@ export async function getAnalyticsSummary() {
     browsers: topEntries(toObject(results[5]?.result)),
     operatingSystems: topEntries(toObject(results[6]?.result)),
     countries: topEntries(toObject(results[7]?.result)),
+    events: topEntries(toObject(results[10]?.result), 12),
+    eventDetails: topEntries(toObject(results[11]?.result), 14),
+    timeByPage: topEntries(toObject(results[13]?.result), 10),
     recent,
   };
 }
