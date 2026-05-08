@@ -285,6 +285,31 @@ a {
     background 180ms ease;
 }
 
+.nav-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.nav-icon-link:hover {
+  color: var(--heading-color);
+  border-color: rgba(139, 92, 246, 0.28);
+  background: rgba(139, 92, 246, 0.1);
+  transform: translateY(-1px);
+}
+
 .nav-toggle:hover {
   color: var(--heading-color);
   border-color: rgba(139, 92, 246, 0.28);

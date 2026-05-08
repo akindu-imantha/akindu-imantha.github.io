@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Globe2, Moon, Sun } from 'lucide-react';
+import { BarChart3, Github, Globe2, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
 import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
@@ -29,6 +29,14 @@ export default function Hero({
         <div className="nav-links">
           <a href="#console" onClick={() => trackEvent('nav_click', { label: 'Terminal' })}>
             {ui.terminal ?? 'Terminal'}
+          </a>
+          <a
+            href="#analytics"
+            className="nav-icon-link"
+            aria-label="Open analytics dashboard"
+            title="Analytics"
+          >
+            <BarChart3 size={16} />
           </a>
           <button
             type="button"
