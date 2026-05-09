@@ -13,10 +13,18 @@ import {
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
 
-const allowedOrigin = (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+const defaultAllowedOrigins = [
+  'http://localhost:5173',
+  'https://akindu-imantha.github.io',
+];
+
+const allowedOrigin = [
+  ...defaultAllowedOrigins,
+  ...(process.env.CORS_ORIGIN ?? '')
   .split(',')
   .map((origin) => origin.trim())
-  .filter(Boolean);
+  .filter(Boolean),
+].filter((origin, index, origins) => origins.indexOf(origin) === index);
 
 app.use(cors({ origin: allowedOrigin }));
 app.use(express.json({ limit: '20kb' }));
