@@ -86,6 +86,53 @@ function normalizeDevice(device, userAgent) {
   return 'Desktop';
 }
 
+function detectTrafficSource(userAgent, payload = {}) {
+  const value = clean(userAgent, '').toLowerCase();
+  const knownAiAgents = [
+    ['GPTBot', /gptbot/],
+    ['ChatGPT-User', /chatgpt-user/],
+    ['OpenAI SearchBot', /oai-searchbot|searchbot/],
+    ['ClaudeBot', /claudebot|anthropic-ai/],
+    ['PerplexityBot', /perplexitybot/],
+    ['Google-Extended', /google-extended/],
+    ['Bytespider', /bytespider/],
+    ['CCBot', /ccbot/],
+    ['YouBot', /youbot/],
+    ['Meta AI', /meta-externalagent|facebookexternalhit/],
+  ];
+  const matchedAiAgent = knownAiAgents.find(([, pattern]) => pattern.test(value));
+
+  if (matchedAiAgent) {
+    return {
+      type: 'Known AI crawler',
+      agent: matchedAiAgent[0],
+      confidence: 'high',
+    };
+  }
+
+  if (/bot|crawler|spider|scraper|slurp|wget|curl|python-requests|headless|phantom|selenium|puppeteer|playwright/.test(value)) {
+    return {
+      type: 'Bot',
+      agent: detectBrowser(userAgent),
+      confidence: 'medium',
+    };
+  }
+
+  if (!value || payload.webdriver === true) {
+    return {
+      type: 'Suspicious',
+      agent: payload.webdriver === true ? 'Browser automation' : 'Missing user agent',
+      confidence: 'low',
+    };
+  }
+
+  return {
+    type: 'Human',
+    agent: detectBrowser(userAgent),
+    confidence: 'medium',
+  };
+}
+
 function toObject(hashResult) {
   if (hashResult && typeof hashResult === 'object' && !Array.isArray(hashResult)) {
     return Object.fromEntries(
@@ -148,6 +195,7 @@ export async function recordAnalyticsVisit(request, payload = {}) {
   const device = normalizeDevice(payload.device, userAgent);
   const browser = detectBrowser(userAgent);
   const os = detectOs(userAgent);
+  const trafficSource = detectTrafficSource(userAgent, payload);
   const country = clean(request.headers['x-vercel-ip-country'] ?? request.headers['cf-ipcountry'], 'Unknown');
   const isEvent = eventType === 'event';
   const isReturningVisitor = payload.isReturning === true;
@@ -162,12 +210,22 @@ export async function recordAnalyticsVisit(request, payload = {}) {
     language: clampText(payload.language, 40),
     timezone: clampText(payload.timezone, 80),
     referrer: clampText(payload.referrer, 220),
+    trafficType: trafficSource.type,
+    trafficAgent: trafficSource.agent,
+    trafficConfidence: trafficSource.confidence,
   };
 
   const commands = [
     ['PFADD', 'analytics:visitors:all', visitorId],
     ['PFADD', `analytics:visitors:${day}`, visitorId],
+    ['HINCRBY', 'analytics:traffic:types', trafficSource.type, 1],
   ];
+
+  if (trafficSource.type === 'Known AI crawler') {
+    commands.push(['HINCRBY', 'analytics:traffic:ai-agents', trafficSource.agent, 1]);
+  } else if (trafficSource.type !== 'Human') {
+    commands.push(['HINCRBY', 'analytics:traffic:bot-agents', trafficSource.agent, 1]);
+  }
 
   if (isReturningVisitor) {
     commands.push(['PFADD', 'analytics:returning:all', visitorId]);
@@ -227,6 +285,9 @@ export async function getAnalyticsSummary() {
     ['HGETALL', 'analytics:time:seconds:total'],
     ['HGETALL', 'analytics:time:seconds:by-path'],
     ['PFCOUNT', 'analytics:returning:all'],
+    ['HGETALL', 'analytics:traffic:types'],
+    ['HGETALL', 'analytics:traffic:ai-agents'],
+    ['HGETALL', 'analytics:traffic:bot-agents'],
   ]);
 
   const days = toObject(results[2]?.result);
@@ -258,6 +319,9 @@ export async function getAnalyticsSummary() {
     events: topEntries(toObject(results[10]?.result), 12),
     eventDetails: topEntries(toObject(results[11]?.result), 14),
     timeByPage: topEntries(toObject(results[13]?.result), 10),
+    trafficTypes: topEntries(toObject(results[15]?.result)),
+    aiAgents: topEntries(toObject(results[16]?.result), 10),
+    botAgents: topEntries(toObject(results[17]?.result), 10),
     recent,
   };
 }
@@ -280,6 +344,9 @@ export async function clearAnalyticsSummary() {
     ['DEL', 'analytics:time:seconds:total'],
     ['DEL', 'analytics:time:seconds:by-path'],
     ['DEL', 'analytics:returning:all'],
+    ['DEL', 'analytics:traffic:types'],
+    ['DEL', 'analytics:traffic:ai-agents'],
+    ['DEL', 'analytics:traffic:bot-agents'],
   ]);
 
   return { ok: true };

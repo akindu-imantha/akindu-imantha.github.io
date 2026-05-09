@@ -64,6 +64,7 @@ export function trackPageView(path = window.location.pathname + window.location.
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     device: getDeviceType(),
     screen: `${window.screen?.width ?? 0}x${window.screen?.height ?? 0}`,
+    webdriver: navigator.webdriver === true,
   };
 
   sendAnalyticsPayload(payload);
@@ -86,6 +87,7 @@ export function trackEvent(eventName, details = {}) {
     language: navigator.language,
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     device: getDeviceType(),
+    webdriver: navigator.webdriver === true,
   });
 }
 

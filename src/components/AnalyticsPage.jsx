@@ -1,4 +1,4 @@
-import { BarChart3, Clock3, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, Users } from 'lucide-react';
+import { BarChart3, Bot, Clock3, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, ShieldAlert, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { clearAnalyticsSummary, fetchAnalyticsSummary } from '../utils/analytics';
 
@@ -119,6 +119,50 @@ function RankingList({ title, items = [], chartType = 'bar' }) {
           <p className="analytics-empty">No data yet.</p>
         )}
       </div>
+    </section>
+  );
+}
+
+function getCount(items = [], name) {
+  return items.find((item) => item.name === name)?.count ?? 0;
+}
+
+function DetectionPanel({ summary }) {
+  const trafficTypes = summary.trafficTypes ?? [];
+  const knownAiCount = getCount(trafficTypes, 'Known AI crawler');
+  const botCount = getCount(trafficTypes, 'Bot');
+  const suspiciousCount = getCount(trafficTypes, 'Suspicious');
+  const humanCount = getCount(trafficTypes, 'Human');
+  const flaggedCount = knownAiCount + botCount + suspiciousCount;
+
+  return (
+    <section className="analytics-panel analytics-panel--wide analytics-detection">
+      <div>
+        <p className="eyebrow">Traffic detection</p>
+        <h2>AI / bot monitor</h2>
+      </div>
+      <div className="analytics-detection-grid">
+        <article>
+          <Bot size={20} />
+          <span>Known AI crawler hits</span>
+          <strong>{knownAiCount}</strong>
+        </article>
+        <article>
+          <ShieldAlert size={20} />
+          <span>Bot or suspicious hits</span>
+          <strong>{botCount + suspiciousCount}</strong>
+        </article>
+        <article>
+          <Users size={20} />
+          <span>Human-classified hits</span>
+          <strong>{humanCount}</strong>
+        </article>
+      </div>
+      <p>
+        {flaggedCount > 0
+          ? `${flaggedCount} analytics requests were flagged by user-agent or automation signals. This is a best-effort detection, not a guaranteed identity check.`
+          : 'No AI crawler or bot-like traffic has been flagged in the stored analytics yet.'}
+      </p>
     </section>
   );
 }
@@ -258,9 +302,16 @@ export default function AnalyticsPage() {
             <MetricCard icon={Repeat2} label="Returning visitors" value={summary.returningVisitors ?? 0} />
             <MetricCard icon={MousePointerClick} label="Tracked events" value={summary.totalEvents ?? 0} />
             <MetricCard icon={Clock3} label="Total time" value={formatDuration(summary.totalTimeSeconds)} />
+            <MetricCard icon={Bot} label="AI crawler hits" value={getCount(summary.trafficTypes, 'Known AI crawler')} />
+            <MetricCard icon={ShieldAlert} label="Bot/suspicious hits" value={getCount(summary.trafficTypes, 'Bot') + getCount(summary.trafficTypes, 'Suspicious')} />
           </section>
 
+          <DetectionPanel summary={summary} />
+
           <section className="analytics-grid">
+            <RankingList title="Traffic types" items={summary.trafficTypes} chartType="donut" />
+            <RankingList title="Known AI agents" items={summary.aiAgents} chartType="bar" />
+            <RankingList title="Bot signals" items={summary.botAgents} chartType="bar" />
             <RankingList title="Event types" items={summary.events} />
             <RankingList title="Event details" items={summary.eventDetails} />
             <RankingList title="Time by page" items={summary.timeByPage} />
@@ -280,7 +331,9 @@ export default function AnalyticsPage() {
                   <article className="analytics-recent-item" key={`${visit.at}-${visit.path}`}>
                     <strong>{visit.path}</strong>
                     <span>{formatTime(visit.at)}</span>
-                    <span>{[visit.device, visit.browser, visit.os, visit.country].filter(Boolean).join(' / ')}</span>
+                    <span>
+                      {[visit.device, visit.browser, visit.os, visit.country, visit.trafficType].filter(Boolean).join(' / ')}
+                    </span>
                   </article>
                 ))
               ) : (
