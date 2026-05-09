@@ -2139,9 +2139,75 @@ a {
   gap: 0.9rem;
 }
 
-.analytics-panel h2 {
+.analytics-panel-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: center;
+  min-height: 92px;
   margin: 0 0 0.9rem;
+}
+
+.analytics-panel h2 {
+  margin: 0;
   font-size: 1.05rem;
+}
+
+.analytics-chart {
+  width: 132px;
+  height: 82px;
+}
+
+.analytics-chart--bars {
+  display: flex;
+  align-items: end;
+  gap: 0.42rem;
+  padding: 0.4rem 0.1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.analytics-chart--bars span {
+  flex: 1;
+  min-width: 10px;
+  height: var(--bar-height);
+  border-radius: 999px 999px 2px 2px;
+  background: linear-gradient(180deg, var(--chart-color), rgba(56, 189, 248, 0.28));
+}
+
+.analytics-chart--donut {
+  overflow: visible;
+}
+
+.analytics-chart--donut circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 18;
+}
+
+.analytics-chart--donut path {
+  fill: none;
+  stroke: var(--chart-color);
+  stroke-linecap: round;
+  stroke-width: 18;
+}
+
+.analytics-chart--line {
+  padding: 0.4rem 0;
+}
+
+.analytics-chart--line polyline {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 6;
+  vector-effect: non-scaling-stroke;
+}
+
+[data-theme='light'] .analytics-chart--bars,
+[data-theme='light'] .analytics-chart--donut circle {
+  border-color: rgba(15, 23, 42, 0.12);
+  stroke: rgba(15, 23, 42, 0.1);
 }
 
 .analytics-ranking,

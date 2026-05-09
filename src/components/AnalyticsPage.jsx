@@ -14,14 +14,98 @@ function MetricCard({ icon: Icon, label, value }) {
   );
 }
 
-function RankingList({ title, items = [] }) {
+const CHART_COLORS = ['#22c55e', '#38bdf8', '#a78bfa', '#f59e0b', '#fb7185'];
+
+function polarToCartesian(center, radius, angleInDegrees) {
+  const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180;
+
+  return {
+    x: center + radius * Math.cos(angleInRadians),
+    y: center + radius * Math.sin(angleInRadians),
+  };
+}
+
+function describeArc(center, radius, startAngle, endAngle) {
+  const start = polarToCartesian(center, radius, endAngle);
+  const end = polarToCartesian(center, radius, startAngle);
+  const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+
+  return ['M', start.x, start.y, 'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(' ');
+}
+
+function BarChart({ items = [], max }) {
+  return (
+    <div className="analytics-chart analytics-chart--bars" aria-hidden="true">
+      {items.slice(0, 6).map((item, index) => (
+        <span
+          key={item.name}
+          style={{
+            '--bar-height': `${Math.max((item.count / max) * 100, 8)}%`,
+            '--chart-color': CHART_COLORS[index % CHART_COLORS.length],
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function DonutChart({ items = [] }) {
+  const total = items.reduce((sum, item) => sum + item.count, 0);
+  let cursor = 0;
+
+  return (
+    <svg className="analytics-chart analytics-chart--donut" viewBox="0 0 120 120" role="img" aria-label="Distribution chart">
+      <circle cx="60" cy="60" r="42" />
+      {items.slice(0, 5).map((item, index) => {
+        const share = total ? item.count / total : 0;
+        const start = cursor;
+        const end = cursor + share * 359.99;
+        cursor = end;
+
+        return (
+          <path
+            key={item.name}
+            d={describeArc(60, 42, start, end)}
+            style={{ '--chart-color': CHART_COLORS[index % CHART_COLORS.length] }}
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+function LineChart({ items = [], max }) {
+  const chartItems = items.slice(-8);
+  const points = chartItems
+    .map((item, index) => {
+      const x = chartItems.length === 1 ? 50 : (index / (chartItems.length - 1)) * 100;
+      const y = 100 - (item.count / max) * 88;
+
+      return `${x},${Math.max(y, 8)}`;
+    })
+    .join(' ');
+
+  return (
+    <svg className="analytics-chart analytics-chart--line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points={points} />
+    </svg>
+  );
+}
+
+function RankingList({ title, items = [], chartType = 'bar' }) {
   const max = Math.max(...items.map((item) => item.count), 1);
+  const hasItems = items.length > 0;
 
   return (
     <section className="analytics-panel">
-      <h2>{title}</h2>
+      <div className="analytics-panel-heading">
+        <h2>{title}</h2>
+        {hasItems && chartType === 'bar' ? <BarChart items={items} max={max} /> : null}
+        {hasItems && chartType === 'donut' ? <DonutChart items={items} /> : null}
+        {hasItems && chartType === 'line' ? <LineChart items={items} max={max} /> : null}
+      </div>
       <div className="analytics-ranking">
-        {items.length ? (
+        {hasItems ? (
           items.map((item) => (
             <div className="analytics-rank-row" key={item.name}>
               <div>
@@ -181,11 +265,11 @@ export default function AnalyticsPage() {
             <RankingList title="Event details" items={summary.eventDetails} />
             <RankingList title="Time by page" items={summary.timeByPage} />
             <RankingList title="Top pages" items={summary.topPages} />
-            <RankingList title="Devices" items={summary.devices} />
-            <RankingList title="Browsers" items={summary.browsers} />
-            <RankingList title="Operating systems" items={summary.operatingSystems} />
-            <RankingList title="Countries" items={summary.countries} />
-            <RankingList title="Daily views" items={summary.daily?.map((item) => ({ name: item.date, count: item.count }))} />
+            <RankingList title="Devices" items={summary.devices} chartType="donut" />
+            <RankingList title="Browsers" items={summary.browsers} chartType="donut" />
+            <RankingList title="Operating systems" items={summary.operatingSystems} chartType="donut" />
+            <RankingList title="Countries" items={summary.countries} chartType="bar" />
+            <RankingList title="Daily views" items={summary.daily?.map((item) => ({ name: item.date, count: item.count }))} chartType="line" />
           </section>
 
           <section className="analytics-panel analytics-panel--wide">
