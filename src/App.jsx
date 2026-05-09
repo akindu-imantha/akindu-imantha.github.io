@@ -1,11 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
-import AnalyticsPage from './components/AnalyticsPage';
-import GradesPage from './components/GradesPage';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import Hero from './components/Hero';
 import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
 import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
+
+const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
+const GradesPage = lazy(() => import('./components/GradesPage'));
+
+function PageLoading() {
+  return <main className="page-loading" aria-live="polite">Loading...</main>;
+}
 
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
@@ -72,9 +77,13 @@ function App() {
   return (
     <div className="page-shell">
       {isAnalyticsPage ? (
-        <AnalyticsPage />
+        <Suspense fallback={<PageLoading />}>
+          <AnalyticsPage />
+        </Suspense>
       ) : isGradesPage ? (
-        <GradesPage content={content} activeGradeId={activeGradeId} />
+        <Suspense fallback={<PageLoading />}>
+          <GradesPage content={content} activeGradeId={activeGradeId} />
+        </Suspense>
       ) : (
         <>
           <Hero

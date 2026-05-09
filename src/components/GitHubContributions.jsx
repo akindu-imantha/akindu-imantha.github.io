@@ -54,6 +54,19 @@ function getApiUrl(dataApiUrl) {
   return configuredUrl;
 }
 
+function GitHubCalendarSkeleton() {
+  return (
+    <div className="github-skeleton" aria-hidden="true">
+      <span className="github-skeleton-line" />
+      <div className="github-skeleton-grid">
+        {Array.from({ length: 78 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function GitHubContributions({ data = {}, ui = {}, className = '' }) {
   const currentYear = new Date().getFullYear();
   const username = data.username ?? 'akindu-imantha';
@@ -113,7 +126,9 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
         </a>
       </div>
 
-      {status === 'ready' && calendar ? (
+      {status === 'loading' ? (
+        <GitHubCalendarSkeleton />
+      ) : status === 'ready' && calendar ? (
         <>
           <p className="github-total">
             {calendar.totalContributions} contributions in {calendar.year}
