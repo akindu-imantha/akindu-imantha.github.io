@@ -2,6 +2,7 @@ import { Github } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DEFAULT_API_URL = 'https://akindu-portfolio-api.vercel.app/api/github/contributions';
 
 function getLevel(count) {
   if (count === 0) return 0;
@@ -33,12 +34,32 @@ function getMonthMarkers(weeks = []) {
   return markers;
 }
 
+function getApiUrl(dataApiUrl) {
+  const configuredUrl = dataApiUrl ?? import.meta.env.VITE_GITHUB_CONTRIBUTIONS_API_URL;
+  const isLocalPage = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+  if (!configuredUrl) return DEFAULT_API_URL;
+
+  try {
+    const url = new URL(configuredUrl, window.location.origin);
+    const isLocalApi = ['localhost', '127.0.0.1'].includes(url.hostname);
+
+    if (!isLocalPage && isLocalApi) {
+      return DEFAULT_API_URL;
+    }
+  } catch {
+    return DEFAULT_API_URL;
+  }
+
+  return configuredUrl;
+}
+
 export default function GitHubContributions({ data = {}, ui = {}, className = '' }) {
   const currentYear = new Date().getFullYear();
   const username = data.username ?? 'akindu-imantha';
-  const apiUrl = data.apiUrl ?? import.meta.env.VITE_GITHUB_CONTRIBUTIONS_API_URL;
+  const apiUrl = getApiUrl(data.apiUrl);
   const [calendar, setCalendar] = useState(null);
-  const [status, setStatus] = useState(apiUrl ? 'loading' : 'unconfigured');
+  const [status, setStatus] = useState('loading');
 
   useEffect(() => {
     if (!apiUrl) {
