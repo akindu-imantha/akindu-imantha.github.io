@@ -1,10 +1,17 @@
 const contributionCache = new Map();
 
 function setCorsHeaders(request, response) {
-  const allowedOrigin = process.env.CORS_ORIGIN;
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://akindu-imantha.github.io',
+    ...String(process.env.CORS_ORIGIN ?? '')
+      .split(',')
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  ];
   const origin = request.headers.origin;
 
-  if (!allowedOrigin || !origin || origin !== allowedOrigin) {
+  if (!origin || !allowedOrigins.includes(origin)) {
     return;
   }
 
