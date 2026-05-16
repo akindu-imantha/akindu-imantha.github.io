@@ -371,13 +371,13 @@ export default function GradeAdminPage() {
               <tbody>
                 {subjects.map((subject, index) => (
                   <tr key={`${activeSemesterTitle || selectedGroupId}-${index}`}>
-                    <td>
+                    <td data-label="Code">
                       <input disabled={!isUnlocked} value={subject.code ?? ''} onChange={(event) => updateSubject(index, 'code', event.target.value)} />
                     </td>
-                    <td>
+                    <td data-label="Module">
                       <input disabled={!isUnlocked} value={subject.name ?? ''} onChange={(event) => updateSubject(index, 'name', event.target.value)} />
                     </td>
-                    <td>
+                    <td data-label="Grade">
                       <select disabled={!isUnlocked} value={subject.grade ?? 'Pending'} onChange={(event) => updateSubject(index, 'grade', event.target.value)}>
                         {gradeOptions.map((grade) => (
                           <option value={grade} key={grade}>
@@ -386,7 +386,7 @@ export default function GradeAdminPage() {
                         ))}
                       </select>
                     </td>
-                    <td>
+                    <td data-label="Credits">
                       <input
                         type="number"
                         min="0"
@@ -396,7 +396,7 @@ export default function GradeAdminPage() {
                         onChange={(event) => updateSubject(index, 'credits', event.target.value)}
                       />
                     </td>
-                    <td>
+                    <td data-label="Remove">
                       <button type="button" className="grade-admin-icon-button" onClick={() => removeSubject(index)} disabled={!isUnlocked} aria-label="Remove row">
                         <Trash2 size={16} />
                       </button>

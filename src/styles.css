@@ -3242,6 +3242,23 @@ a {
     justify-content: flex-start;
   }
 
+  .grade-admin-page {
+    gap: 1rem;
+    padding-top: 0.75rem;
+  }
+
+  .grade-admin-header {
+    gap: 0.8rem;
+  }
+
+  .grade-admin-header h1 {
+    font-size: clamp(2rem, 13vw, 3rem);
+  }
+
+  .grade-admin-nav .secondary-button {
+    flex: 1 1 140px;
+  }
+
   .grade-admin-sidebar {
     position: static;
   }
@@ -3255,6 +3272,81 @@ a {
   .grade-admin-actions .secondary-button,
   .grade-admin-actions .primary-button {
     width: 100%;
+  }
+
+  .grade-admin-table-heading h2 {
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .grade-admin-table-wrap {
+    overflow-x: visible;
+  }
+
+  .grade-admin-table,
+  .grade-admin-table thead,
+  .grade-admin-table tbody,
+  .grade-admin-table tr,
+  .grade-admin-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .grade-admin-table thead {
+    display: none;
+  }
+
+  .grade-admin-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    padding: 0.75rem;
+  }
+
+  .grade-admin-table tr {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .grade-admin-table tr + tr {
+    margin-top: 0.8rem;
+  }
+
+  [data-theme='light'] .grade-admin-table tr {
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .grade-admin-table td {
+    display: grid;
+    gap: 0.32rem;
+    padding: 0;
+    border-bottom: none;
+    text-align: left;
+  }
+
+  .grade-admin-table td::before {
+    content: attr(data-label);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .grade-admin-table td:nth-child(1),
+  .grade-admin-table td:nth-child(3),
+  .grade-admin-table td:nth-child(4),
+  .grade-admin-table td:nth-child(5) {
+    width: 100%;
+    text-align: left;
+  }
+
+  .grade-admin-icon-button {
+    width: 100%;
+    height: 42px;
   }
 
   .scanlines {
