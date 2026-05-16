@@ -2473,6 +2473,16 @@ a {
   cursor: pointer;
 }
 
+.grade-admin-locked {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.09);
+  color: #fbbf24;
+  font-weight: 700;
+}
+
 .grade-admin-workspace {
   display: grid;
   grid-template-columns: minmax(240px, 310px) minmax(0, 1fr);
@@ -2620,6 +2630,14 @@ a {
   background: rgba(248, 113, 113, 0.08);
   color: #fca5a5;
   cursor: pointer;
+}
+
+.grade-admin-page input:disabled,
+.grade-admin-page select:disabled,
+.grade-admin-page textarea:disabled,
+.grade-admin-page button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
 }
 
 @media (max-width: 900px) {

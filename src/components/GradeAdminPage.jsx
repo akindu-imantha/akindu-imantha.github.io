@@ -1,6 +1,7 @@
 import { ArrowLeft, GraduationCap, Lock, Plus, RefreshCw, Save, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { academicGrades } from '../data/portfolioData';
+import { fetchAnalyticsSummary } from '../utils/analytics';
 import { fetchStoredAcademicGrades, saveStoredAcademicGrades } from '../utils/grades';
 
 const TOKEN_KEY = 'portfolio-analytics-token';
@@ -51,6 +52,7 @@ export default function GradeAdminPage() {
   const [selectedSemesterTitle, setSelectedSemesterTitle] = useState(academicGrades[0]?.semesters?.[0]?.title ?? '');
   const [status, setStatus] = useState(token ? 'loading' : 'locked');
   const [message, setMessage] = useState('');
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
   const activeGroupIndex = grades.findIndex((group) => group.id === selectedGroupId);
   const activeGroup = grades[activeGroupIndex] ?? grades[0];
@@ -74,9 +76,35 @@ export default function GradeAdminPage() {
     }
   };
 
+  const unlockEditor = async (nextToken) => {
+    if (!nextToken) {
+      setIsUnlocked(false);
+      setStatus('locked');
+      setMessage('Admin token is required before editing grades.');
+      return;
+    }
+
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      await fetchAnalyticsSummary(nextToken);
+      setToken(nextToken);
+      setIsUnlocked(true);
+      sessionStorage.setItem(TOKEN_KEY, nextToken);
+      await loadGrades();
+    } catch (error) {
+      setIsUnlocked(false);
+      sessionStorage.removeItem(TOKEN_KEY);
+      setToken('');
+      setStatus('error');
+      setMessage(error.message || 'Invalid admin token.');
+    }
+  };
+
   useEffect(() => {
     if (token) {
-      loadGrades();
+      unlockEditor(token);
     }
   }, []);
 
@@ -96,12 +124,12 @@ export default function GradeAdminPage() {
   const handleUnlock = (event) => {
     event.preventDefault();
     const nextToken = tokenInput.trim();
-    setToken(nextToken);
-    sessionStorage.setItem(TOKEN_KEY, nextToken);
-    loadGrades();
+    unlockEditor(nextToken);
   };
 
   const updateActiveGroup = (field, value) => {
+    if (!isUnlocked) return;
+
     setGrades((currentGrades) =>
       currentGrades.map((group) =>
         group.id === selectedGroupId ? { ...group, [field]: value } : group,
@@ -110,6 +138,8 @@ export default function GradeAdminPage() {
   };
 
   const updateSubject = (subjectIndex, field, value) => {
+    if (!isUnlocked) return;
+
     setGrades((currentGrades) =>
       currentGrades.map((group) => {
         if (group.id !== selectedGroupId) return group;
@@ -141,6 +171,8 @@ export default function GradeAdminPage() {
   };
 
   const addSubject = () => {
+    if (!isUnlocked) return;
+
     setGrades((currentGrades) =>
       currentGrades.map((group) => {
         if (group.id !== selectedGroupId) return group;
@@ -164,6 +196,8 @@ export default function GradeAdminPage() {
   };
 
   const removeSubject = (subjectIndex) => {
+    if (!isUnlocked) return;
+
     setGrades((currentGrades) =>
       currentGrades.map((group) => {
         if (group.id !== selectedGroupId) return group;
@@ -185,6 +219,8 @@ export default function GradeAdminPage() {
   };
 
   const resetToFileData = () => {
+    if (!isUnlocked) return;
+
     const nextGrades = cloneGrades(academicGrades);
     setGrades(nextGrades);
     setSelectedGroupId(nextGrades[0]?.id ?? '');
@@ -194,9 +230,9 @@ export default function GradeAdminPage() {
   };
 
   const saveGrades = async () => {
-    if (!token) {
+    if (!isUnlocked || !token) {
       setStatus('error');
-      setMessage('Admin token is required.');
+      setMessage('Unlock the grade editor before saving changes.');
       return;
     }
 
@@ -246,11 +282,17 @@ export default function GradeAdminPage() {
         <button type="submit" className="primary-button">
           Unlock
         </button>
-        <button type="button" className="secondary-button" onClick={loadGrades} disabled={status === 'loading' || status === 'saving'}>
+        <button type="button" className="secondary-button" onClick={loadGrades} disabled={!isUnlocked || status === 'loading' || status === 'saving'}>
           <RefreshCw size={16} />
           <span>Load</span>
         </button>
       </form>
+
+      {!isUnlocked ? (
+        <p className="grade-admin-locked">
+          Unlock with the admin token to edit or save grade data.
+        </p>
+      ) : null}
 
       {message ? (
         <p className={`analytics-state${status === 'error' ? ' analytics-state--error' : ''}`}>
@@ -286,11 +328,11 @@ export default function GradeAdminPage() {
 
           <label>
             <span>Status</span>
-            <input value={activeGroup?.status ?? ''} onChange={(event) => updateActiveGroup('status', event.target.value)} />
+            <input disabled={!isUnlocked} value={activeGroup?.status ?? ''} onChange={(event) => updateActiveGroup('status', event.target.value)} />
           </label>
           <label>
             <span>Summary</span>
-            <textarea value={activeGroup?.summary ?? ''} onChange={(event) => updateActiveGroup('summary', event.target.value)} />
+            <textarea disabled={!isUnlocked} value={activeGroup?.summary ?? ''} onChange={(event) => updateActiveGroup('summary', event.target.value)} />
           </label>
         </aside>
 
@@ -301,14 +343,14 @@ export default function GradeAdminPage() {
               <h2>{activeGroup?.program}</h2>
             </div>
             <div className="grade-admin-actions">
-              <button type="button" className="secondary-button" onClick={addSubject}>
+              <button type="button" className="secondary-button" onClick={addSubject} disabled={!isUnlocked}>
                 <Plus size={16} />
                 <span>Add row</span>
               </button>
-              <button type="button" className="secondary-button" onClick={resetToFileData} disabled={status === 'saving'}>
+              <button type="button" className="secondary-button" onClick={resetToFileData} disabled={!isUnlocked || status === 'saving'}>
                 Reset
               </button>
-              <button type="button" className="primary-button" onClick={saveGrades} disabled={status === 'saving'}>
+              <button type="button" className="primary-button" onClick={saveGrades} disabled={!isUnlocked || status === 'saving'}>
                 <Save size={16} />
                 <span>{status === 'saving' ? 'Saving...' : 'Save website grades'}</span>
               </button>
@@ -330,13 +372,13 @@ export default function GradeAdminPage() {
                 {subjects.map((subject, index) => (
                   <tr key={`${activeSemesterTitle || selectedGroupId}-${index}`}>
                     <td>
-                      <input value={subject.code ?? ''} onChange={(event) => updateSubject(index, 'code', event.target.value)} />
+                      <input disabled={!isUnlocked} value={subject.code ?? ''} onChange={(event) => updateSubject(index, 'code', event.target.value)} />
                     </td>
                     <td>
-                      <input value={subject.name ?? ''} onChange={(event) => updateSubject(index, 'name', event.target.value)} />
+                      <input disabled={!isUnlocked} value={subject.name ?? ''} onChange={(event) => updateSubject(index, 'name', event.target.value)} />
                     </td>
                     <td>
-                      <select value={subject.grade ?? 'Pending'} onChange={(event) => updateSubject(index, 'grade', event.target.value)}>
+                      <select disabled={!isUnlocked} value={subject.grade ?? 'Pending'} onChange={(event) => updateSubject(index, 'grade', event.target.value)}>
                         {gradeOptions.map((grade) => (
                           <option value={grade} key={grade}>
                             {grade}
@@ -350,11 +392,12 @@ export default function GradeAdminPage() {
                         min="0"
                         step="0.5"
                         value={subject.credits ?? ''}
+                        disabled={!isUnlocked}
                         onChange={(event) => updateSubject(index, 'credits', event.target.value)}
                       />
                     </td>
                     <td>
-                      <button type="button" className="grade-admin-icon-button" onClick={() => removeSubject(index)} aria-label="Remove row">
+                      <button type="button" className="grade-admin-icon-button" onClick={() => removeSubject(index)} disabled={!isUnlocked} aria-label="Remove row">
                         <Trash2 size={16} />
                       </button>
                     </td>
