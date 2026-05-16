@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, GraduationCap, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { academicGrades, portfolioContent } from '../data/portfolioData';
+import { fetchStoredAcademicGrades } from '../utils/grades';
 import SectionTitle from './SectionTitle';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
@@ -89,12 +90,39 @@ function getFilteredSemesters(group, query) {
 
 export default function GradesPage({ content = portfolioContent.en, activeGradeId = '' }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const grades = content.academicGrades ?? academicGrades;
+  const [storedGrades, setStoredGrades] = useState(null);
+  const [remoteStatus, setRemoteStatus] = useState('idle');
+  const grades = storedGrades ?? content.academicGrades ?? academicGrades;
   const ui = content.ui ?? {};
   const visibleGrades = activeGradeId
     ? grades.filter((group) => group.id === activeGradeId)
     : grades;
   const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadStoredGrades = async () => {
+      try {
+        const nextGrades = await fetchStoredAcademicGrades();
+
+        if (isActive && nextGrades?.length) {
+          setStoredGrades(nextGrades);
+          setRemoteStatus('ready');
+        }
+      } catch {
+        if (isActive) {
+          setRemoteStatus('unavailable');
+        }
+      }
+    };
+
+    loadStoredGrades();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <main className="grades-page">
@@ -168,6 +196,7 @@ export default function GradesPage({ content = portfolioContent.en, activeGradeI
                     <div className="grades-summary-pills">
                       <span>CGPA: {groupGpa.gpa}</span>
                       <span>Completed GPA credits: {groupGpa.credits}</span>
+                      {remoteStatus === 'ready' ? <span>Live website data</span> : null}
                     </div>
                   )}
 

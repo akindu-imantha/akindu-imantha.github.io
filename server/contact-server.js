@@ -9,6 +9,11 @@ import {
   isAnalyticsConfigured,
   recordAnalyticsVisit,
 } from './analytics-store.js';
+import {
+  getStoredAcademicGrades,
+  isGradesStorageConfigured,
+  saveStoredAcademicGrades,
+} from './grades-store.js';
 
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
@@ -97,6 +102,39 @@ app.delete('/api/analytics', async (request, response) => {
   } catch (error) {
     console.error('Analytics clear failed:', error);
     response.status(500).json({ message: 'Analytics request failed.' });
+  }
+});
+
+app.get('/api/grades', async (_request, response) => {
+  if (!isGradesStorageConfigured()) {
+    response.json({ academicGrades: null });
+    return;
+  }
+
+  try {
+    response.json({ academicGrades: await getStoredAcademicGrades() });
+  } catch (error) {
+    console.error('Grades load failed:', error);
+    response.status(500).json({ message: 'Grades request failed.' });
+  }
+});
+
+app.put('/api/grades', async (request, response) => {
+  if (!hasValidAnalyticsToken(request)) {
+    response.status(401).json({ message: 'Admin token is required.' });
+    return;
+  }
+
+  if (!isGradesStorageConfigured()) {
+    response.status(503).json({ message: 'Grades storage is not configured.' });
+    return;
+  }
+
+  try {
+    response.json(await saveStoredAcademicGrades(request.body?.academicGrades));
+  } catch (error) {
+    console.error('Grades save failed:', error);
+    response.status(error.status ?? 500).json({ message: error.message || 'Grades request failed.' });
   }
 });
 

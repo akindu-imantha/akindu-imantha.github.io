@@ -1,6 +1,8 @@
 import { BarChart3, Bot, Clock3, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, ShieldAlert, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { academicGrades } from '../data/portfolioData';
 import { clearAnalyticsSummary, fetchAnalyticsSummary } from '../utils/analytics';
+import { fetchStoredAcademicGrades, saveStoredAcademicGrades } from '../utils/grades';
 
 const TOKEN_KEY = 'portfolio-analytics-token';
 
@@ -186,6 +188,105 @@ function formatDuration(seconds = 0) {
   return `${minutes}m ${remainingSeconds}s`;
 }
 
+function GradesEditor({ token }) {
+  const [draft, setDraft] = useState(() => JSON.stringify(academicGrades, null, 2));
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+
+  const loadGrades = async () => {
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const storedGrades = await fetchStoredAcademicGrades();
+      setDraft(JSON.stringify(storedGrades ?? academicGrades, null, 2));
+      setStatus('ready');
+      setMessage(storedGrades ? 'Loaded saved website grades.' : 'No saved grades yet. Showing current file data.');
+    } catch (error) {
+      setStatus('error');
+      setMessage(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      loadGrades();
+    }
+  }, [token]);
+
+  const handleSave = async () => {
+    if (!token) {
+      setStatus('error');
+      setMessage('Admin token is required.');
+      return;
+    }
+
+    let parsedGrades;
+
+    try {
+      parsedGrades = JSON.parse(draft);
+    } catch {
+      setStatus('error');
+      setMessage('Grade data must be valid JSON.');
+      return;
+    }
+
+    setStatus('saving');
+    setMessage('');
+
+    try {
+      const savedGrades = await saveStoredAcademicGrades(token, parsedGrades);
+      setDraft(JSON.stringify(savedGrades, null, 2));
+      setStatus('ready');
+      setMessage('Grades saved. The public grades page will use this data.');
+    } catch (error) {
+      setStatus('error');
+      setMessage(error.message);
+    }
+  };
+
+  const resetToFileData = () => {
+    setDraft(JSON.stringify(academicGrades, null, 2));
+    setStatus('idle');
+    setMessage('Reset editor to current file data. Save to publish it.');
+  };
+
+  return (
+    <section className="analytics-panel analytics-panel--wide grades-admin-panel">
+      <div className="grades-admin-heading">
+        <div>
+          <p className="eyebrow">Private grade editor</p>
+          <h2>Website degree grades</h2>
+        </div>
+        <div className="grades-admin-actions">
+          <button type="button" className="secondary-button" onClick={loadGrades} disabled={status === 'loading' || status === 'saving'}>
+            <RefreshCw size={16} />
+            <span>Load</span>
+          </button>
+          <button type="button" className="secondary-button" onClick={resetToFileData} disabled={status === 'saving'}>
+            Reset
+          </button>
+          <button type="button" className="primary-button" onClick={handleSave} disabled={status === 'saving'}>
+            Save grades
+          </button>
+        </div>
+      </div>
+      <textarea
+        className="grades-admin-editor"
+        value={draft}
+        onChange={(event) => setDraft(event.target.value)}
+        spellCheck="false"
+        aria-label="Academic grades JSON editor"
+      />
+      {message ? (
+        <p className={`analytics-state${status === 'error' ? ' analytics-state--error' : ''}`}>
+          {message}
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
 export default function AnalyticsPage() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) ?? '');
   const [tokenInput, setTokenInput] = useState(token);
@@ -307,6 +408,7 @@ export default function AnalyticsPage() {
           </section>
 
           <DetectionPanel summary={summary} />
+          <GradesEditor token={token} />
 
           <section className="analytics-grid">
             <RankingList title="Traffic types" items={summary.trafficTypes} chartType="donut" />

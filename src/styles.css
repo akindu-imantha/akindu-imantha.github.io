@@ -2359,6 +2359,57 @@ a {
   color: var(--text-muted);
 }
 
+.grades-admin-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.grades-admin-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.grades-admin-heading h2 {
+  margin: 0.2rem 0 0;
+}
+
+.grades-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.grades-admin-actions .secondary-button,
+.grades-admin-actions .primary-button {
+  min-height: 42px;
+}
+
+.grades-admin-editor {
+  width: 100%;
+  min-height: 420px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(4, 10, 20, 0.78);
+  color: var(--heading-color);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 1rem;
+  outline: none;
+}
+
+.grades-admin-editor:focus {
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+[data-theme='light'] .grades-admin-editor {
+  background: rgba(255, 255, 255, 0.92);
+}
 
 @media (max-width: 900px) {
   .hero {
@@ -2914,6 +2965,18 @@ a {
   .analytics-auth .primary-button,
   .analytics-refresh,
   .analytics-clear {
+    width: 100%;
+  }
+
+  .grades-admin-heading,
+  .grades-admin-actions {
+    display: grid;
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .grades-admin-actions .secondary-button,
+  .grades-admin-actions .primary-button {
     width: 100%;
   }
 
