@@ -6,6 +6,7 @@ import { portfolioContent } from './data/portfolioData';
 import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
 
 const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
+const GradeAdminPage = lazy(() => import('./components/GradeAdminPage'));
 const GradesPage = lazy(() => import('./components/GradesPage'));
 
 function PageLoading() {
@@ -22,6 +23,7 @@ function App() {
   const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
   const isGradesPage = currentHash.startsWith('#grades');
   const isAnalyticsPage = currentHash.startsWith('#analytics');
+  const isGradeAdminPage = currentHash.startsWith('#grade-admin');
   const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
 
   useEffect(() => {
@@ -76,7 +78,11 @@ function App() {
 
   return (
     <div className="page-shell">
-      {isAnalyticsPage ? (
+      {isGradeAdminPage ? (
+        <Suspense fallback={<PageLoading />}>
+          <GradeAdminPage />
+        </Suspense>
+      ) : isAnalyticsPage ? (
         <Suspense fallback={<PageLoading />}>
           <AnalyticsPage />
         </Suspense>
