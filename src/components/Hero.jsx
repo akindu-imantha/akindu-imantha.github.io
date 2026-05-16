@@ -27,7 +27,11 @@ export default function Hero({
       >
         <div className="brand">Akindu Imantha</div>
         <div className="nav-links">
-          <a href="#console" onClick={() => trackEvent('nav_click', { label: 'Terminal' })}>
+          <a
+            href="#console"
+            className="nav-terminal-link"
+            onClick={() => trackEvent('nav_click', { label: 'Terminal' })}
+          >
             {ui.terminal ?? 'Terminal'}
           </a>
           <a

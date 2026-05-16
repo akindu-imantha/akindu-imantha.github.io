@@ -2495,8 +2495,12 @@ a {
     flex-wrap: wrap;
   }
 
-  .nav-links a {
+  .nav-terminal-link {
     margin-right: auto;
+  }
+
+  .nav-icon-link {
+    order: 3;
   }
 
   .nav-toggle {
