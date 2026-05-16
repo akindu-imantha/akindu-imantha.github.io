@@ -265,11 +265,11 @@ export const academicGrades = [
       {
         title: 'Level 1 Semester 2',
         subjects: [
-          { code: 'CCS1303', name: 'Object Oriented Programming', grade: 'Pending', credits: 3 },
-          { code: 'CCS1304', name: 'Data Technologies', grade: 'Pending', credits: 3 },
+          { code: 'CCS1303', name: 'Object Oriented Programming', grade: 'A', credits: 3 },
+          { code: 'CCS1304', name: 'Data Technologies', grade: 'B', credits: 3 },
           { code: 'CCS1307', name: 'Entrepreneurship & Start-up Culture', grade: 'Pending', credits: 3 },
           { code: 'CCS1310', name: 'Professional Practice', grade: 'Pending', credits: 3 },
-          { code: 'CCS2301', name: 'Business Analysis and Software Design', grade: 'Pending', credits: 3 },
+          { code: 'CCS2301', name: 'Business Analysis and Software Design', grade: 'B-', credits: 3 },
         ],
       },
       {
