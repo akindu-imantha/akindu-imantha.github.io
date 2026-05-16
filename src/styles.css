@@ -2538,6 +2538,18 @@ a {
   resize: vertical;
 }
 
+.grade-admin-sidebar select,
+.grade-admin-table select {
+  background-color: #111827;
+  color: #f8fafc;
+}
+
+.grade-admin-sidebar option,
+.grade-admin-table option {
+  background-color: #111827;
+  color: #f8fafc;
+}
+
 .grade-admin-sidebar input:focus,
 .grade-admin-sidebar select:focus,
 .grade-admin-sidebar textarea:focus,
@@ -2553,6 +2565,14 @@ a {
 [data-theme='light'] .grade-admin-table input,
 [data-theme='light'] .grade-admin-table select {
   background: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='light'] .grade-admin-sidebar select,
+[data-theme='light'] .grade-admin-table select,
+[data-theme='light'] .grade-admin-sidebar option,
+[data-theme='light'] .grade-admin-table option {
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
 .grade-admin-table-panel {
