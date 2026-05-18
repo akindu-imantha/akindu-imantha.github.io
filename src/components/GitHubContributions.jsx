@@ -135,31 +135,30 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
           </p>
           {litePerformanceMode ? (
             <p className="github-state">
-              {ui.githubLiteMode ?? 'Calendar grid is simplified on low-end devices.'}
+              {ui.githubLiteMode ?? 'Calendar loaded in performance mode.'}
             </p>
-          ) : (
-            <div className="github-calendar-shell" aria-label={`${calendar.totalContributions} GitHub contributions in ${calendar.year}`}>
-              <div className="github-months" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
-                {monthMarkers.map((marker) => (
-                  <span key={`${marker.label}-${marker.column}`} style={{ gridColumn: marker.column }}>
-                    {marker.label}
-                  </span>
-                ))}
-              </div>
-              <div className="github-calendar" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
-                {calendar.weeks.flatMap((week) =>
-                  week.contributionDays.map((day) => (
-                    <span
-                      key={day.date}
-                      className={`github-day github-day--${getLevel(day.contributionCount)}`}
-                      title={`${day.contributionCount} contributions on ${day.date}`}
-                      aria-label={`${day.contributionCount} contributions on ${day.date}`}
-                    />
-                  )),
-                )}
-              </div>
+          ) : null}
+          <div className="github-calendar-shell" aria-label={`${calendar.totalContributions} GitHub contributions in ${calendar.year}`}>
+            <div className="github-months" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
+              {monthMarkers.map((marker) => (
+                <span key={`${marker.label}-${marker.column}`} style={{ gridColumn: marker.column }}>
+                  {marker.label}
+                </span>
+              ))}
             </div>
-          )}
+            <div className="github-calendar" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
+              {calendar.weeks.flatMap((week) =>
+                week.contributionDays.map((day) => (
+                  <span
+                    key={day.date}
+                    className={`github-day github-day--${getLevel(day.contributionCount)}`}
+                    title={`${day.contributionCount} contributions on ${day.date}`}
+                    aria-label={`${day.contributionCount} contributions on ${day.date}`}
+                  />
+                )),
+              )}
+            </div>
+          </div>
         </>
       ) : (
         <p className="github-state">
