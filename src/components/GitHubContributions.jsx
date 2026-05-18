@@ -75,11 +75,6 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {
-    if (litePerformanceMode) {
-      setStatus('lite');
-      return;
-    }
-
     if (!apiUrl) {
       setStatus('unconfigured');
       return;
@@ -112,7 +107,7 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
       });
 
     return () => controller.abort();
-  }, [apiUrl, currentYear, litePerformanceMode, username]);
+  }, [apiUrl, currentYear, username]);
 
   const monthMarkers = useMemo(() => getMonthMarkers(calendar?.weeks), [calendar]);
 
@@ -131,38 +126,40 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
         </a>
       </div>
 
-      {status === 'lite' ? (
-        <p className="github-state">
-          {ui.githubLiteMode ?? 'GitHub activity is available on the profile link.'}
-        </p>
-      ) : status === 'loading' ? (
+      {status === 'loading' ? (
         <GitHubCalendarSkeleton />
       ) : status === 'ready' && calendar ? (
         <>
           <p className="github-total">
             {calendar.totalContributions} contributions in {calendar.year}
           </p>
-          <div className="github-calendar-shell" aria-label={`${calendar.totalContributions} GitHub contributions in ${calendar.year}`}>
-            <div className="github-months" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
-              {monthMarkers.map((marker) => (
-                <span key={`${marker.label}-${marker.column}`} style={{ gridColumn: marker.column }}>
-                  {marker.label}
-                </span>
-              ))}
+          {litePerformanceMode ? (
+            <p className="github-state">
+              {ui.githubLiteMode ?? 'Calendar grid is simplified on low-end devices.'}
+            </p>
+          ) : (
+            <div className="github-calendar-shell" aria-label={`${calendar.totalContributions} GitHub contributions in ${calendar.year}`}>
+              <div className="github-months" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
+                {monthMarkers.map((marker) => (
+                  <span key={`${marker.label}-${marker.column}`} style={{ gridColumn: marker.column }}>
+                    {marker.label}
+                  </span>
+                ))}
+              </div>
+              <div className="github-calendar" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
+                {calendar.weeks.flatMap((week) =>
+                  week.contributionDays.map((day) => (
+                    <span
+                      key={day.date}
+                      className={`github-day github-day--${getLevel(day.contributionCount)}`}
+                      title={`${day.contributionCount} contributions on ${day.date}`}
+                      aria-label={`${day.contributionCount} contributions on ${day.date}`}
+                    />
+                  )),
+                )}
+              </div>
             </div>
-            <div className="github-calendar" style={{ gridTemplateColumns: `repeat(${calendar.weeks.length}, 12px)` }}>
-              {calendar.weeks.flatMap((week) =>
-                week.contributionDays.map((day) => (
-                  <span
-                    key={day.date}
-                    className={`github-day github-day--${getLevel(day.contributionCount)}`}
-                    title={`${day.contributionCount} contributions on ${day.date}`}
-                    aria-label={`${day.contributionCount} contributions on ${day.date}`}
-                  />
-                )),
-              )}
-            </div>
-          </div>
+          )}
         </>
       ) : (
         <p className="github-state">
