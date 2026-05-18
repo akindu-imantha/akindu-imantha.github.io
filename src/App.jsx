@@ -4,6 +4,7 @@ import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
 import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
+import { shouldUseLitePerformanceMode } from './utils/performance';
 
 const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
 const GradeAdminPage = lazy(() => import('./components/GradeAdminPage'));
@@ -16,6 +17,7 @@ function PageLoading() {
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') ?? 'dark');
+  const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
   const [activeTab, setActiveTab] = useState(() =>
     window.location.hash.startsWith('#grades') ? 'education' : 'about',
@@ -30,6 +32,10 @@ function App() {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('portfolio-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.dataset.performance = litePerformanceMode ? 'lite' : 'full';
+  }, [litePerformanceMode]);
 
   useEffect(() => {
     document.documentElement.lang = language === 'si' ? 'si' : 'en';
@@ -98,6 +104,7 @@ function App() {
             theme={theme}
             onLanguageToggle={toggleLanguage}
             onThemeToggle={toggleTheme}
+            litePerformanceMode={litePerformanceMode}
           />
           <TerminalConsole
             content={content}

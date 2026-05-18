@@ -3468,3 +3468,69 @@ a {
     opacity: 0;
   }
 }
+
+.console-loading {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+[data-performance='lite'] {
+  scroll-behavior: auto;
+}
+
+[data-performance='lite'] body::before,
+[data-performance='lite'] body::after {
+  display: none;
+}
+
+[data-performance='lite'] *,
+[data-performance='lite'] *::before,
+[data-performance='lite'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.001ms !important;
+}
+
+[data-performance='lite'] .topbar,
+[data-performance='lite'] .scroll-hint,
+[data-performance='lite'] .hero-card,
+[data-performance='lite'] .about-card,
+[data-performance='lite'] .project-card,
+[data-performance='lite'] .timeline-item,
+[data-performance='lite'] .contact-panel,
+[data-performance='lite'] .console-card,
+[data-performance='lite'] .interactive-console,
+[data-performance='lite'] .console-header,
+[data-performance='lite'] .console-sidebar,
+[data-performance='lite'] .mobile-tabbar {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+[data-performance='lite'] .scanlines,
+[data-performance='lite'] .profile-glow {
+  display: none;
+}
+
+[data-performance='lite'] .profile-card:hover .profile-image,
+[data-performance='lite'] .hero-card:hover,
+[data-performance='lite'] .about-card:hover,
+[data-performance='lite'] .project-card:hover,
+[data-performance='lite'] .timeline-item:hover,
+[data-performance='lite'] .contact-panel:hover,
+[data-performance='lite'] .console-card:hover,
+[data-performance='lite'] .primary-button:hover,
+[data-performance='lite'] .secondary-button:hover,
+[data-performance='lite'] .contact-links a:hover,
+[data-performance='lite'] .project-link:hover,
+[data-performance='lite'] .project-preview:hover img,
+[data-performance='lite'] .cmd-btn:hover,
+[data-performance='lite'] .nav-toggle:hover,
+[data-performance='lite'] .nav-icon-link:hover {
+  transform: none;
+}

@@ -11,6 +11,7 @@ export default function Hero({
   theme = 'dark',
   onLanguageToggle,
   onThemeToggle,
+  litePerformanceMode = false,
 }) {
   const hero = content.heroData ?? heroData;
   const areas = content.focusAreas ?? focusAreas;
@@ -120,6 +121,7 @@ export default function Hero({
               data={content.githubActivity}
               ui={content.ui}
               className="github-card--hero"
+              litePerformanceMode={litePerformanceMode}
             />
           </motion.div>
         </div>

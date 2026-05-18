@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import {
   certifications,
   contactLinks,
@@ -10,29 +10,28 @@ import {
   technicalSkills,
   tools,
 } from '../data/portfolioData';
-import AboutTab from './tabs/AboutTab';
-import ContactTab from './tabs/ContactTab';
-import EducationTab from './tabs/EducationTab';
-import ExperienceTab from './tabs/ExperienceTab';
-import ProjectsTab from './tabs/ProjectsTab';
-import SkillsTab from './tabs/SkillsTab';
 import ConsoleSidebar from './ConsoleSidebar';
-import SearchResults from './SearchResults';
 import { terminalScale } from './motionVariants';
 
 const tabComponents = {
-  about: AboutTab,
-  education: EducationTab,
-  skills: SkillsTab,
-  projects: ProjectsTab,
-  experience: ExperienceTab,
-  contact: ContactTab,
+  about: lazy(() => import('./tabs/AboutTab')),
+  education: lazy(() => import('./tabs/EducationTab')),
+  skills: lazy(() => import('./tabs/SkillsTab')),
+  projects: lazy(() => import('./tabs/ProjectsTab')),
+  experience: lazy(() => import('./tabs/ExperienceTab')),
+  contact: lazy(() => import('./tabs/ContactTab')),
 };
+
+const SearchResults = lazy(() => import('./SearchResults'));
+
+function ConsoleLoading() {
+  return <div className="console-loading" aria-live="polite">Loading...</div>;
+}
 
 export default function TerminalConsole({ content = portfolioContent.en, activeTab = 'about', onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const ActiveTab = tabComponents[activeTab] ?? AboutTab;
+  const ActiveTab = tabComponents[activeTab] ?? tabComponents.about;
   const data = {
     certifications: content.certifications ?? certifications,
     contactLinks: content.contactLinks ?? contactLinks,
@@ -85,13 +84,15 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
 
           <div className="console-content-area">
             <div className="scanlines"></div>
-            <AnimatePresence mode="wait">
-              {searchQuery.trim() ? (
-                <SearchResults searchQuery={searchQuery} data={data} />
-              ) : (
-                <ActiveTab data={data} />
-              )}
-            </AnimatePresence>
+            <Suspense fallback={<ConsoleLoading />}>
+              <AnimatePresence mode="wait">
+                {searchQuery.trim() ? (
+                  <SearchResults searchQuery={searchQuery} data={data} />
+                ) : (
+                  <ActiveTab data={data} />
+                )}
+              </AnimatePresence>
+            </Suspense>
           </div>
         </div>
       </motion.div>

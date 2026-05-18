@@ -67,7 +67,7 @@ function GitHubCalendarSkeleton() {
   );
 }
 
-export default function GitHubContributions({ data = {}, ui = {}, className = '' }) {
+export default function GitHubContributions({ data = {}, ui = {}, className = '', litePerformanceMode = false }) {
   const currentYear = new Date().getFullYear();
   const username = data.username ?? 'akindu-imantha';
   const apiUrl = getApiUrl(data.apiUrl);
@@ -75,6 +75,11 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {
+    if (litePerformanceMode) {
+      setStatus('lite');
+      return;
+    }
+
     if (!apiUrl) {
       setStatus('unconfigured');
       return;
@@ -107,7 +112,7 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
       });
 
     return () => controller.abort();
-  }, [apiUrl, currentYear, username]);
+  }, [apiUrl, currentYear, litePerformanceMode, username]);
 
   const monthMarkers = useMemo(() => getMonthMarkers(calendar?.weeks), [calendar]);
 
@@ -126,7 +131,11 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
         </a>
       </div>
 
-      {status === 'loading' ? (
+      {status === 'lite' ? (
+        <p className="github-state">
+          {ui.githubLiteMode ?? 'GitHub activity is available on the profile link.'}
+        </p>
+      ) : status === 'loading' ? (
         <GitHubCalendarSkeleton />
       ) : status === 'ready' && calendar ? (
         <>
