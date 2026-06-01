@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart3, Github, Globe2, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
@@ -13,6 +14,7 @@ export default function Hero({
   onThemeToggle,
   litePerformanceMode = false,
 }) {
+  const [isProfileImageLoaded, setIsProfileImageLoaded] = useState(false);
   const hero = content.heroData ?? heroData;
   const areas = content.focusAreas ?? focusAreas;
   const ui = content.ui ?? {};
@@ -127,7 +129,10 @@ export default function Hero({
         </div>
 
         <motion.div variants={fadeInUp} className="hero-card profile-card">
-          <div className="profile-image-container">
+          <div
+            className={`profile-image-container${isProfileImageLoaded ? ' is-loaded' : ''}`}
+            style={{ '--profile-reflection-image': `url(${hero.profileImage})` }}
+          >
             <img
               src={hero.profileImage}
               alt={hero.profileImageAlt}
@@ -136,7 +141,10 @@ export default function Hero({
               height="720"
               decoding="async"
               fetchPriority="high"
+              onLoad={() => setIsProfileImageLoaded(true)}
+              onError={() => setIsProfileImageLoaded(true)}
             />
+            <div className="profile-dots"></div>
             <div className="profile-glow"></div>
           </div>
           <div className="profile-card-content">

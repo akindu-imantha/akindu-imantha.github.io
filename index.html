@@ -13,6 +13,13 @@
     <title>Akindu Imantha | Portfolio</title>
   </head>
   <body>
+    <script>
+      (() => {
+        const storedTheme = localStorage.getItem('portfolio-theme');
+        document.documentElement.dataset.theme =
+          storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

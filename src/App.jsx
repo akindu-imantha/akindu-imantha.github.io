@@ -10,13 +10,18 @@ const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
 const GradeAdminPage = lazy(() => import('./components/GradeAdminPage'));
 const GradesPage = lazy(() => import('./components/GradesPage'));
 
+function getStoredTheme() {
+  const storedTheme = localStorage.getItem('portfolio-theme');
+  return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
+}
+
 function PageLoading() {
   return <main className="page-loading" aria-live="polite">Loading...</main>;
 }
 
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
-  const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') ?? 'dark');
+  const [theme, setTheme] = useState(getStoredTheme);
   const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
   const [activeTab, setActiveTab] = useState(() =>
