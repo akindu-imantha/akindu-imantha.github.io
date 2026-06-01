@@ -3433,7 +3433,8 @@ a {
   }
 
   .skill-orb-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    gap: 0.85rem 0.65rem;
   }
 
   .skill-meter,
@@ -3446,18 +3447,16 @@ a {
   }
 
   .skill-meter-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem 0.65rem;
-  }
-
-  @media (max-width: 480px) {
-    .skill-meter-list {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
   }
 
   .skill-meter-label {
     font-size: 0.82rem;
+  }
+
+  .skill-meter-name span {
+    white-space: normal;
   }
 
   .skill-meter-value {
@@ -3470,13 +3469,40 @@ a {
   }
 
   .skill-orb-ring {
-    width: 84px;
-    height: 84px;
+    width: 76px;
+    height: 76px;
   }
 
   .skill-orb-core {
-    width: 68px;
-    height: 68px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .skill-orb-core svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .skill-orb > span {
+    max-width: 14ch;
+    font-size: 0.82rem;
+  }
+
+  .creative-profile-card {
+    gap: 1rem;
+  }
+
+  .creative-profile-actions {
+    width: 100%;
+  }
+
+  .skill-list {
+    gap: 0.55rem;
+  }
+
+  .skill-pill {
+    padding: 0.65rem 0.78rem;
+    font-size: 0.84rem;
   }
 
   .cmd-arrow {
