@@ -47,12 +47,13 @@ export default function Hero({
           </a>
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle nav-toggle--language"
             onClick={onLanguageToggle}
-            aria-label={ui.languageToggleLabel ?? 'Toggle language'}
+            aria-label={language === 'en' ? 'Current language: English. Switch to Sinhala' : 'Current language: Sinhala. Switch to English'}
+            title={language === 'en' ? 'English' : 'Sinhala'}
           >
             <Globe2 size={16} />
-            <span>{language === 'en' ? 'සිං' : 'EN'}</span>
+            <span className="nav-language-code">{language === 'en' ? 'EN' : 'සිං'}</span>
           </button>
           <button
             type="button"
