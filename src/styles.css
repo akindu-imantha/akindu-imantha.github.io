@@ -2990,11 +2990,14 @@ a {
     align-items: center;
     justify-content: space-between;
     top: 0.65rem;
-    padding: 0.45rem 0.5rem 0.45rem 1rem;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0.38rem 0.42rem 0.38rem 0.85rem;
     background: rgba(12, 15, 19, 0.74);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border);
+    overflow: hidden;
   }
 
   [data-theme='light'] .topbar {
@@ -3002,7 +3005,12 @@ a {
   }
 
   .brand {
-    font-size: 0.82rem;
+    min-width: 0;
+    max-width: calc(100vw - 12.5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.78rem;
     letter-spacing: 0.04em;
     font-weight: 700;
   }
@@ -3017,13 +3025,15 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.35rem;
+    gap: 0.26rem;
+    flex: 0 0 auto;
     color: var(--text-muted);
   }
 
   .nav-terminal-link {
-    font-size: 0.76rem;
-    padding: 0.4rem 0.65rem;
+    font-size: 0.68rem;
+    line-height: 1;
+    padding: 0.34rem 0.52rem;
     border-radius: 999px;
     background: var(--accent-glow);
     border: 1px solid rgba(139, 92, 246, 0.2);
@@ -3038,8 +3048,8 @@ a {
   }
 
   .nav-toggle {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     min-height: auto;
     padding: 0;
     border-radius: 50%;
@@ -3051,10 +3061,16 @@ a {
 
   .nav-toggle--language {
     width: auto;
-    min-width: 50px;
-    padding: 0 0.5rem;
-    gap: 0.25rem;
+    min-width: 44px;
+    padding: 0 0.38rem;
+    gap: 0.18rem;
     border-radius: 999px;
+  }
+
+  .nav-toggle svg,
+  .nav-icon-link svg {
+    width: 13px;
+    height: 13px;
   }
 
   .nav-toggle span {
@@ -3063,16 +3079,16 @@ a {
 
   .nav-toggle--language .nav-language-code {
     display: inline;
-    min-width: 1.35rem;
-    font-size: 0.72rem;
+    min-width: 1.15rem;
+    font-size: 0.65rem;
     font-weight: 800;
     line-height: 1;
     text-align: center;
   }
 
   .nav-icon-link {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
