@@ -4563,22 +4563,35 @@ a {
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
     top: auto !important;
     width: auto !important;
-    max-height: min(68svh, 520px);
-    padding: 0.95rem;
+    max-height: min(70svh, 520px);
+    padding: 0.8rem;
+    gap: 0.65rem;
+  }
+
+  .guide-popover-header {
+    gap: 0.5rem;
+  }
+
+  .guide-popover-header span {
+    font-size: 0.68rem;
+    padding: 0.24rem 0.45rem;
   }
 
   .guide-popover h2 {
-    padding-right: 2rem;
-    font-size: 1.12rem;
+    padding-right: 1rem;
+    font-size: 1.02rem;
+    line-height: 1.25;
   }
 
   .guide-popover p {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
   }
 
   .guide-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
   }
 
   .guide-actions .guide-action:first-child,
@@ -4590,6 +4603,18 @@ a {
     width: 100%;
     justify-content: center;
     white-space: normal;
+    min-height: 34px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .guide-progress {
+    gap: 0.3rem;
+  }
+
+  .guide-progress-dot {
+    min-width: 18px;
+    min-height: 14px;
   }
 
   .guide-target-active {
