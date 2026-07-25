@@ -77,6 +77,7 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
 
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let measureTimer;
+    let retryCount = 0;
 
     const measure = () => {
       window.cancelAnimationFrame(frameRef.current);
@@ -85,6 +86,12 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
         const next = target?.getBoundingClientRect();
 
         if (!next) {
+          if (retryCount < 6) {
+            retryCount += 1;
+            measureTimer = window.setTimeout(measure, 200);
+            return;
+          }
+
           setRect(fallbackRect);
           return;
         }
@@ -158,7 +165,7 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
 
   const openGrades = () => {
     onClose();
-    window.location.hash = '#grades-sltc';
+    window.location.hash = '#grades';
   };
 
   const handleTouchEnd = (event) => {
