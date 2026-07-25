@@ -97,6 +97,59 @@ body::after {
   opacity: 0.72;
 }
 
+/* When the guide is open over Grades, stop background animations and filters to avoid global blur */
+body.guide-open-grades::before,
+body.guide-open-grades::after {
+  animation: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 0.78 !important;
+}
+
+/* Remove backdrop-filter and heavy shadows for common Grades-area surfaces when guide is open, but keep the guide popover's glass */
+body.guide-open-grades .hero-card,
+body.guide-open-grades .about-card,
+body.guide-open-grades .project-card,
+body.guide-open-grades .timeline-item,
+body.guide-open-grades .contact-panel,
+body.guide-open-grades .console-card,
+body.guide-open-grades .interactive-console,
+body.guide-open-grades .console-sidebar,
+body.guide-open-grades .console-content-area {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep a subtle scrim blur to gently separate the guide from the page without blurring the Grades content */
+body.guide-open-grades .guide-scrim {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  background: rgba(2, 6, 23, 0.56) !important;
+}
+
+/* Strong final override: absolutely disable any backdrop blur for the guide scrim
+   when the Grades guide is active. Placed at EOF to override earlier rules. */
+html body.guide-open-grades .guide-scrim,
+html body.guide-open-grades .guide-scrim * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Ultimate safeguard: remove any filters/backdrop-filters from the Grades page and all descendants
+   (including pseudo elements) while the Grades guide is active. Keeps guide popover and spotlight unaffected. */
+body.guide-open-grades .grades-page,
+body.guide-open-grades .grades-page *,
+body.guide-open-grades .grades-page *::before,
+body.guide-open-grades .grades-page *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
 [data-theme='light'] body::before {
   background:
     linear-gradient(115deg, transparent 0 34%, rgba(37, 99, 235, 0.14) 40%, transparent 46% 100%),
@@ -1455,6 +1508,40 @@ a {
   padding: clamp(1rem, 3vw, 2rem) 0 4rem;
 }
 
+.grades-page .interactive-console,
+.grades-page .console-sidebar,
+.grades-page .console-content-area,
+.grades-page .console-header,
+.grades-page .grades-back-link,
+.grades-page .grades-search-box,
+.grades-page .grades-card,
+.grades-page .semester-heading,
+.grades-page .grades-table,
+.grades-page .grades-row,
+.grades-page .grades-summary-pills span {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.grades-page .interactive-console,
+.grades-page .console-sidebar {
+  box-shadow: none !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .grades-page .interactive-console,
+  .grades-page .console-sidebar,
+  .grades-page .console-content-area,
+  .grades-page .grades-search-box,
+  .grades-page .grades-card,
+  .grades-page .semester-heading,
+  .grades-page .grades-table,
+  .grades-page .grades-row {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
 .grades-page-shell {
   display: grid;
   gap: 1.5rem;
@@ -1511,13 +1598,15 @@ a {
   width: min(100%, 420px);
   padding: 0.7rem 0.95rem;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 [data-theme='light'] .grades-search-box {
-  background: rgba(255, 255, 255, 0.82);
-  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(15, 23, 42, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .grades-search-icon {
@@ -1532,6 +1621,12 @@ a {
   color: var(--heading-color);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.grades-search-input::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .grades-search-empty {
@@ -1544,6 +1639,13 @@ a {
   display: grid;
   gap: 1.1rem;
   min-width: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .grades-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(15, 23, 42, 0.12);
 }
 
 .grades-card--wide {
@@ -1615,8 +1717,12 @@ a {
   gap: 1rem;
   padding: 0.8rem 0.95rem;
   border-radius: 14px;
-  border: 1px solid rgba(125, 211, 252, 0.2);
-  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(14, 165, 233, 0.14);
+}
+
+[data-theme='light'] .semester-heading {
+  background: rgba(14, 165, 233, 0.09);
 }
 
 .semester-heading h4 {
@@ -3987,3 +4093,655 @@ a {
 [data-performance='lite'] .nav-icon-link:hover {
   transform: none;
 }
+
+.guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(3, 7, 18, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.guide-panel {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: min(760px, calc(100svh - 2.5rem));
+  overflow: auto;
+  padding: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(139, 92, 246, 0.16), transparent 38%),
+    rgba(9, 12, 18, 0.94);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
+}
+
+[data-theme='light'] .guide-panel {
+  border-color: rgba(15, 23, 42, 0.12);
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.12), transparent 38%),
+    rgba(255, 255, 255, 0.96);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.18);
+}
+
+.guide-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--heading-color);
+  cursor: pointer;
+}
+
+.guide-header {
+  display: grid;
+  gap: 0.65rem;
+  padding-right: 2.75rem;
+}
+
+.guide-kicker {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--accent-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.guide-header h2 {
+  margin: 0;
+  color: var(--heading-color);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.75rem, 5vw, 2.6rem);
+  line-height: 1.05;
+}
+
+.guide-header p,
+.guide-step-copy p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.guide-progress {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 1.45rem 0 1rem;
+}
+
+.guide-progress-dot {
+  height: 7px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.28);
+  cursor: pointer;
+}
+
+.guide-progress-dot.active {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+}
+
+.guide-step-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  min-height: 190px;
+  padding: 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+[data-theme='light'] .guide-step-card {
+  background: rgba(248, 250, 252, 0.82);
+}
+
+.guide-step-icon {
+  display: inline-flex;
+  width: 54px;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 16px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--accent-soft);
+}
+
+.guide-step-copy {
+  display: grid;
+  align-content: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.guide-step-copy span {
+  color: var(--accent-soft);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.guide-step-copy h3 {
+  margin: 0;
+  color: var(--heading-color);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1.15;
+}
+
+.guide-step-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.guide-step-list span {
+  max-width: 100%;
+  padding: 0.42rem 0.62rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.2;
+}
+
+.guide-step-list span.active {
+  border-color: rgba(139, 92, 246, 0.34);
+  color: var(--heading-color);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.guide-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.guide-action {
+  display: inline-flex;
+  width: auto;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.guide-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .guide-overlay {
+    align-items: end;
+    padding: 0.75rem;
+  }
+
+  .guide-panel {
+    max-height: calc(100svh - 1.5rem);
+    padding: 1rem;
+    border-radius: 20px;
+  }
+
+  .guide-header {
+    gap: 0.5rem;
+  }
+
+  .guide-step-card {
+    grid-template-columns: 1fr;
+    min-height: 230px;
+    gap: 0.85rem;
+  }
+
+  .guide-step-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .guide-step-list {
+    display: none;
+  }
+
+  .guide-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .guide-actions .guide-action:first-child {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .guide-action {
+    width: 100%;
+  }
+}
+.guide-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none;
+}
+
+[data-theme='light'] .guide-scrim {
+  background: rgba(248, 250, 252, 0.64);
+}
+
+.guide-spotlight {
+  position: fixed;
+  z-index: 122;
+  border: 1px solid rgba(125, 211, 252, 0.9);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 0 0 9999px rgba(2, 6, 23, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 0 30px rgba(59, 130, 246, 0.24);
+  pointer-events: none;
+}
+
+[data-theme='light'] .guide-spotlight {
+  border-color: rgba(37, 99, 235, 0.75);
+  background: rgba(37, 99, 235, 0.06);
+  box-shadow:
+    0 0 0 9999px rgba(248, 250, 252, 0.62),
+    0 0 0 1px rgba(37, 99, 235, 0.08) inset,
+    0 0 28px rgba(37, 99, 235, 0.16);
+}
+
+.guide-target-active {
+  position: relative !important;
+  z-index: 121 !important;
+  outline: 2px solid rgba(96, 165, 250, 0.9);
+  outline-offset: 7px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 0 28px rgba(59, 130, 246, 0.28) !important;
+  animation: guide-target-pulse 1.8s ease-in-out infinite;
+}
+
+[data-theme='light'] .guide-target-active {
+  outline-color: rgba(37, 99, 235, 0.9);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 0 24px rgba(37, 99, 235, 0.18) !important;
+}
+
+.guide-popover {
+  position: fixed;
+  z-index: 130;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem 0.85rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(9, 12, 18, 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  color: var(--heading-color);
+  transition: transform 200ms ease, opacity 200ms ease, box-shadow 200ms ease;
+}
+
+[data-theme='light'] .guide-popover {
+  border-color: rgba(15, 23, 42, 0.13);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+}
+
+.guide-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-right: 2.5rem;
+}
+
+.guide-popover-header span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.14);
+  color: var(--accent-soft);
+  font-size: 0.70rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.guide-popover h2 {
+  margin: 0;
+  padding-right: 1.5rem;
+  font-size: 1.18rem;
+  line-height: 1.2;
+}
+
+.guide-popover p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* Make guide buttons clearly visible and interactive in both themes */
+.guide-popover .primary-button,
+.guide-popover .secondary-button {
+  min-width: 96px;
+  padding: 0.6rem 0.95rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.guide-popover .secondary-button {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .guide-popover .secondary-button {
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.guide-popover .primary-button {
+  color: #fff;
+}
+
+
+.guide-step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), rgba(255, 255, 255, 0.2));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  color: white;
+}
+
+[data-theme='light'] .guide-step-icon {
+  background: linear-gradient(135deg, var(--accent), #93c5fd);
+}
+
+.guide-close {
+  position: absolute;
+  top: 0.72rem;
+  right: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.16);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.guide-close:hover {
+  background: rgba(96, 165, 250, 0.16);
+  color: var(--heading-color);
+  transform: scale(1.04);
+}
+
+.guide-progress {
+  display: flex;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.guide-progress-dot {
+  flex: 1 1 0;
+  min-width: 22px;
+  min-height: 18px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.24);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.guide-progress-dot:hover {
+  transform: translateY(-1px);
+}
+
+.guide-progress-dot.active {
+  background: linear-gradient(90deg, var(--accent), rgba(125, 211, 252, 0.8));
+  transform: scale(1.04);
+}
+
+.guide-action {
+  min-height: 36px;
+  white-space: nowrap;
+  padding: 0.55rem 0.85rem;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.guide-action:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes guide-target-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.01);
+  }
+}
+
+@media (max-width: 640px) {
+  .guide-popover {
+    left: 0.75rem !important;
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    top: auto !important;
+    width: auto !important;
+    max-height: min(68svh, 520px);
+    padding: 0.95rem;
+  }
+
+  .guide-popover h2 {
+    padding-right: 2rem;
+    font-size: 1.12rem;
+  }
+
+  .guide-popover p {
+    font-size: 0.9rem;
+  }
+
+  .guide-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .guide-actions .guide-action:first-child,
+  .guide-actions .guide-action:last-child:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  .guide-action {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .guide-target-active {
+    outline-offset: 5px;
+  }
+}
+
+/* Responsive first-load guide and education grade hints */
+.education-grade-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.education-grade-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.35rem 0.58rem;
+  border: 1px solid rgba(125, 211, 252, 0.24);
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.09);
+  color: var(--heading-color);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.guide-scrim {
+  background: rgba(2, 6, 23, 0.58);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.guide-spotlight {
+  border-radius: 14px;
+  will-change: top, left, width, height, transform;
+}
+
+/* When the guide opens while viewing the Grades page, avoid blurring the page.
+   Use the spotlight's large box-shadow to dim everything except the target. */
+body.guide-open-grades .guide-scrim {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(2, 6, 23, 0.64) !important;
+}
+
+/* Ensure specific Grades panels never blur when the guide is open */
+body.guide-open-grades .grades-page,
+body.guide-open-grades .grades-page-shell,
+body.guide-open-grades .grades-grid,
+body.guide-open-grades .grades-card,
+body.guide-open-grades .grades-card--wide,
+body.guide-open-grades .grades-table,
+body.guide-open-grades .grades-row,
+body.guide-open-grades .grades-row--module,
+body.guide-open-grades .semester-heading,
+body.guide-open-grades .grades-search-box,
+body.guide-open-grades .grades-search-input,
+body.guide-open-grades .grades-summary,
+body.guide-open-grades .grades-summary-pills {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.guide-popover {
+  box-sizing: border-box;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100svh - 2rem);
+  overflow: auto;
+  border-radius: 14px;
+  will-change: transform, opacity;
+  touch-action: pan-y;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease;
+}
+
+.guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.guide-action.primary-button {
+  margin-left: auto;
+  order: 99;
+}
+
+.guide-action {
+  min-height: 36px;
+  white-space: nowrap;
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, opacity 180ms ease;
+  will-change: transform, opacity;
+}
+
+.guide-action:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.guide-action:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-spotlight,
+  .guide-popover,
+  .guide-scrim {
+    transition: none !important;
+  }
+}
+
+/* Final safety overrides: ensure Grades view does not blur globally when guide is open */
+body.guide-open-grades::before,
+body.guide-open-grades::after {
+  animation: none !important;
+  transition: none !important;
+  -webkit-animation: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 0.88 !important;
+}
+
+/* Remove glass effects from main page surfaces while keeping the guide popover glass */
+body.guide-open-grades .hero-card,
+body.guide-open-grades .about-card,
+body.guide-open-grades .project-card,
+body.guide-open-grades .timeline-item,
+body.guide-open-grades .contact-panel,
+body.guide-open-grades .console-card,
+body.guide-open-grades .interactive-console,
+body.guide-open-grades .console-sidebar,
+body.guide-open-grades .console-content-area,
+body.guide-open-grades .profile-card,
+body.guide-open-grades .page-shell {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep a subtle scrim blur to separate guide from page without blurring content */
+body.guide-open-grades .guide-scrim {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  background: rgba(2, 6, 23, 0.56) !important;
+}
+

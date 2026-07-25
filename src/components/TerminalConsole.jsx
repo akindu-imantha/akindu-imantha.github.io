@@ -43,6 +43,7 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
     creativeProfile: content.creativeProfile,
     githubActivity: content.githubActivity,
     education: content.education,
+    academicGrades: content.academicGrades,
     aboutCards: content.aboutCards,
     sections: content.sections,
     ui: content.ui,
@@ -51,7 +52,7 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
   return (
     <main id="console" className="console-wrapper">
       <motion.div
-        className="interactive-console"
+        className="interactive-console" data-tour="terminal"
         variants={terminalScale}
         initial="hidden"
         whileInView="visible"

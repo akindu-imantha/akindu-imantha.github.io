@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, Github, Globe2, Moon, Sun } from 'lucide-react';
+import { BarChart3, Github, Globe2, HelpCircle, Moon, Sun } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
 import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
@@ -13,6 +13,7 @@ export default function Hero({
   onLanguageToggle,
   onThemeToggle,
   litePerformanceMode = false,
+  onGuideOpen,
 }) {
   const [isProfileImageLoaded, setIsProfileImageLoaded] = useState(false);
   const hero = content.heroData ?? heroData;
@@ -23,7 +24,7 @@ export default function Hero({
   return (
     <header className="hero">
       <motion.nav
-        className="topbar"
+        className="topbar" data-tour="topbar"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -37,6 +38,15 @@ export default function Hero({
           >
             {ui.terminal ?? 'Terminal'}
           </a>
+          <button
+            type="button"
+            className="nav-toggle nav-toggle--icon"
+            onClick={onGuideOpen}
+            aria-label="Open portfolio guide"
+            title="Guide"
+          >
+            <HelpCircle size={16} />
+          </button>
           <a
             href="#analytics"
             className="nav-icon-link"
@@ -53,7 +63,7 @@ export default function Hero({
             title={language === 'en' ? 'English' : 'Sinhala'}
           >
             <Globe2 size={16} />
-            <span className="nav-language-code">{language === 'en' ? 'EN' : 'සිං'}</span>
+            <span className="nav-language-code">{language === 'en' ? 'EN' : '\u0dc3\u0dd2\u0d82'}</span>
           </button>
           <button
             type="button"
@@ -90,7 +100,7 @@ export default function Hero({
             ))}
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="hero-actions">
+          <motion.div variants={fadeInUp} className="hero-actions" data-tour="hero-actions">
             <a
               href={hero.primaryAction.href}
               className="primary-button"
@@ -164,3 +174,5 @@ export default function Hero({
     </header>
   );
 }
+
+

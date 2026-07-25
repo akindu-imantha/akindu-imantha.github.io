@@ -83,8 +83,8 @@ export default function ConsoleSidebar({
 
   return (
     <>
-      <div className="console-sidebar">
-        <div className="search-bar-container">
+      <div className="console-sidebar" data-tour="sidebar">
+        <div className="search-bar-container" data-tour="search">
           <Search size={16} className="search-icon" />
           <input
             type="text"

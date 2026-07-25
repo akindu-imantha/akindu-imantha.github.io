@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import Hero from './components/Hero';
+import PortfolioGuide from './components/PortfolioGuide';
 import ScrollHint from './components/ScrollHint';
 import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
@@ -24,6 +25,9 @@ function App() {
   const [theme, setTheme] = useState(getStoredTheme);
   const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
+  const [isGuideOpen, setIsGuideOpen] = useState(
+    () => localStorage.getItem('portfolio-guide-seen') !== 'true',
+  );
   const [activeTab, setActiveTab] = useState(() =>
     window.location.hash.startsWith('#grades') ? 'education' : 'about',
   );
@@ -87,6 +91,11 @@ function App() {
     setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
   };
 
+  const closeGuide = () => {
+    localStorage.setItem('portfolio-guide-seen', 'true');
+    setIsGuideOpen(false);
+  };
+
   return (
     <div className="page-shell">
       {isGradeAdminPage ? (
@@ -110,6 +119,7 @@ function App() {
             onLanguageToggle={toggleLanguage}
             onThemeToggle={toggleTheme}
             litePerformanceMode={litePerformanceMode}
+            onGuideOpen={() => setIsGuideOpen(true)}
           />
           <TerminalConsole
             content={content}
@@ -117,6 +127,12 @@ function App() {
             onTabChange={setActiveTab}
           />
           <ScrollHint label={content.ui.scrollHint} />
+          <PortfolioGuide
+            isOpen={isGuideOpen}
+            language={language}
+            onClose={closeGuide}
+            onTabChange={setActiveTab}
+          />
         </>
       )}
     </div>
@@ -124,3 +140,4 @@ function App() {
 }
 
 export default App;
+
