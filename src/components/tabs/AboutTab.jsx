@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { aboutCards } from '../../data/portfolioData';
+import { PortfolioImageBar } from '../Hero';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -37,3 +38,4 @@ export default function AboutTab({ data = {} }) {
     </motion.div>
   );
 }
+

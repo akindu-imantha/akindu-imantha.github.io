@@ -98,31 +98,31 @@ export const githubActivity = {
 };
 
 export const imageBar = {
-  title: 'Visual highlights',
-  text: 'A quick look at project, academic, and community work.',
+  title: 'Portfolio moments',
+  text: 'Academic, community, project, and design highlights in one quick visual strip.',
   items: [
     {
-      src: './images/optimized/hospital-management-thumbnail-900.jpg',
-      alt: 'Hospital Management System project preview',
-      label: 'Hospital system',
+      src: './images/highlights/moratuwa-awards-2025.jpg',
+      alt: 'Akindu Imantha receiving a Diploma in Information Technology award at University of Moratuwa.',
+      label: 'Moratuwa award',
       href: '#console',
     },
     {
-      src: './images/optimized/ylca-team-1200.jpg',
-      alt: 'Youth Leadership for Climate Action team',
-      label: 'Climate action',
+      src: './images/highlights/ylca-british-council.jpg',
+      alt: 'Youth Leadership for Climate Action programme participation with British Council certificate.',
+      label: 'Climate leadership',
       href: '#console',
     },
     {
-      src: './images/optimized/unicef-cash-plus-poster-900.jpg',
-      alt: 'UNICEF Cash Plus project poster',
-      label: 'Community work',
+      src: './images/highlights/ewaste-management-preview.jpg',
+      alt: 'E-Waste Management platform preview on laptop and mobile screens.',
+      label: 'E-waste platform',
       href: '#console',
     },
     {
-      src: './images/optimized/ylca-poster-900.jpg',
-      alt: 'Youth Leadership for Climate Action project poster',
-      label: 'Design work',
+      src: './images/highlights/art-cafe-design.jpg',
+      alt: 'Art Cafe graphic design agency poster created by Akindu Imantha.',
+      label: 'Graphic design',
       href: 'https://www.behance.net/akinduimantha',
       external: true,
     },
@@ -868,3 +868,4 @@ export const portfolioContent = {
   en: englishContent,
   si: cleanSinhalaContent,
 };
+

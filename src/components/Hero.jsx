@@ -6,12 +6,12 @@ import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
-function PortfolioImageBar({ data }) {
+export function PortfolioImageBar({ data, className = '' }) {
   if (!data?.items?.length) return null;
 
   return (
     <motion.section
-      className="portfolio-image-bar"
+      className={`portfolio-image-bar${className ? ` ${className}` : ''}`}
       variants={fadeInUp}
       initial="hidden"
       animate="visible"
@@ -220,5 +220,6 @@ export default function Hero({
     </header>
   );
 }
+
 
 
