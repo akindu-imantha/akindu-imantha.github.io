@@ -6,6 +6,51 @@ import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
+function PortfolioImageBar({ data }) {
+  if (!data?.items?.length) return null;
+
+  return (
+    <motion.section
+      className="portfolio-image-bar"
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      aria-label={data.title}
+    >
+      <div className="portfolio-image-bar-copy">
+        <span>{data.title}</span>
+        <p>{data.text}</p>
+      </div>
+      <div className="portfolio-image-strip">
+        {data.items.map((item) => {
+          const content = (
+            <>
+              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+              <span>{item.label}</span>
+            </>
+          );
+
+          return item.href ? (
+            <a
+              key={`${item.src}-${item.label}`}
+              href={item.href}
+              className="portfolio-image-tile"
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noreferrer' : undefined}
+            >
+              {content}
+            </a>
+          ) : (
+            <div key={`${item.src}-${item.label}`} className="portfolio-image-tile">
+              {content}
+            </div>
+          );
+        })}
+      </div>
+    </motion.section>
+  );
+}
+
 export default function Hero({
   content = { heroData, focusAreas, ui: { terminal: 'Terminal' } },
   language = 'en',
@@ -171,6 +216,7 @@ export default function Hero({
           </div>
         </motion.div>
       </motion.div>
+      <PortfolioImageBar data={content.imageBar} />
     </header>
   );
 }

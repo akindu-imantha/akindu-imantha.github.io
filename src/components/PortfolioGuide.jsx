@@ -51,10 +51,15 @@ function getTipStyle(rect) {
   };
 }
 
+function getIsCompactGuide() {
+  return window.matchMedia?.('(max-width: 640px)').matches ?? window.innerWidth <= 640;
+}
+
 export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTabChange }) {
   const copy = copies[language] ?? copies.en;
   const [stepIndex, setStepIndex] = useState(0);
   const [rect, setRect] = useState(fallbackRect);
+  const [isCompactGuide, setIsCompactGuide] = useState(() => getIsCompactGuide());
   const frameRef = useRef(0);
   const touchStartRef = useRef(null);
   const step = copy.steps[stepIndex];
@@ -68,12 +73,23 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
   }, [isOpen]);
 
   useEffect(() => {
+    const updateCompactGuide = () => setIsCompactGuide(getIsCompactGuide());
+    updateCompactGuide();
+    window.addEventListener('resize', updateCompactGuide);
+    return () => window.removeEventListener('resize', updateCompactGuide);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen || !step.targetTab) return;
     onTabChange?.(step.targetTab);
   }, [isOpen, onTabChange, step.targetTab]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
+    if (isCompactGuide) {
+      setRect(fallbackRect);
+      return undefined;
+    }
 
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let measureTimer;
@@ -120,14 +136,15 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
       window.removeEventListener('resize', measure);
       window.removeEventListener('scroll', measure);
     };
-  }, [isOpen, selector, step.targetTab]);
+  }, [isCompactGuide, isOpen, selector, step.targetTab]);
 
   useEffect(() => {
+    if (isCompactGuide) return undefined;
     if (!isOpen) return undefined;
     const target = document.querySelector(selector);
     target?.classList.add('guide-target-active');
     return () => target?.classList.remove('guide-target-active');
-  }, [isOpen, selector, rect]);
+  }, [isCompactGuide, isOpen, selector, rect]);
 
   useEffect(() => {
     const updateGradesClass = () => {
@@ -183,18 +200,20 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
       {isOpen ? (
         <>
           <motion.div className="guide-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} aria-hidden="true" />
-          <motion.div
-            className="guide-spotlight"
-            style={{ top: rect.top - 10, left: rect.left - 10, width: rect.width + 20, height: rect.height + 20 }}
-            layout
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={motionTransition}
-            aria-hidden="true"
-          />
+          {!isCompactGuide ? (
+            <motion.div
+              className="guide-spotlight"
+              style={{ top: rect.top - 10, left: rect.left - 10, width: rect.width + 20, height: rect.height + 20 }}
+              layout
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={motionTransition}
+              aria-hidden="true"
+            />
+          ) : null}
           <motion.section
-            className="guide-popover"
+            className={`guide-popover${isCompactGuide ? ' guide-popover--compact' : ''}`}
             style={tipStyle}
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -213,6 +232,11 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
             </div>
             <h2 id="portfolio-guide-title">{title}</h2>
             <p>{text}</p>
+            {isCompactGuide ? (
+              <div className="guide-mobile-current">
+                <span>{title}</span>
+              </div>
+            ) : null}
             <div className="guide-progress" aria-label={`Step ${stepIndex + 1} of ${copy.steps.length}`}>
               {copy.steps.map((guideStep, index) => (
                 <button key={guideStep.title} type="button" className={`guide-progress-dot ${index === stepIndex ? 'active' : ''}`} onClick={() => setStepIndex(index)} aria-label={`Go to step ${index + 1}`} />

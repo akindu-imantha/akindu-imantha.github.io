@@ -97,6 +97,38 @@ export const githubActivity = {
   title: 'GitHub contribution activity',
 };
 
+export const imageBar = {
+  title: 'Visual highlights',
+  text: 'A quick look at project, academic, and community work.',
+  items: [
+    {
+      src: './images/optimized/hospital-management-thumbnail-900.jpg',
+      alt: 'Hospital Management System project preview',
+      label: 'Hospital system',
+      href: '#console',
+    },
+    {
+      src: './images/optimized/ylca-team-1200.jpg',
+      alt: 'Youth Leadership for Climate Action team',
+      label: 'Climate action',
+      href: '#console',
+    },
+    {
+      src: './images/optimized/unicef-cash-plus-poster-900.jpg',
+      alt: 'UNICEF Cash Plus project poster',
+      label: 'Community work',
+      href: '#console',
+    },
+    {
+      src: './images/optimized/ylca-poster-900.jpg',
+      alt: 'Youth Leadership for Climate Action project poster',
+      label: 'Design work',
+      href: 'https://www.behance.net/akinduimantha',
+      external: true,
+    },
+  ],
+};
+
 export const education = [
   {
     title: 'Bachelor of Information Technology',
@@ -525,6 +557,7 @@ const englishContent = {
   tools,
   creativeProfile,
   githubActivity,
+  imageBar,
   education,
   academicGrades,
   certifications,
