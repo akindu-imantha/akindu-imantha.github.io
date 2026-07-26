@@ -20,12 +20,30 @@ function PageLoading() {
   return <main className="page-loading" aria-live="polite">Loading...</main>;
 }
 
+const guidePromptCopy = {
+  en: {
+    title: 'Need a quick guide?',
+    text: 'A short walkthrough can show the main sections. You can skip it and browse normally.',
+    start: 'Start guide',
+    dismiss: 'No thanks',
+  },
+  si: {
+    title: 'Quick guide ekak onida?',
+    text: 'Main sections tika ikmanata pennanna puluwan. One nathnam normal widiyata browse karanna.',
+    start: 'Guide eka start',
+    dismiss: 'Epa',
+  },
+};
+
 function App() {
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
   const [theme, setTheme] = useState(getStoredTheme);
   const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [showGuidePrompt, setShowGuidePrompt] = useState(
+    () => localStorage.getItem('portfolio-guide-seen') !== 'true',
+  );
   const [activeTab, setActiveTab] = useState(() =>
     window.location.hash.startsWith('#grades') ? 'education' : 'about',
   );
@@ -92,7 +110,20 @@ function App() {
   const closeGuide = () => {
     localStorage.setItem('portfolio-guide-seen', 'true');
     setIsGuideOpen(false);
+    setShowGuidePrompt(false);
   };
+
+  const startGuide = () => {
+    setShowGuidePrompt(false);
+    setIsGuideOpen(true);
+  };
+
+  const dismissGuidePrompt = () => {
+    localStorage.setItem('portfolio-guide-seen', 'true');
+    setShowGuidePrompt(false);
+  };
+
+  const guidePrompt = guidePromptCopy[language] ?? guidePromptCopy.en;
 
   return (
     <div className="page-shell">
@@ -125,6 +156,22 @@ function App() {
             onTabChange={setActiveTab}
           />
           <ScrollHint label={content.ui.scrollHint} />
+          {showGuidePrompt && !isGuideOpen ? (
+            <aside className="guide-prompt" aria-labelledby="guide-prompt-title">
+              <div>
+                <h2 id="guide-prompt-title">{guidePrompt.title}</h2>
+                <p>{guidePrompt.text}</p>
+              </div>
+              <div className="guide-prompt-actions">
+                <button type="button" className="secondary-button guide-prompt-action" onClick={dismissGuidePrompt}>
+                  {guidePrompt.dismiss}
+                </button>
+                <button type="button" className="primary-button guide-prompt-action" onClick={startGuide}>
+                  {guidePrompt.start}
+                </button>
+              </div>
+            </aside>
+          ) : null}
           <PortfolioGuide
             isOpen={isGuideOpen}
             language={language}
