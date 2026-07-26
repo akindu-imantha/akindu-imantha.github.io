@@ -25,9 +25,7 @@ function App() {
   const [theme, setTheme] = useState(getStoredTheme);
   const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
-  const [isGuideOpen, setIsGuideOpen] = useState(
-    () => localStorage.getItem('portfolio-guide-seen') !== 'true',
-  );
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(() =>
     window.location.hash.startsWith('#grades') ? 'education' : 'about',
   );
