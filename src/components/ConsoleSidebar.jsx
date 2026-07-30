@@ -29,6 +29,7 @@ export default function ConsoleSidebar({
 
   const handleMobileTabChange = (tabId) => {
     onTabChange(tabId);
+    onSearchChange('');
     requestAnimationFrame(scrollConsoleIntoView);
   };
 

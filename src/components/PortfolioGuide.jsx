@@ -86,14 +86,28 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
 
   useEffect(() => {
     if (!isOpen) return undefined;
-    if (isCompactGuide) {
-      setRect(fallbackRect);
-      return undefined;
-    }
 
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let measureTimer;
     let retryCount = 0;
+
+    const scrollTargetIntoView = (target) => {
+      if (!target) return;
+      const isTopbar = target.matches('[data-tour="topbar"]') || target.classList.contains('topbar');
+      const targetY = target.getBoundingClientRect().top + window.scrollY;
+      const offset = isTopbar ? Math.max(targetY - 96, 0) : Math.max(targetY - window.innerHeight / 2 + target.offsetHeight / 2, 0);
+
+      window.scrollTo({ top: offset, behavior: reducedMotion ? 'auto' : 'smooth' });
+    };
+
+    if (isCompactGuide) {
+      const target = document.querySelector(selector);
+      if (target) {
+        scrollTargetIntoView(target);
+      }
+      setRect(fallbackRect);
+      return undefined;
+    }
 
     const measure = () => {
       window.cancelAnimationFrame(frameRef.current);
@@ -120,7 +134,7 @@ export default function PortfolioGuide({ isOpen, language = 'en', onClose, onTab
       const target = document.querySelector(selector);
 
       if (target) {
-        target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center', inline: 'nearest' });
+        scrollTargetIntoView(target);
       }
 
       measureTimer = window.setTimeout(measure, reducedMotion ? 60 : 360);
