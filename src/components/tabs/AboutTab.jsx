@@ -35,7 +35,8 @@ export default function AboutTab({ data = {} }) {
           </motion.article>
         ))}
       </div>
+
+      <PortfolioImageBar data={data.imageBar} className="portfolio-image-bar--about" />
     </motion.div>
   );
 }
-

@@ -102,25 +102,25 @@ export const imageBar = {
   text: 'Academic, community, project, and design highlights in one quick visual strip.',
   items: [
     {
-      src: './images/highlights/moratuwa-awards-2025.jpg',
+      src: './images/education/university-of-moratuwa-logo.png',
       alt: 'Akindu Imantha receiving a Diploma in Information Technology award at University of Moratuwa.',
       label: 'Moratuwa award',
       href: '#console',
     },
     {
-      src: './images/highlights/ylca-british-council.jpg',
+      src: './images/optimized/ylca-team-1200.jpg',
       alt: 'Youth Leadership for Climate Action programme participation with British Council certificate.',
       label: 'Climate leadership',
       href: '#console',
     },
     {
-      src: './images/highlights/ewaste-management-preview.jpg',
+      src: './images/optimized/hospital-management-thumbnail-900.jpg',
       alt: 'E-Waste Management platform preview on laptop and mobile screens.',
       label: 'E-waste platform',
       href: '#console',
     },
     {
-      src: './images/highlights/art-cafe-design.jpg',
+      src: './images/optimized/ylca-poster-900.jpg',
       alt: 'Art Cafe graphic design agency poster created by Akindu Imantha.',
       label: 'Graphic design',
       href: 'https://www.behance.net/akinduimantha',

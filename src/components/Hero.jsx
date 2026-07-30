@@ -25,7 +25,7 @@ export function PortfolioImageBar({ data, className = '' }) {
         {data.items.map((item) => {
           const content = (
             <>
-              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" onError={(event) => { if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) event.currentTarget.src = item.fallbackSrc; }} />
               <span>{item.label}</span>
             </>
           );
@@ -220,6 +220,7 @@ export default function Hero({
     </header>
   );
 }
+
 
 
 
