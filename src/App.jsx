@@ -47,6 +47,17 @@ function App() {
   const [activeTab, setActiveTab] = useState(() =>
     window.location.hash.startsWith('#grades') ? 'education' : 'about',
   );
+
+  const isMobileViewport = () =>
+    window.matchMedia?.('(max-width: 760px)').matches ?? window.innerWidth <= 760;
+
+  useEffect(() => {
+    if (!showGuidePrompt || isGuideOpen) return;
+    if (isMobileViewport()) {
+      setIsGuideOpen(true);
+    }
+  }, [showGuidePrompt, isGuideOpen]);
+
   const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
   const isGradesPage = currentHash.startsWith('#grades');
   const isAnalyticsPage = currentHash.startsWith('#analytics');

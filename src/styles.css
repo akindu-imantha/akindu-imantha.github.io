@@ -47,6 +47,9 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -56,6 +59,7 @@ body {
   background: #09090b;
   overflow-x: hidden;
   position: relative;
+  font-size: 1rem;
 }
 
 [data-theme='light'] body {
@@ -3337,6 +3341,20 @@ button.portfolio-image-tile {
     animation: none;
     filter: none;
     opacity: 0.28;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.75rem, 6vw, 2.2rem);
+  }
+
+  .intro,
+  .section-heading p,
+  .about-card p,
+  .project-card p,
+  .timeline-item p,
+  .hero-card p {
+    font-size: 0.96rem;
+    line-height: 1.55;
   }
 
   body::after {
