@@ -1,53 +1,135 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { BarChart3, Github, Globe2, HelpCircle, Moon, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { BarChart3, Github, Globe2, HelpCircle, Moon, Sun, X } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
 import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
+function PortfolioImageLightbox({ item, onClose }) {
+  useEffect(() => {
+    if (!item) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [item, onClose]);
+
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <AnimatePresence>
+      {item ? (
+        <motion.div
+          key={`${item.src}-${item.label}`}
+          className="portfolio-image-lightbox-root"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+        >
+          <button
+            type="button"
+            className="portfolio-image-lightbox-scrim"
+            aria-label="Close image preview"
+            onClick={onClose}
+          />
+          <motion.div
+            className="portfolio-image-lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={item.label}
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+          >
+            <button type="button" className="portfolio-image-lightbox-close" onClick={onClose} aria-label="Close">
+              <X size={18} />
+            </button>
+            <img
+              src={item.src}
+              alt={item.alt}
+              onError={(event) => {
+                if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) {
+                  event.currentTarget.src = item.fallbackSrc;
+                }
+              }}
+            />
+            <div className="portfolio-image-lightbox-caption">
+              <span>{item.label}</span>
+              {item.href && item.external ? (
+                <a href={item.href} target="_blank" rel="noreferrer">
+                  View profile
+                </a>
+              ) : null}
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>,
+    document.body,
+  );
+}
+
 export function PortfolioImageBar({ data, className = '' }) {
+  const [activeItem, setActiveItem] = useState(null);
+
   if (!data?.items?.length) return null;
 
   return (
-    <motion.section
-      className={`portfolio-image-bar${className ? ` ${className}` : ''}`}
-      variants={fadeInUp}
-      initial="hidden"
-      animate="visible"
-      aria-label={data.title}
-    >
-      <div className="portfolio-image-bar-copy">
-        <span>{data.title}</span>
-        <p>{data.text}</p>
-      </div>
-      <div className="portfolio-image-strip">
-        {data.items.map((item) => {
-          const content = (
-            <>
-              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" onError={(event) => { if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) event.currentTarget.src = item.fallbackSrc; }} />
-              <span>{item.label}</span>
-            </>
-          );
-
-          return item.href ? (
-            <a
+    <>
+      <motion.section
+        className={`portfolio-image-bar${className ? ` ${className}` : ''}`}
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+        aria-label={data.title}
+      >
+        <div className="portfolio-image-bar-copy">
+          <span>{data.title}</span>
+          <p>{data.text}</p>
+        </div>
+        <div className="portfolio-image-strip">
+          {data.items.map((item) => (
+            <button
               key={`${item.src}-${item.label}`}
-              href={item.href}
+              type="button"
               className="portfolio-image-tile"
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noreferrer' : undefined}
+              aria-label={`View ${item.label}`}
+              onClick={() => {
+                setActiveItem(item);
+                trackEvent('moment_preview_open', { label: item.label });
+              }}
             >
-              {content}
-            </a>
-          ) : (
-            <div key={`${item.src}-${item.label}`} className="portfolio-image-tile">
-              {content}
-            </div>
-          );
-        })}
-      </div>
-    </motion.section>
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading="lazy"
+                decoding="async"
+                onError={(event) => {
+                  if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) {
+                    event.currentTarget.src = item.fallbackSrc;
+                  }
+                }}
+              />
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </motion.section>
+      <PortfolioImageLightbox item={activeItem} onClose={() => setActiveItem(null)} />
+    </>
   );
 }
 
