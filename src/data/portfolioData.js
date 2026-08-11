@@ -568,9 +568,9 @@ const englishContent = {
   sections: {
     about: {
       eyebrow: './about.sh',
-      title: 'A broader profile beyond only frontend development.',
+      title: 'A practical, user-focused IT undergraduate.',
       text:
-        'This section introduces my academic path, technical range, project mindset, and the wider experience I have built through both study and community work.',
+        'I build digital experiences that combine practical software development, creative design, and security-minded thinking.',
     },
     education: {
       eyebrow: './education.sh',
@@ -789,9 +789,9 @@ const cleanSinhalaContent = {
   sections: {
     about: {
       eyebrow: './about.sh',
-      title: 'Frontend development වලට වඩා පුළුල් profile එකක්.',
+      title: 'Practical සහ user-focused IT undergraduate කෙනෙක්.',
       text:
-        'මෙම කොටස මගේ academic path, technical range, project mindset, සහ study/community work හරහා ගොඩනැගූ experience පෙන්වයි.',
+        'Practical software development, creative design, සහ security-minded thinking එකට එක්කරලා digital experiences ගොඩනගනවා.',
     },
     education: {
       eyebrow: './education.sh',

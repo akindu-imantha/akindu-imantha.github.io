@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { certifications, education } from '../../data/portfolioData';
+import { fetchStoredAcademicGrades } from '../../utils/grades';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -27,12 +29,35 @@ function getModuleSummary(academicGrades = [], gradeLink = '') {
 export default function EducationTab({ data = {} }) {
   const educationItems = data.education ?? education;
   const certificationItems = data.certifications ?? certifications;
-  const academicGradeItems = data.academicGrades ?? [];
+  const [storedGrades, setStoredGrades] = useState(null);
+  const academicGradeItems = storedGrades ?? data.academicGrades ?? [];
   const section = data.sections?.education ?? {
     eyebrow: './education.sh',
     title: 'Academic background',
     text: 'My studies combine school qualifications, undergraduate IT learning, and completed courses or certifications that support my technical foundation.',
   };
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadStoredGrades = async () => {
+      try {
+        const nextGrades = await fetchStoredAcademicGrades();
+
+        if (isActive && nextGrades?.length) {
+          setStoredGrades(nextGrades);
+        }
+      } catch {
+        // Keep the portfolio's bundled grades when live storage is unavailable.
+      }
+    };
+
+    loadStoredGrades();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <motion.div

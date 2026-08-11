@@ -314,7 +314,45 @@ a {
   font: inherit;
   font-size: 0.88rem;
   cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
+
+.guide-prompt-action:hover {
+  transform: translateY(-1px);
+}
+
+.guide-prompt-action:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.guide-prompt .secondary-button:hover {
+  border-color: rgba(125, 211, 252, 0.58);
+  background: rgba(125, 211, 252, 0.1);
+}
+
+.guide-prompt .primary-button:hover {
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.34);
+}
+
+/* The first-load guide prompt needs its own dark-theme contrast rules. */
+[data-theme='dark'] .guide-prompt,
+[data-theme='dark'] .guide-prompt h2,
+[data-theme='dark'] .guide-prompt p,
+[data-theme='dark'] .guide-prompt-action {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .guide-prompt {
+  border-color: rgba(148, 163, 184, 0.38);
+  background: linear-gradient(145deg, rgba(20, 28, 43, 0.99), rgba(7, 12, 23, 0.99));
+}
+
+[data-theme='dark'] .guide-prompt .secondary-button {
+  border-color: rgba(148, 163, 184, 0.34);
+  background: rgba(148, 163, 184, 0.12);
+  color: #ffffff;
+}
+
 
 @keyframes scroll-hint-bob {
   0%,
@@ -2555,6 +2593,105 @@ button.portfolio-image-tile {
   contain-intrinsic-size: 700px;
 }
 
+.console-section--about {
+  min-height: 0;
+}
+
+.about-intro {
+  max-width: 700px;
+  margin: 0 !important;
+  text-align: left;
+}
+
+.about-intro h2 {
+  max-width: 20ch;
+  margin: 0.65rem 0 1rem !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.about-intro p {
+  max-width: 58ch;
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.about-showcase {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.about-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-showcase-card,
+.about-approach-card {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.about-showcase-card {
+  min-height: 176px;
+}
+
+.about-showcase-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent-soft);
+}
+
+.about-showcase-card-heading h3 {
+  margin: 0;
+  color: var(--heading-color);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.about-showcase-card ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-showcase-card li {
+  color: var(--text-muted);
+  font-size: 0.96rem;
+}
+
+.about-showcase-card li::before {
+  content: '—';
+  margin-right: 0.5rem;
+  color: var(--accent);
+}
+
+.about-approach-card p {
+  max-width: 64ch;
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+[data-theme='light'] .about-showcase-card,
+[data-theme='light'] .about-approach-card {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
 .console-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -3344,7 +3481,8 @@ button.portfolio-image-tile {
   }
 
   .section-heading h2 {
-    font-size: clamp(1.75rem, 6vw, 2.2rem);
+    font-size: clamp(1.55rem, 6vw, 1.95rem);
+    line-height: 1.16;
   }
 
   .intro,
@@ -3353,8 +3491,8 @@ button.portfolio-image-tile {
   .project-card p,
   .timeline-item p,
   .hero-card p {
-    font-size: 0.96rem;
-    line-height: 1.55;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   body::after {
@@ -3524,8 +3662,8 @@ button.portfolio-image-tile {
   }
 
   .hero-grid {
-    gap: 1.25rem;
-    padding-top: 2rem;
+    gap: 1rem;
+    padding-top: 1.35rem;
     padding-bottom: 1rem;
   }
 
@@ -3588,7 +3726,7 @@ button.portfolio-image-tile {
 
   .hero-copy h1 {
     width: min(100%, 340px);
-    font-size: clamp(2rem, 10.5vw, 2.8rem);
+    font-size: clamp(1.85rem, 9vw, 2.35rem);
     line-height: 1.08;
     margin: -2.15rem auto 0;
     padding: 0 0.85rem;
@@ -3607,7 +3745,7 @@ button.portfolio-image-tile {
   }
 
   .intro {
-    font-size: 0.98rem;
+    font-size: 0.9rem;
     margin-top: 0.7rem;
     position: relative;
     z-index: 4;
@@ -3706,7 +3844,7 @@ button.portfolio-image-tile {
   }
 
   .console-wrapper {
-    padding: 1.25rem 0 4rem;
+    padding: 1rem 0 4rem;
   }
 
   .interactive-console {
@@ -3760,7 +3898,7 @@ button.portfolio-image-tile {
     -webkit-backdrop-filter: none;
     position: relative;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-    max-height: 240px;
+    max-height: none;
     overflow: hidden;
   }
 
@@ -3803,6 +3941,11 @@ button.portfolio-image-tile {
     padding-right: 4.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+  }
+
+  /* On phones, keep one clear navigation control: the bottom section bar. */
+  .cmd-list-shell {
+    display: none;
   }
 
   .cmd-list::-webkit-scrollbar {
@@ -4030,6 +4173,45 @@ button.portfolio-image-tile {
     min-height: auto;
     overflow: visible;
     background: transparent;
+  }
+
+  .console-section--about {
+    padding: 1rem 0;
+  }
+
+  .about-intro h2 {
+    max-width: 17ch;
+    font-size: clamp(1.9rem, 9vw, 2.35rem) !important;
+  }
+
+  .about-intro p {
+    max-width: 38ch;
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .about-showcase {
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .about-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .about-showcase-card,
+  .about-approach-card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .about-showcase-card {
+    min-height: auto;
+  }
+
+  .about-grid--simple {
+    gap: 0.75rem;
   }
 
   .search-bar-container {
@@ -5032,6 +5214,51 @@ body.guide-open-grades .grades-summary-pills {
 
 .guide-action:active {
   transform: scale(0.98);
+}
+
+/* Dark mode guide: keep the walkthrough distinct from the already-dark page. */
+[data-theme='dark'] .guide-scrim {
+  background: rgba(1, 4, 12, 0.78);
+}
+
+[data-theme='dark'] .guide-spotlight {
+  border-color: rgba(125, 211, 252, 0.96);
+  background: rgba(56, 189, 248, 0.09);
+  box-shadow:
+    0 0 0 9999px rgba(1, 4, 12, 0.44),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 0 32px rgba(56, 189, 248, 0.34);
+}
+
+[data-theme='dark'] .guide-popover {
+  border-color: rgba(148, 163, 184, 0.38);
+  background: linear-gradient(145deg, rgba(20, 28, 43, 0.99), rgba(7, 12, 23, 0.99));
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(96, 165, 250, 0.1);
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .guide-popover,
+[data-theme='dark'] .guide-popover *,
+[data-theme='dark'] .guide-close,
+[data-theme='dark'] .guide-close svg {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .guide-popover .secondary-button {
+  border-color: rgba(148, 163, 184, 0.34);
+  background: rgba(148, 163, 184, 0.12);
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .guide-popover .secondary-button:hover:not(:disabled) {
+  border-color: rgba(125, 211, 252, 0.7);
+  background: rgba(56, 189, 248, 0.15);
+}
+
+[data-theme='dark'] .guide-popover .secondary-button:disabled {
+  background: rgba(148, 163, 184, 0.06);
+  color: #ffffff;
+  opacity: 0.5;
 }
 
 @media (prefers-reduced-motion: reduce) {

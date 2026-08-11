@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Hero from './components/Hero';
 import PortfolioGuide from './components/PortfolioGuide';
 import ScrollHint from './components/ScrollHint';
@@ -44,19 +45,15 @@ function App() {
   const [showGuidePrompt, setShowGuidePrompt] = useState(
     () => localStorage.getItem('portfolio-guide-seen') !== 'true',
   );
-  const [activeTab, setActiveTab] = useState(() =>
-    window.location.hash.startsWith('#grades') ? 'education' : 'about',
-  );
-
-  const isMobileViewport = () =>
-    window.matchMedia?.('(max-width: 760px)').matches ?? window.innerWidth <= 760;
-
-  useEffect(() => {
-    if (!showGuidePrompt || isGuideOpen) return;
-    if (isMobileViewport()) {
-      setIsGuideOpen(true);
-    }
-  }, [showGuidePrompt, isGuideOpen]);
+  const getTabFromHash = (hash = window.location.hash) => {
+    const tabId = hash.replace(/^#/, '');
+    return ['about', 'education', 'skills', 'projects', 'experience', 'contact'].includes(tabId)
+      ? tabId
+      : hash.startsWith('#grades')
+        ? 'education'
+        : 'about';
+  };
+  const [activeTab, setActiveTab] = useState(() => getTabFromHash());
 
   const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
   const isGradesPage = currentHash.startsWith('#grades');
@@ -81,9 +78,7 @@ function App() {
   useEffect(() => {
     const syncHash = () => {
       const hash = window.location.hash;
-      if (hash.startsWith('#grades')) {
-        setActiveTab('education');
-      }
+      setActiveTab(getTabFromHash(hash));
       setCurrentHash(hash);
     };
 
@@ -134,6 +129,16 @@ function App() {
     setShowGuidePrompt(false);
   };
 
+  const handleTabChange = (tabId) => {
+    if (!['about', 'education', 'skills', 'projects', 'experience', 'contact'].includes(tabId)) return;
+
+    setActiveTab(tabId);
+    if (window.location.hash !== `#${tabId}`) {
+      window.history.replaceState(null, '', `#${tabId}`);
+      setCurrentHash(`#${tabId}`);
+    }
+  };
+
   const guidePrompt = guidePromptCopy[language] ?? guidePromptCopy.en;
 
   return (
@@ -164,30 +169,39 @@ function App() {
           <TerminalConsole
             content={content}
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={handleTabChange}
           />
           <ScrollHint label={content.ui.scrollHint} />
-          {showGuidePrompt && !isGuideOpen ? (
-            <aside className="guide-prompt" aria-labelledby="guide-prompt-title">
-              <div>
-                <h2 id="guide-prompt-title">{guidePrompt.title}</h2>
-                <p>{guidePrompt.text}</p>
-              </div>
-              <div className="guide-prompt-actions">
-                <button type="button" className="secondary-button guide-prompt-action" onClick={dismissGuidePrompt}>
-                  {guidePrompt.dismiss}
-                </button>
-                <button type="button" className="primary-button guide-prompt-action" onClick={startGuide}>
-                  {guidePrompt.start}
-                </button>
-              </div>
-            </aside>
-          ) : null}
+          <AnimatePresence>
+            {showGuidePrompt && !isGuideOpen ? (
+              <motion.aside
+                className="guide-prompt"
+                aria-labelledby="guide-prompt-title"
+                initial={{ opacity: 0, y: 14, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              >
+                <div>
+                  <h2 id="guide-prompt-title">{guidePrompt.title}</h2>
+                  <p>{guidePrompt.text}</p>
+                </div>
+                <div className="guide-prompt-actions">
+                  <button type="button" className="secondary-button guide-prompt-action" onClick={dismissGuidePrompt}>
+                    {guidePrompt.dismiss}
+                  </button>
+                  <button type="button" className="primary-button guide-prompt-action" onClick={startGuide}>
+                    {guidePrompt.start}
+                  </button>
+                </div>
+              </motion.aside>
+            ) : null}
+          </AnimatePresence>
           <PortfolioGuide
             isOpen={isGuideOpen}
             language={language}
             onClose={closeGuide}
-            onTabChange={setActiveTab}
+            onTabChange={handleTabChange}
           />
         </>
       )}
@@ -196,4 +210,3 @@ function App() {
 }
 
 export default App;
-
