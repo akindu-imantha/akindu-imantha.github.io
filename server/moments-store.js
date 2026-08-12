@@ -32,12 +32,18 @@ function validItem(item) {
     typeof item.alt === 'string' && item.alt.length <= 220;
 }
 
+function validGallery(item) {
+  const gallery = item.gallery ?? [{ src: item.src, alt: item.alt }];
+  return Array.isArray(gallery) && gallery.length >= 1 && gallery.length <= 3 &&
+    gallery.every((image) => image && typeof image.src === 'string' && image.src.length > 0 && image.src.length <= 900000 && typeof image.alt === 'string' && image.alt.length <= 220);
+}
+
 function validMoments(imageBar) {
   return imageBar && typeof imageBar === 'object' &&
     typeof imageBar.title === 'string' && imageBar.title.length <= 100 &&
     typeof imageBar.text === 'string' && imageBar.text.length <= 280 &&
     Array.isArray(imageBar.items) && imageBar.items.length === 4 &&
-    imageBar.items.every(validItem);
+    imageBar.items.every((item) => validItem(item) && validGallery(item));
 }
 
 export async function getStoredMoments() {

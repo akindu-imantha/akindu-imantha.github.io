@@ -106,18 +106,27 @@ export const imageBar = {
       alt: 'Akindu Imantha receiving a Diploma in Information Technology at the University of Moratuwa Awards Ceremony 2025.',
       label: 'Moratuwa award',
       href: '#console',
+      gallery: [
+        { src: './images/highlights/moratuwa-awards-2025.png', alt: 'University of Moratuwa award moment.' },
+      ],
     },
     {
       src: './images/highlights/ylca-climate-action.png',
       alt: 'British Council Youth Leadership for Climate Action programme certificate, team project, and participation portrait.',
       label: 'Climate leadership',
       href: '#console',
+      gallery: [
+        { src: './images/highlights/ylca-climate-action.png', alt: 'Climate leadership moment.' },
+      ],
     },
     {
       src: './images/highlights/e-waste-management-platform.png',
       alt: 'E-Waste Management in Sri Lanka platform preview on laptop and mobile screens.',
       label: 'E-waste platform',
       href: '#console',
+      gallery: [
+        { src: './images/highlights/e-waste-management-platform.png', alt: 'E-waste platform moment.' },
+      ],
     },
     {
       src: './images/highlights/art-cafe-graphic-design.png',
@@ -125,6 +134,9 @@ export const imageBar = {
       label: 'Graphic design',
       href: 'https://www.behance.net/akinduimantha',
       external: true,
+      gallery: [
+        { src: './images/highlights/art-cafe-graphic-design.png', alt: 'Graphic design moment.' },
+      ],
     },
   ],
 };

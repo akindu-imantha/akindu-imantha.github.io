@@ -8,6 +8,10 @@ import GitHubContributions from './GitHubContributions';
 import { fadeInUp, staggerContainer } from './motionVariants';
 
 function PortfolioImageLightbox({ item, onClose }) {
+  const gallery = item?.gallery?.length ? item.gallery : item ? [{ src: item.src, alt: item.alt }] : [];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => setSelectedIndex(0), [item]);
   useEffect(() => {
     if (!item) return undefined;
 
@@ -58,8 +62,8 @@ function PortfolioImageLightbox({ item, onClose }) {
               <X size={18} />
             </button>
             <img
-              src={item.src}
-              alt={item.alt}
+              src={gallery[selectedIndex]?.src}
+              alt={gallery[selectedIndex]?.alt || item.alt}
               onError={(event) => {
                 if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) {
                   event.currentTarget.src = item.fallbackSrc;
@@ -74,6 +78,21 @@ function PortfolioImageLightbox({ item, onClose }) {
                 </a>
               ) : null}
             </div>
+            {gallery.length > 1 ? (
+              <div className="portfolio-image-lightbox-gallery" aria-label={`${item.label} photos`}>
+                {gallery.map((image, index) => (
+                  <button
+                    type="button"
+                    key={`${image.src}-${index}`}
+                    className={index === selectedIndex ? 'is-active' : ''}
+                    onClick={() => setSelectedIndex(index)}
+                    aria-label={`View photo ${index + 1}`}
+                  >
+                    <img src={image.src} alt="" />
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </motion.div>
         </motion.div>
       ) : null}
@@ -108,7 +127,7 @@ export function PortfolioImageBar({ data, className = '' }) {
               className="portfolio-image-tile"
               aria-label={`View ${item.label}`}
               onClick={() => {
-                setActiveItem(item);
+                setActiveItem({ ...item, gallery: item.gallery?.length ? item.gallery : [{ src: item.src, alt: item.alt }] });
                 trackEvent('moment_preview_open', { label: item.label });
               }}
             >

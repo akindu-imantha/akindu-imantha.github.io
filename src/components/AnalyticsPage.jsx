@@ -277,13 +277,27 @@ export default function AnalyticsPage() {
     }));
   };
 
-  const handleMomentFile = async (index, file) => {
+  const getGallery = (item) => item.gallery?.length ? item.gallery : [{ src: item.src, alt: item.alt }];
+
+  const updateMomentGallery = (index, galleryIndex, image) => {
+    setMoments((current) => ({
+      ...current,
+      items: current.items.map((item, itemIndex) => {
+        if (itemIndex !== index) return item;
+        const gallery = getGallery(item);
+        gallery[galleryIndex] = image;
+        return { ...item, src: gallery[0].src, alt: gallery[0].alt, gallery };
+      }),
+    }));
+  };
+
+  const handleMomentFile = async (index, galleryIndex, file) => {
     if (!file) return;
     setMomentsMessage('Preparing image...');
     try {
       const src = await imageToDataUrl(file);
-      updateMoment(index, 'src', src);
-      updateMoment(index, 'alt', moments.items[index].alt || file.name.replace(/\.[^.]+$/, ''));
+      const alt = moments.items[index].alt || file.name.replace(/\.[^.]+$/, '');
+      updateMomentGallery(index, galleryIndex, { src, alt });
       setMomentsMessage('Image ready. Press Save moments to publish.');
     } catch (uploadError) {
       setMomentsMessage(uploadError.message);
@@ -391,14 +405,23 @@ export default function AnalyticsPage() {
                 <Save size={16} /> Save moments
               </button>
             </div>
-            <p className="analytics-editor-note">Choose a photo for each card, then save. Images are resized before upload and published using this same admin token.</p>
+            <p className="analytics-editor-note">Each moment can hold up to three photos. The first photo is used on the website strip; clicking it opens every photo in that moment.</p>
             <div className="moments-editor-grid">
               {moments.items.map((item, index) => (
                 <label className="moment-editor-card" key={`${index}-${item.label}`}>
-                  <img src={item.src} alt="" />
+                  <img src={getGallery(item)[0]?.src} alt="" />
                   <span>Moment {index + 1}</span>
                   <input value={item.label} onChange={(event) => updateMoment(index, 'label', event.target.value)} aria-label={`Moment ${index + 1} label`} />
-                  <input type="file" accept="image/*" onChange={(event) => handleMomentFile(index, event.target.files?.[0])} />
+                  <span className="moment-editor-upload-label">Upload up to 3 photos</span>
+                  {[0, 1, 2].map((galleryIndex) => (
+                    <input
+                      key={galleryIndex}
+                      type="file"
+                      accept="image/*"
+                      aria-label={`Moment ${index + 1}, photo ${galleryIndex + 1}`}
+                      onChange={(event) => handleMomentFile(index, galleryIndex, event.target.files?.[0])}
+                    />
+                  ))}
                 </label>
               ))}
             </div>

@@ -58,6 +58,40 @@
   color: var(--text-muted);
 }
 
+.moment-editor-upload-label {
+  color: var(--accent-soft);
+  font-weight: 700;
+}
+
+.portfolio-image-lightbox-gallery {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 0 0;
+}
+
+.portfolio-image-lightbox-gallery button {
+  width: 58px;
+  height: 46px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  opacity: 0.65;
+  background: transparent;
+}
+
+.portfolio-image-lightbox-gallery button.is-active {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.portfolio-image-lightbox-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 720px) {
   .moments-editor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
