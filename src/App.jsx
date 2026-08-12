@@ -8,6 +8,7 @@ import { portfolioContent } from './data/portfolioData';
 import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
 import { shouldUseLitePerformanceMode } from './utils/performance';
 import { fetchStoredMoments } from './utils/moments';
+import PortfolioIntro from './components/PortfolioIntro';
 
 const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
 const GradeAdminPage = lazy(() => import('./components/GradeAdminPage'));
@@ -38,6 +39,7 @@ const guidePromptCopy = {
 };
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
   const [theme, setTheme] = useState(getStoredTheme);
   const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
@@ -65,6 +67,11 @@ function App() {
   const isAnalyticsPage = currentHash.startsWith('#analytics');
   const isGradeAdminPage = currentHash.startsWith('#grade-admin');
   const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
+
+  useEffect(() => {
+    const introTimer = window.setTimeout(() => setShowIntro(false), 2400);
+    return () => window.clearTimeout(introTimer);
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -154,6 +161,9 @@ function App() {
 
   return (
     <div className="page-shell">
+      <AnimatePresence>
+        {showIntro ? <PortfolioIntro onComplete={() => setShowIntro(false)} /> : null}
+      </AnimatePresence>
       {isGradeAdminPage ? (
         <Suspense fallback={<PageLoading />}>
           <GradeAdminPage />

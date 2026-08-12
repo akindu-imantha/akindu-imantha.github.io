@@ -9,9 +9,6 @@ import { fadeInUp, staggerContainer } from './motionVariants';
 
 function PortfolioImageLightbox({ item, onClose }) {
   const gallery = item?.gallery?.length ? item.gallery : item ? [{ src: item.src, alt: item.alt }] : [];
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => setSelectedIndex(0), [item]);
   useEffect(() => {
     if (!item) return undefined;
 
@@ -61,15 +58,20 @@ function PortfolioImageLightbox({ item, onClose }) {
             <button type="button" className="portfolio-image-lightbox-close" onClick={onClose} aria-label="Close">
               <X size={18} />
             </button>
-            <img
-              src={gallery[selectedIndex]?.src}
-              alt={gallery[selectedIndex]?.alt || item.alt}
-              onError={(event) => {
-                if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) {
-                  event.currentTarget.src = item.fallbackSrc;
-                }
-              }}
-            />
+            <div className={`portfolio-image-lightbox-collage portfolio-image-lightbox-collage--${gallery.length}`}>
+              {gallery.map((image, index) => (
+                <img
+                  key={`${image.src}-${index}`}
+                  src={image.src}
+                  alt={image.alt || item.alt}
+                  onError={(event) => {
+                    if (item.fallbackSrc && event.currentTarget.src !== item.fallbackSrc) {
+                      event.currentTarget.src = item.fallbackSrc;
+                    }
+                  }}
+                />
+              ))}
+            </div>
             <div className="portfolio-image-lightbox-caption">
               <span>{item.label}</span>
               {item.href && item.external ? (
@@ -78,21 +80,6 @@ function PortfolioImageLightbox({ item, onClose }) {
                 </a>
               ) : null}
             </div>
-            {gallery.length > 1 ? (
-              <div className="portfolio-image-lightbox-gallery" aria-label={`${item.label} photos`}>
-                {gallery.map((image, index) => (
-                  <button
-                    type="button"
-                    key={`${image.src}-${index}`}
-                    className={index === selectedIndex ? 'is-active' : ''}
-                    onClick={() => setSelectedIndex(index)}
-                    aria-label={`View photo ${index + 1}`}
-                  >
-                    <img src={image.src} alt="" />
-                  </button>
-                ))}
-              </div>
-            ) : null}
           </motion.div>
         </motion.div>
       ) : null}
