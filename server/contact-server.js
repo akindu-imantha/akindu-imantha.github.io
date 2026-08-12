@@ -14,6 +14,11 @@ import {
   isGradesStorageConfigured,
   saveStoredAcademicGrades,
 } from './grades-store.js';
+import {
+  getStoredMoments,
+  isMomentsStorageConfigured,
+  saveStoredMoments,
+} from './moments-store.js';
 
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
@@ -32,7 +37,7 @@ const allowedOrigin = [
 ].filter((origin, index, origins) => origins.indexOf(origin) === index);
 
 app.use(cors({ origin: allowedOrigin }));
-app.use(express.json({ limit: '20kb' }));
+app.use(express.json({ limit: '4mb' }));
 
 const requiredEnv = ['SMTP_USER', 'SMTP_PASS', 'CONTACT_TO_EMAIL'];
 const contributionCache = new Map();
@@ -135,6 +140,32 @@ app.put('/api/grades', async (request, response) => {
   } catch (error) {
     console.error('Grades save failed:', error);
     response.status(error.status ?? 500).json({ message: error.message || 'Grades request failed.' });
+  }
+});
+
+app.get('/api/moments', async (_request, response) => {
+  try {
+    response.json({ imageBar: await getStoredMoments() });
+  } catch (error) {
+    console.error('Portfolio moments load failed:', error);
+    response.status(500).json({ message: 'Portfolio moments could not be loaded.' });
+  }
+});
+
+app.put('/api/moments', async (request, response) => {
+  if (!hasValidAnalyticsToken(request)) {
+    response.status(401).json({ message: 'Admin token is required.' });
+    return;
+  }
+  if (!isMomentsStorageConfigured()) {
+    response.status(503).json({ message: 'Portfolio moments storage is not configured.' });
+    return;
+  }
+  try {
+    response.json(await saveStoredMoments(request.body?.imageBar));
+  } catch (error) {
+    console.error('Portfolio moments save failed:', error);
+    response.status(error.status ?? 500).json({ message: error.message || 'Portfolio moments could not be saved.' });
   }
 });
 

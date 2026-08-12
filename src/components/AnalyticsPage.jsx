@@ -1,6 +1,8 @@
-import { BarChart3, Bot, Clock3, GraduationCap, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, ShieldAlert, Users } from 'lucide-react';
+import { BarChart3, Bot, Clock3, GraduationCap, Lock, MousePointerClick, MonitorSmartphone, RefreshCw, Repeat2, Save, ShieldAlert, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { clearAnalyticsSummary, fetchAnalyticsSummary } from '../utils/analytics';
+import { imageBar as defaultImageBar } from '../data/portfolioData';
+import { fetchStoredMoments, saveStoredMoments } from '../utils/moments';
 
 const TOKEN_KEY = 'portfolio-analytics-token';
 
@@ -186,12 +188,43 @@ function formatDuration(seconds = 0) {
   return `${minutes}m ${remainingSeconds}s`;
 }
 
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+async function imageToDataUrl(file) {
+  if (!file?.type.startsWith('image/')) throw new Error('Please choose an image file.');
+  const source = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('The image could not be read.'));
+    reader.readAsDataURL(file);
+  });
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, 1400 / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  let quality = 0.84;
+  let output = canvas.toDataURL('image/jpeg', quality);
+  while (output.length > 600000 && quality > 0.45) {
+    quality -= 0.1;
+    output = canvas.toDataURL('image/jpeg', quality);
+  }
+  if (output.length > 600000) throw new Error('This image is too detailed. Please use a smaller image.');
+  return output || source;
+}
+
 export default function AnalyticsPage() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) ?? '');
   const [tokenInput, setTokenInput] = useState(token);
   const [summary, setSummary] = useState(null);
   const [status, setStatus] = useState(token ? 'loading' : 'locked');
   const [error, setError] = useState('');
+  const [moments, setMoments] = useState(() => clone(defaultImageBar));
+  const [momentsMessage, setMomentsMessage] = useState('');
 
   const latestDayCount = useMemo(() => {
     if (!summary?.daily?.length) return 0;
@@ -210,6 +243,12 @@ export default function AnalyticsPage() {
     try {
       const data = await fetchAnalyticsSummary(activeToken);
       setSummary(data);
+      try {
+        const stored = await fetchStoredMoments();
+        setMoments(clone(stored.imageBar ?? defaultImageBar));
+      } catch {
+        setMoments(clone(defaultImageBar));
+      }
       setStatus('ready');
       sessionStorage.setItem(TOKEN_KEY, activeToken);
     } catch (loadError) {
@@ -229,6 +268,36 @@ export default function AnalyticsPage() {
     const nextToken = tokenInput.trim();
     setToken(nextToken);
     loadSummary(nextToken);
+  };
+
+  const updateMoment = (index, field, value) => {
+    setMoments((current) => ({
+      ...current,
+      items: current.items.map((item, itemIndex) => itemIndex === index ? { ...item, [field]: value } : item),
+    }));
+  };
+
+  const handleMomentFile = async (index, file) => {
+    if (!file) return;
+    setMomentsMessage('Preparing image...');
+    try {
+      const src = await imageToDataUrl(file);
+      updateMoment(index, 'src', src);
+      updateMoment(index, 'alt', moments.items[index].alt || file.name.replace(/\.[^.]+$/, ''));
+      setMomentsMessage('Image ready. Press Save moments to publish.');
+    } catch (uploadError) {
+      setMomentsMessage(uploadError.message);
+    }
+  };
+
+  const saveMoments = async () => {
+    setMomentsMessage('Saving...');
+    try {
+      await saveStoredMoments(token, moments);
+      setMomentsMessage('Portfolio moments published. Refresh the public portfolio to see them.');
+    } catch (saveError) {
+      setMomentsMessage(saveError.message);
+    }
   };
 
   const handleClear = async () => {
@@ -311,6 +380,30 @@ export default function AnalyticsPage() {
           </section>
 
           <DetectionPanel summary={summary} />
+
+          <section className="analytics-panel analytics-panel--wide moments-editor">
+            <div className="analytics-panel-heading">
+              <div>
+                <p className="eyebrow">Website content</p>
+                <h2>Portfolio moments</h2>
+              </div>
+              <button type="button" className="primary-button" onClick={saveMoments}>
+                <Save size={16} /> Save moments
+              </button>
+            </div>
+            <p className="analytics-editor-note">Choose a photo for each card, then save. Images are resized before upload and published using this same admin token.</p>
+            <div className="moments-editor-grid">
+              {moments.items.map((item, index) => (
+                <label className="moment-editor-card" key={`${index}-${item.label}`}>
+                  <img src={item.src} alt="" />
+                  <span>Moment {index + 1}</span>
+                  <input value={item.label} onChange={(event) => updateMoment(index, 'label', event.target.value)} aria-label={`Moment ${index + 1} label`} />
+                  <input type="file" accept="image/*" onChange={(event) => handleMomentFile(index, event.target.files?.[0])} />
+                </label>
+              ))}
+            </div>
+            {momentsMessage ? <p className="analytics-state">{momentsMessage}</p> : null}
+          </section>
 
           <section className="analytics-grid">
             <RankingList title="Traffic types" items={summary.trafficTypes} chartType="donut" />

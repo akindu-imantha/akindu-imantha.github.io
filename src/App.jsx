@@ -7,6 +7,7 @@ import TerminalConsole from './components/TerminalConsole';
 import { portfolioContent } from './data/portfolioData';
 import { startTimeOnPageTracking, trackPageView } from './utils/analytics';
 import { shouldUseLitePerformanceMode } from './utils/performance';
+import { fetchStoredMoments } from './utils/moments';
 
 const AnalyticsPage = lazy(() => import('./components/AnalyticsPage'));
 const GradeAdminPage = lazy(() => import('./components/GradeAdminPage'));
@@ -54,8 +55,12 @@ function App() {
         : 'about';
   };
   const [activeTab, setActiveTab] = useState(() => getTabFromHash());
+  const [storedImageBar, setStoredImageBar] = useState(null);
 
-  const content = useMemo(() => portfolioContent[language] ?? portfolioContent.en, [language]);
+  const content = useMemo(() => {
+    const baseContent = portfolioContent[language] ?? portfolioContent.en;
+    return storedImageBar ? { ...baseContent, imageBar: storedImageBar } : baseContent;
+  }, [language, storedImageBar]);
   const isGradesPage = currentHash.startsWith('#grades');
   const isAnalyticsPage = currentHash.startsWith('#analytics');
   const isGradeAdminPage = currentHash.startsWith('#grade-admin');
@@ -89,6 +94,12 @@ function App() {
   useEffect(() => {
     trackPageView(window.location.pathname + currentHash);
   }, [currentHash]);
+
+  useEffect(() => {
+    fetchStoredMoments()
+      .then((data) => setStoredImageBar(data.imageBar ?? null))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => startTimeOnPageTracking(), []);
 
