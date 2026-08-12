@@ -245,7 +245,7 @@ export default function AnalyticsPage() {
       setSummary(data);
       try {
         const stored = await fetchStoredMoments();
-        setMoments(clone(stored.imageBar ?? defaultImageBar));
+        setMoments(clone(stored.imageBar?.items?.length === 3 ? stored.imageBar : defaultImageBar));
       } catch {
         setMoments(clone(defaultImageBar));
       }
