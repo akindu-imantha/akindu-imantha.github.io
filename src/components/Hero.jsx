@@ -100,7 +100,7 @@ export function PortfolioImageBar({ data, className = '' }) {
           <span>{data.title}</span>
           <p>{data.text}</p>
         </div>
-        <div className={`portfolio-image-strip${data.items.length === 3 ? ' portfolio-image-strip--collage' : ''}`}>
+        <div className="portfolio-image-strip">
           {data.items.map((item) => (
             <button
               key={`${item.src}-${item.label}`}

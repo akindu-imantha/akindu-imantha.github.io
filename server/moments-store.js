@@ -36,7 +36,7 @@ function validMoments(imageBar) {
   return imageBar && typeof imageBar === 'object' &&
     typeof imageBar.title === 'string' && imageBar.title.length <= 100 &&
     typeof imageBar.text === 'string' && imageBar.text.length <= 280 &&
-    Array.isArray(imageBar.items) && imageBar.items.length === 3 &&
+    Array.isArray(imageBar.items) && imageBar.items.length === 4 &&
     imageBar.items.every(validItem);
 }
 

@@ -99,7 +99,7 @@ export const githubActivity = {
 
 export const imageBar = {
   title: 'Portfolio moments',
-  text: 'Three favourite academic, community, and project moments in one visual collage.',
+  text: 'Academic, community, project, and design highlights in one quick visual strip.',
   items: [
     {
       src: './images/highlights/moratuwa-awards-2025.png',
@@ -118,6 +118,13 @@ export const imageBar = {
       alt: 'E-Waste Management in Sri Lanka platform preview on laptop and mobile screens.',
       label: 'E-waste platform',
       href: '#console',
+    },
+    {
+      src: './images/highlights/art-cafe-graphic-design.png',
+      alt: 'Art Cafe graphic design agency promotional poster created by Akindu Imantha.',
+      label: 'Graphic design',
+      href: 'https://www.behance.net/akinduimantha',
+      external: true,
     },
   ],
 };
