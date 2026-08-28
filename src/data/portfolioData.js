@@ -20,7 +20,7 @@ export const heroData = {
   primaryAction: { href: '#console', label: 'View Details' },
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
   tertiaryAction: { href: 'https://github.com/akindu-imantha', label: 'GitHub' },
-  profileImage: './images/optimized/profile-hero-cutout-720.png',
+  profileImage: './images/profile-hero-cutout.png',
   profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
