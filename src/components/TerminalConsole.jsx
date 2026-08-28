@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useRef, useState } from 'react';
 import {
   certifications,
   contactLinks,
@@ -30,6 +30,7 @@ function ConsoleLoading() {
 
 export default function TerminalConsole({ content = portfolioContent.en, activeTab = 'about', onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const touchStartRef = useRef(null);
 
   const ActiveTab = tabComponents[activeTab] ?? tabComponents.about;
   const data = {
@@ -47,6 +48,39 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
     aboutCards: content.aboutCards,
     sections: content.sections,
     ui: content.ui,
+  };
+
+  const handleTouchStart = (event) => {
+    if (event.touches.length !== 1 || event.target.closest('input, textarea, select, button, a, [data-swipe-ignore]')) {
+      touchStartRef.current = null;
+      return;
+    }
+
+    const [touch] = event.touches;
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (event) => {
+    const touchStart = touchStartRef.current;
+    touchStartRef.current = null;
+
+    if (!touchStart || event.changedTouches.length !== 1) return;
+
+    const [touch] = event.changedTouches;
+    const distanceX = touch.clientX - touchStart.x;
+    const distanceY = touch.clientY - touchStart.y;
+    const isHorizontalSwipe = Math.abs(distanceX) >= 56 && Math.abs(distanceX) > Math.abs(distanceY) * 1.25;
+
+    if (!isHorizontalSwipe) return;
+
+    const currentIndex = data.tabs.findIndex((tab) => tab.id === activeTab);
+    const direction = distanceX < 0 ? 1 : -1;
+    const nextTab = data.tabs[currentIndex + direction];
+
+    if (!nextTab) return;
+
+    onTabChange?.(nextTab.id);
+    setSearchQuery('');
   };
 
   return (
@@ -83,7 +117,11 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
             ui={data.ui}
           />
 
-          <div className="console-content-area">
+          <div
+            className="console-content-area"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="scanlines"></div>
             <Suspense fallback={<ConsoleLoading />}>
               <AnimatePresence mode="wait">
