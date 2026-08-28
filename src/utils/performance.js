@@ -9,12 +9,11 @@ export function shouldUseLitePerformanceMode() {
   if (forcedMode === 'full') return false;
   if (forcedMode === 'lite') return true;
 
-  const connection = navigator.connection ?? navigator.mozConnection ?? navigator.webkitConnection;
   const hasReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const hasLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4;
-  const hasFewCores = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4;
-  const savesData = Boolean(connection?.saveData);
-  const slowNetwork = typeof connection?.effectiveType === 'string' && /(^2g$|^3g$|slow-2g)/i.test(connection.effectiveType);
 
-  return Boolean(hasReducedMotion || hasLowMemory || hasFewCores || savesData || slowNetwork);
+  // Device memory and CPU counts are unreliable, and using them made the
+  // opening experience differ between phones and desktops. The intro itself
+  // is now lightweight enough to use everywhere; only an explicit request or
+  // the user's accessibility preference enables the simplified mode.
+  return Boolean(hasReducedMotion);
 }

@@ -49,15 +49,13 @@
   width: min(70vw, 760px);
   aspect-ratio: 1;
   border: 1px solid rgba(167, 139, 250, 0.22);
-  box-shadow: 0 0 80px rgba(139, 92, 246, 0.2), inset 0 0 80px rgba(59, 130, 246, 0.12);
-  animation: intro-orbit 4.8s linear infinite;
+  box-shadow: 0 0 48px rgba(139, 92, 246, 0.16);
 }
 
 .portfolio-intro::after {
   width: min(44vw, 480px);
   aspect-ratio: 1;
   border: 1px dashed rgba(56, 189, 248, 0.25);
-  animation: intro-orbit 8s linear infinite reverse;
 }
 
 .portfolio-intro-grid {
@@ -68,15 +66,10 @@
   background-image: linear-gradient(rgba(167, 139, 250, 0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(167, 139, 250, 0.16) 1px, transparent 1px);
   background-size: 48px 48px;
   transform: perspective(500px) rotateX(58deg) translateY(22%);
-  animation: intro-grid 3.2s linear infinite;
 }
 
 .portfolio-intro-ambient {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
+  display: none;
 }
 
 .portfolio-intro-ambient::before,
@@ -142,7 +135,7 @@
 .portfolio-intro-content { position: relative; text-align: center; z-index: 1; }
 .portfolio-intro-command { margin: 0 0 1.1rem; color: #a5f3fc; font: 600 clamp(0.62rem, 1.4vw, 0.78rem)/1 'Space Grotesk', sans-serif; letter-spacing: 0.18em; }
 .portfolio-intro-monogram { display: flex; align-items: center; justify-content: center; min-height: clamp(154px, 29vw, 252px); }
-.portfolio-intro-initial { display: grid; justify-items: center; align-content: start; }
+.portfolio-intro-initial { display: grid; justify-items: center; align-content: start; will-change: transform, opacity; }
 .portfolio-intro-letter { font: 800 clamp(7rem, 22vw, 13rem)/0.76 'Outfit', sans-serif; text-shadow: 0 0 18px #a78bfa, 0 0 56px rgba(139, 92, 246, 0.76); }
 .portfolio-intro-letter--a { color: #c4b5fd; }
 .portfolio-intro-letter--i { color: #67e8f9; text-shadow: 0 0 18px #67e8f9, 0 0 56px rgba(56, 189, 248, 0.72); }
@@ -150,7 +143,7 @@
 .portfolio-intro-initial--i .portfolio-intro-initial-name { color: #a5f3fc; }
 .portfolio-intro-divider { width: 2px; height: clamp(76px, 14vw, 122px); margin: 0 clamp(0.7rem, 3vw, 1.8rem) clamp(2.6rem, 5vw, 3.45rem); align-self: start; background: linear-gradient(transparent, #e2e8f0, transparent); box-shadow: 0 0 14px #fff; }
 .portfolio-intro-status { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 1.15rem 0 0; color: #94a3b8; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.17em; }
-.portfolio-intro-status i { width: 7px; height: 7px; border-radius: 999px; background: #67e8f9; box-shadow: 0 0 11px #67e8f9; animation: intro-blink 0.7s steps(2, jump-none) infinite; }
+.portfolio-intro-status i { width: 7px; height: 7px; border-radius: 999px; background: #67e8f9; box-shadow: 0 0 11px #67e8f9; }
 .portfolio-intro-progress { position: absolute; z-index: 1; right: 9vw; bottom: 9vh; left: 9vw; height: 2px; overflow: hidden; background: rgba(255, 255, 255, 0.12); }
 .portfolio-intro-progress span { display: block; width: 100%; height: 100%; transform: translateX(-100%); background: linear-gradient(90deg, #8b5cf6, #67e8f9); box-shadow: 0 0 12px #67e8f9; animation: intro-progress 2.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 .portfolio-intro-skip { position: absolute; top: 1.5rem; right: 1.5rem; z-index: 2; padding: 0.45rem 0.7rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; color: #cbd5e1; background: rgba(15, 23, 42, 0.5); font: 600 0.68rem 'Space Grotesk', sans-serif; cursor: pointer; }
@@ -4831,10 +4824,7 @@ button.portfolio-image-tile {
 }
 
 [data-performance='lite'] .profile-dots {
-  animation-name: profile-dots-drift !important;
-  animation-duration: 16s !important;
-  animation-timing-function: linear !important;
-  animation-iteration-count: infinite !important;
+  display: none;
 }
 
 [data-performance='lite'] .topbar,

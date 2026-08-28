@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 
-export default function PortfolioIntro({ onComplete }) {
+export default function PortfolioIntro({ onComplete, litePerformanceMode = false }) {
   return (
     <motion.section
-      className="portfolio-intro"
+      className={`portfolio-intro ${litePerformanceMode ? 'portfolio-intro--lite' : ''}`}
       aria-label="Loading Akindu Imantha portfolio"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.025, filter: 'blur(7px)' }}
-      transition={{ duration: 0.42, ease: 'easeInOut' }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: litePerformanceMode ? 0.16 : 0.28, ease: 'easeOut' }}
     >
       <div className="portfolio-intro-grid" aria-hidden="true" />
       <div className="portfolio-intro-ambient" aria-hidden="true">
@@ -23,9 +23,9 @@ export default function PortfolioIntro({ onComplete }) {
         <div className="portfolio-intro-monogram" aria-label="Akindu Imantha">
           <motion.div
             className="portfolio-intro-initial portfolio-intro-initial--a"
-            initial={{ opacity: 0, x: -76, rotate: -14 }}
+            initial={litePerformanceMode ? false : { opacity: 0, x: -76, rotate: -14 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: litePerformanceMode ? 0 : 0.62, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="portfolio-intro-letter portfolio-intro-letter--a">A</span>
             <span className="portfolio-intro-initial-name">AKINDU</span>
@@ -33,9 +33,9 @@ export default function PortfolioIntro({ onComplete }) {
           <span className="portfolio-intro-divider" aria-hidden="true" />
           <motion.div
             className="portfolio-intro-initial portfolio-intro-initial--i"
-            initial={{ opacity: 0, x: 76, rotate: 14 }}
+            initial={litePerformanceMode ? false : { opacity: 0, x: 76, rotate: 14 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 0.62, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: litePerformanceMode ? 0 : 0.62, delay: litePerformanceMode ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="portfolio-intro-letter portfolio-intro-letter--i">I</span>
             <span className="portfolio-intro-initial-name">IMANTHA</span>
@@ -43,9 +43,9 @@ export default function PortfolioIntro({ onComplete }) {
         </div>
         <motion.p
           className="portfolio-intro-status"
-          initial={{ opacity: 0 }}
+          initial={litePerformanceMode ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, delay: 1.08 }}
+          transition={{ duration: litePerformanceMode ? 0 : 0.35, delay: litePerformanceMode ? 0 : 1.08 }}
         >
           <i /> PORTFOLIO READY
         </motion.p>

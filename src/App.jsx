@@ -39,10 +39,17 @@ const guidePromptCopy = {
 };
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
   const [language, setLanguage] = useState(() => localStorage.getItem('portfolio-language') ?? 'en');
   const [theme, setTheme] = useState(getStoredTheme);
-  const [litePerformanceMode] = useState(() => shouldUseLitePerformanceMode());
+  const [litePerformanceMode] = useState(() => {
+    const enabled = shouldUseLitePerformanceMode();
+
+    // Apply this before the first child paints. Waiting for an effect lets the
+    // expensive intro/background animations run for an initial frame on phones.
+    document.documentElement.dataset.performance = enabled ? 'lite' : 'full';
+    return enabled;
+  });
+  const [showIntro, setShowIntro] = useState(() => !litePerformanceMode);
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [showGuidePrompt, setShowGuidePrompt] = useState(
@@ -69,9 +76,11 @@ function App() {
   const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
 
   useEffect(() => {
+    if (litePerformanceMode) return undefined;
+
     const introTimer = window.setTimeout(() => setShowIntro(false), 2400);
     return () => window.clearTimeout(introTimer);
-  }, []);
+  }, [litePerformanceMode]);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -162,7 +171,12 @@ function App() {
   return (
     <div className="page-shell">
       <AnimatePresence>
-        {showIntro ? <PortfolioIntro onComplete={() => setShowIntro(false)} /> : null}
+        {showIntro ? (
+          <PortfolioIntro
+            onComplete={() => setShowIntro(false)}
+            litePerformanceMode={litePerformanceMode}
+          />
+        ) : null}
       </AnimatePresence>
       {isGradeAdminPage ? (
         <Suspense fallback={<PageLoading />}>
