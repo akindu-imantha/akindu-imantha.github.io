@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Suspense, lazy, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import {
   certifications,
   contactLinks,
@@ -32,7 +32,10 @@ function ConsoleLoading() {
 export default function TerminalConsole({ content = portfolioContent.en, activeTab = 'about', onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [edgeFeedback, setEdgeFeedback] = useState('');
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const touchStartRef = useRef(null);
+  const edgeFeedbackTimerRef = useRef(null);
 
   const ActiveTab = tabComponents[activeTab] ?? tabComponents.about;
   const data = {
@@ -50,6 +53,32 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
     aboutCards: content.aboutCards,
     sections: content.sections,
     ui: content.ui,
+  };
+  const activeTabIndex = Math.max(0, data.tabs.findIndex((tab) => tab.id === activeTab));
+
+  useEffect(() => {
+    const updateScrollToTopVisibility = () => {
+      const consoleElement = document.getElementById('console');
+      setShowScrollToTop(Boolean(consoleElement && consoleElement.getBoundingClientRect().top < -180));
+    };
+
+    updateScrollToTopVisibility();
+    window.addEventListener('scroll', updateScrollToTopVisibility, { passive: true });
+    return () => window.removeEventListener('scroll', updateScrollToTopVisibility);
+  }, []);
+
+  useEffect(() => () => window.clearTimeout(edgeFeedbackTimerRef.current), []);
+
+  const showEdgeFeedback = (message) => {
+    setEdgeFeedback(message);
+    window.clearTimeout(edgeFeedbackTimerRef.current);
+    edgeFeedbackTimerRef.current = window.setTimeout(() => setEdgeFeedback(''), 1300);
+  };
+
+  const scrollCurrentTabToTop = () => {
+    const consoleElement = document.getElementById('console');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    consoleElement?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
   };
 
   const handleTouchStart = (event) => {
@@ -78,11 +107,18 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
 
     if (!isHorizontalSwipe) return;
 
-    const currentIndex = data.tabs.findIndex((tab) => tab.id === activeTab);
     const direction = distanceX < 0 ? 1 : -1;
-    const nextTab = data.tabs[currentIndex + direction];
+    const nextTab = data.tabs[activeTabIndex + direction];
 
-    if (!nextTab) return;
+    if (!nextTab) {
+      setShowSwipeHint(false);
+      showEdgeFeedback(
+        direction > 0
+          ? data.ui?.lastSectionMessage ?? 'You are on the last section'
+          : data.ui?.firstSectionMessage ?? 'You are on the first section',
+      );
+      return;
+    }
 
     onTabChange?.(nextTab.id);
     setSearchQuery('');
@@ -129,6 +165,10 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
             onTouchEnd={handleTouchEnd}
           >
             <div className="scanlines"></div>
+            <div className="mobile-tab-progress" aria-live="polite">
+              <span>{activeTabIndex + 1} / {data.tabs.length}</span>
+              <strong>{data.tabs[activeTabIndex]?.label}</strong>
+            </div>
             <div
               className={`swipe-navigation-hint ${showSwipeHint ? '' : 'is-dismissed'}`}
               aria-hidden="true"
@@ -136,6 +176,9 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
               <ChevronLeft size={16} />
               <span>{data.ui?.swipeNavigationHint ?? 'Swipe left or right to browse sections'}</span>
               <ChevronRight size={16} />
+            </div>
+            <div className={`swipe-edge-feedback ${edgeFeedback ? 'is-visible' : ''}`} aria-live="polite">
+              {edgeFeedback}
             </div>
             <Suspense fallback={<ConsoleLoading />}>
               <AnimatePresence mode="wait">
@@ -149,6 +192,14 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
           </div>
         </div>
       </motion.div>
+      <button
+        type="button"
+        className={`mobile-scroll-to-top ${showScrollToTop ? 'is-visible' : ''}`}
+        onClick={scrollCurrentTabToTop}
+        aria-label={data.ui?.scrollToTopLabel ?? 'Scroll to the top of this section'}
+      >
+        <ChevronUp size={20} aria-hidden="true" />
+      </button>
     </main>
   );
 }

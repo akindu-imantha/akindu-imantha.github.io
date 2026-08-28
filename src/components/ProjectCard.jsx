@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { trackEvent } from '../utils/analytics';
 
 function getProjectActions(project) {
@@ -21,6 +22,7 @@ export default function ProjectCard({
   variant = 'default',
   ...rest
 }) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const previewHref = project.previewUrl ?? project.secondaryUrl ?? project.liveUrl;
   const actions = getProjectActions(project);
   const statusToneClass = project.statusTone ? `project-status--${project.statusTone}` : '';
@@ -40,9 +42,17 @@ export default function ProjectCard({
         ) : null}
       </div>
 
-      <div className="project-card-copy">
+      <div className={`project-card-copy ${isExpanded ? 'is-expanded' : ''}`}>
         <h3>{project.title}</h3>
         <p>{project.description}</p>
+        <button
+          type="button"
+          className="project-expand-toggle"
+          onClick={() => setIsExpanded((expanded) => !expanded)}
+          aria-expanded={isExpanded}
+        >
+          {isExpanded ? 'Show less' : 'Read more'}
+        </button>
       </div>
 
       {variant !== 'compact' && project.previewImage && previewHref ? (
