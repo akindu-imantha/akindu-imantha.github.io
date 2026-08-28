@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Suspense, lazy, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   certifications,
   contactLinks,
@@ -30,6 +31,7 @@ function ConsoleLoading() {
 
 export default function TerminalConsole({ content = portfolioContent.en, activeTab = 'about', onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const touchStartRef = useRef(null);
 
   const ActiveTab = tabComponents[activeTab] ?? tabComponents.about;
@@ -51,7 +53,10 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
   };
 
   const handleTouchStart = (event) => {
-    if (event.touches.length !== 1 || event.target.closest('input, textarea, select, button, a, [data-swipe-ignore]')) {
+    if (
+      event.touches.length !== 1
+      || event.target.closest?.('input, textarea, select, button, a, [data-swipe-ignore]')
+    ) {
       touchStartRef.current = null;
       return;
     }
@@ -81,6 +86,7 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
 
     onTabChange?.(nextTab.id);
     setSearchQuery('');
+    setShowSwipeHint(false);
   };
 
   return (
@@ -123,6 +129,14 @@ export default function TerminalConsole({ content = portfolioContent.en, activeT
             onTouchEnd={handleTouchEnd}
           >
             <div className="scanlines"></div>
+            <div
+              className={`swipe-navigation-hint ${showSwipeHint ? '' : 'is-dismissed'}`}
+              aria-hidden="true"
+            >
+              <ChevronLeft size={16} />
+              <span>{data.ui?.swipeNavigationHint ?? 'Swipe left or right to browse sections'}</span>
+              <ChevronRight size={16} />
+            </div>
             <Suspense fallback={<ConsoleLoading />}>
               <AnimatePresence mode="wait">
                 {searchQuery.trim() ? (

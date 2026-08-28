@@ -2735,6 +2735,10 @@ button.portfolio-image-tile {
   display: none;
 }
 
+.swipe-navigation-hint {
+  display: none;
+}
+
 .cmd-btn {
   display: flex;
   align-items: center;
@@ -4427,6 +4431,35 @@ button.portfolio-image-tile {
     min-height: auto;
     overflow: visible;
     background: transparent;
+  }
+
+  .swipe-navigation-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    margin: 0.7rem 0.75rem -0.1rem;
+    color: var(--text-muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    opacity: 0.82;
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease, max-height 180ms ease, margin 180ms ease;
+  }
+
+  .swipe-navigation-hint svg {
+    flex: 0 0 auto;
+    color: var(--accent);
+  }
+
+  .swipe-navigation-hint.is-dismissed {
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-0.25rem);
   }
 
   .console-section--about {
