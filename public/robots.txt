@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://akindu-imantha.github.io/sitemap.xml

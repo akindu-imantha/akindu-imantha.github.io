@@ -1,4 +1,4 @@
-import {
+﻿import {
   Briefcase,
   Calculator,
   Code,
@@ -13,7 +13,7 @@ import {
 
 export const heroData = {
   eyebrow: 'Full Stack Developer Portfolio',
-  name: 'M.A. Akindu Imantha Rupasingha',
+  name: "Hi, I'm Akindu Imantha",
   intro:
     'Information Technology undergraduate focused on practical web interfaces, backend presentation, and application building with both web and desktop development experience.',
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
@@ -662,68 +662,68 @@ const cleanSinhalaContent = {
     ...heroData,
     eyebrow: 'Full Stack Developer Portfolio',
     intro:
-      'ප්‍රායෝගික web interfaces, backend presentation, සහ web/desktop application development ගැන අවධානය දෙන Information Technology undergraduate කෙනෙක්.',
-    primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
-    secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
+      'à¶´à·Šâ€à¶»à·à¶ºà·à¶œà·’à¶š web interfaces, backend presentation, à·ƒà·„ web/desktop application development à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶± Information Technology undergraduate à¶šà·™à¶±à·™à¶šà·Š.',
+    primaryAction: { ...heroData.primaryAction, label: 'à·€à·’à·ƒà·Šà¶­à¶» à¶¶à¶½à¶±à·Šà¶±' },
+    secondaryAction: { ...heroData.secondaryAction, label: 'CV à¶¶à·à¶œà¶±à·Šà¶±' },
     tertiaryAction: { ...heroData.tertiaryAction, label: 'GitHub' },
-    profileLabel: 'Profile සාරාංශය',
-    profileTitle: 'Online presentation එකකට පැහැදිලි, polish කළ වැඩ නිර්මාණය කිරීම',
+    profileLabel: 'Profile à·ƒà·à¶»à·à¶‚à·à¶º',
+    profileTitle: 'Online presentation à¶‘à¶šà¶šà¶§ à¶´à·à·„à·à¶¯à·’à¶½à·’, polish à¶šà·… à·€à·à¶© à¶±à·’à¶»à·Šà¶¸à·à¶«à¶º à¶šà·’à¶»à·“à¶¸',
     profileText:
-      'මගේ පසුබිම academic IT study, graphic tools, web development foundations, සහ hands-on project work එකට එකතු වෙනවා.',
+      'à¶¸à¶œà·š à¶´à·ƒà·”à¶¶à·’à¶¸ academic IT study, graphic tools, web development foundations, à·ƒà·„ hands-on project work à¶‘à¶šà¶§ à¶‘à¶šà¶­à·” à·€à·™à¶±à·€à·.',
   },
   focusAreas: [
     'React portfolio interfaces',
     'Responsive web design',
     'C# desktop application development',
-    'HTML, CSS, JavaScript, සහ PHP',
+    'HTML, CSS, JavaScript, à·ƒà·„ PHP',
   ],
   aboutCards: [
     {
-      title: 'වර්තමාන දිශාව',
+      title: 'à·€à¶»à·Šà¶­à¶¸à·à¶± à¶¯à·’à·à·à·€',
       text:
-        'IT undergraduate කෙනෙක් විදිහට practical software solutions, clear interfaces, සහ real user workflows විසඳන systems ගොඩනැගීම ගැන අවධානය දෙමි.',
+        'IT undergraduate à¶šà·™à¶±à·™à¶šà·Š à·€à·’à¶¯à·’à·„à¶§ practical software solutions, clear interfaces, à·ƒà·„ real user workflows à·€à·’à·ƒà¶³à¶± systems à¶œà·œà¶©à¶±à·à¶œà·“à¶¸ à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶¸à·’.',
     },
     {
-      title: 'තාක්ෂණික පරාසය',
+      title: 'à¶­à·à¶šà·Šà·‚à¶«à·’à¶š à¶´à¶»à·à·ƒà¶º',
       text:
-        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, සහ MySQL මගේ experience එකට ඇතුළත් වේ.',
+        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, à·ƒà·„ MySQL à¶¸à¶œà·š experience à¶‘à¶šà¶§ à¶‡à¶­à·”à·…à¶­à·Š à·€à·š.',
     },
     {
       title: 'Project approach',
       text:
-        'මම structured, usable, සහ present කරන්න පහසු වැඩ ගොඩනගන අතර layout quality, clean workflows, සහ practical implementation ගැන අවධානය දෙමි.',
+        'à¶¸à¶¸ structured, usable, à·ƒà·„ present à¶šà¶»à¶±à·Šà¶± à¶´à·„à·ƒà·” à·€à·à¶© à¶œà·œà¶©à¶±à¶œà¶± à¶…à¶­à¶» layout quality, clean workflows, à·ƒà·„ practical implementation à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶¸à·’.',
     },
     {
-      title: 'වෙනත් ශක්තීන්',
+      title: 'à·€à·™à¶±à¶­à·Š à·à¶šà·Šà¶­à·“à¶±à·Š',
       text:
-        'Coding වලට අමතරව graphic tools, documentation, සහ community project experience මගේ technical execution සහ communication එකට සහාය දක්වයි.',
+        'Coding à·€à¶½à¶§ à¶…à¶¸à¶­à¶»à·€ graphic tools, documentation, à·ƒà·„ community project experience à¶¸à¶œà·š technical execution à·ƒà·„ communication à¶‘à¶šà¶§ à·ƒà·„à·à¶º à¶¯à¶šà·Šà·€à¶ºà·’.',
     },
   ],
   creativeProfile: {
     ...creativeProfile,
     title: 'Graphic design presence',
     text:
-      'Behance හරහා මම visual work publish කරන අතර layout-focused design pieces සහ creative presentation skills එහි දැකගත හැක.',
-    link: { ...creativeProfile.link, label: 'Behance profile බලන්න' },
+      'Behance à·„à¶»à·„à· à¶¸à¶¸ visual work publish à¶šà¶»à¶± à¶…à¶­à¶» layout-focused design pieces à·ƒà·„ creative presentation skills à¶‘à·„à·’ à¶¯à·à¶šà¶œà¶­ à·„à·à¶š.',
+    link: { ...creativeProfile.link, label: 'Behance profile à¶¶à¶½à¶±à·Šà¶±' },
   },
   education: [
     {
       ...education[0],
       text:
-        'First year diploma level සහ second year higher diploma level coursework හරහා undergraduate level studies සම්පූර්ණ කර ඇත.',
-      gradeButtonLabel: 'Moratuwa grades බලන්න',
+        'First year diploma level à·ƒà·„ second year higher diploma level coursework à·„à¶»à·„à· undergraduate level studies à·ƒà¶¸à·Šà¶´à·–à¶»à·Šà¶« à¶šà¶» à¶‡à¶­.',
+      gradeButtonLabel: 'Moratuwa grades à¶¶à¶½à¶±à·Šà¶±',
     },
     {
       ...education[1],
       text:
-        'Secure systems, networking, සහ practical information security foundations ගැන අවධානය දෙන cyber security degree studies කරමින් සිටී.',
-      gradeButtonLabel: 'SLTC grades බලන්න',
+        'Secure systems, networking, à·ƒà·„ practical information security foundations à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶± cyber security degree studies à¶šà¶»à¶¸à·’à¶±à·Š à·ƒà·’à¶§à·“.',
+      gradeButtonLabel: 'SLTC grades à¶¶à¶½à¶±à·Šà¶±',
     },
     {
       ...education[2],
       text: [
-        'A/L 2022: Accounting, Business Studies, සහ ICT.',
-        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, සහ Civic Studies.',
+        'A/L 2022: Accounting, Business Studies, à·ƒà·„ ICT.',
+        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, à·ƒà·„ Civic Studies.',
       ],
     },
   ],
@@ -731,148 +731,148 @@ const cleanSinhalaContent = {
     {
       ...academicGrades[0],
       summary:
-        'Official results confirm කළාම subjects සහ grades මෙහි පෙන්විය හැක.',
+        'Official results confirm à¶šà·…à·à¶¸ subjects à·ƒà·„ grades à¶¸à·™à·„à·’ à¶´à·™à¶±à·Šà·€à·’à¶º à·„à·à¶š.',
     },
     {
       ...academicGrades[1],
       summary:
-        'Current degree modules in-progress ලෙස පෙන්වා, results release වූ පසු grades update කරන්න.',
+        'Current degree modules in-progress à¶½à·™à·ƒ à¶´à·™à¶±à·Šà·€à·, results release à·€à·– à¶´à·ƒà·” grades update à¶šà¶»à¶±à·Šà¶±.',
     },
     {
       ...academicGrades[2],
       summary:
-        'A/L subjects business knowledge සහ ICT background එක පෙන්වීමට useful වේ.',
+        'A/L subjects business knowledge à·ƒà·„ ICT background à¶‘à¶š à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ useful à·€à·š.',
     },
     {
       ...academicGrades[3],
       summary:
-        'Main portfolio එක clean තබාගෙන O/L subjects detailed page එකේ පෙන්විය හැක.',
+        'Main portfolio à¶‘à¶š clean à¶­à¶¶à·à¶œà·™à¶± O/L subjects detailed page à¶‘à¶šà·š à¶´à·™à¶±à·Šà·€à·’à¶º à·„à·à¶š.',
     },
   ],
   projects: [
     {
       ...projects[0],
-      category: 'ප්‍රධාන project',
+      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
       description:
-        'E-waste collection, item tracking, සහ workflow management සඳහා operations-focused platform එකක්.',
-      statusText: 'Development වෙමින්',
+        'E-waste collection, item tracking, à·ƒà·„ workflow management à·ƒà¶³à·„à· operations-focused platform à¶‘à¶šà¶šà·Š.',
+      statusText: 'Development à·€à·™à¶¸à·’à¶±à·Š',
     },
     {
       ...projects[1],
-      category: 'ප්‍රධාන project',
+      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
       description:
-        'Patient registration, appointments, සහ medical record handling සඳහා desktop system එකක්.',
-      statusText: 'Demo තිබේ',
-      previewLabel: 'Demo බලන්න',
+        'Patient registration, appointments, à·ƒà·„ medical record handling à·ƒà¶³à·„à· desktop system à¶‘à¶šà¶šà·Š.',
+      statusText: 'Demo à¶­à·’à¶¶à·š',
+      previewLabel: 'Demo à¶¶à¶½à¶±à·Šà¶±',
     },
     {
       ...projects[2],
-      category: 'ප්‍රධාන project',
+      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
       description:
-        'Skills, project work, සහ experience පැහැදිලිව පෙන්වීමට responsive portfolio interface එකක්.',
+        'Skills, project work, à·ƒà·„ experience à¶´à·à·„à·à¶¯à·’à¶½à·’à·€ à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ responsive portfolio interface à¶‘à¶šà¶šà·Š.',
     },
     {
       ...projects[3],
       category: 'Supporting project',
       description:
-        'Parent updates සහ daily record tracking සඳහා attendance-focused school system එකක්.',
+        'Parent updates à·ƒà·„ daily record tracking à·ƒà¶³à·„à· attendance-focused school system à¶‘à¶šà¶šà·Š.',
     },
   ],
   experience: [
     {
       ...experience[0],
       text:
-        'Humanitarian cash transfer programme එකක් සඳහා community-based nutrition promotion, monitoring, සහ capacity development වලට සහාය විය.',
+        'Humanitarian cash transfer programme à¶‘à¶šà¶šà·Š à·ƒà¶³à·„à· community-based nutrition promotion, monitoring, à·ƒà·„ capacity development à·€à¶½à¶§ à·ƒà·„à·à¶º à·€à·’à¶º.',
     },
     {
       ...experience[1],
       text:
-        'Sustainable projects සඳහා knowledge, skills, සහ collaboration ගොඩනැගීමට British Council climate action programme එකට සහභාගී විය.',
+        'Sustainable projects à·ƒà¶³à·„à· knowledge, skills, à·ƒà·„ collaboration à¶œà·œà¶©à¶±à·à¶œà·“à¶¸à¶§ British Council climate action programme à¶‘à¶šà¶§ à·ƒà·„à¶·à·à¶œà·“ à·€à·’à¶º.',
     },
   ],
   tabs: [
-    { ...tabs[0], label: 'මා ගැන' },
-    { ...tabs[1], label: 'අධ්‍යාපනය' },
-    { ...tabs[2], label: 'කුසලතා' },
-    { ...tabs[3], label: 'ව්‍යාපෘති' },
-    { ...tabs[4], label: 'අත්දැකීම්' },
-    { ...tabs[5], label: 'සම්බන්ධ වන්න' },
+    { ...tabs[0], label: 'à¶¸à· à¶œà·à¶±' },
+    { ...tabs[1], label: 'à¶…à¶°à·Šâ€à¶ºà·à¶´à¶±à¶º' },
+    { ...tabs[2], label: 'à¶šà·”à·ƒà¶½à¶­à·' },
+    { ...tabs[3], label: 'à·€à·Šâ€à¶ºà·à¶´à·˜à¶­à·’' },
+    { ...tabs[4], label: 'à¶…à¶­à·Šà¶¯à·à¶šà·“à¶¸à·Š' },
+    { ...tabs[5], label: 'à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à¶±à·Šà¶±' },
   ],
   sections: {
     about: {
       eyebrow: './about.sh',
-      title: 'Practical සහ user-focused IT undergraduate කෙනෙක්.',
+      title: 'Practical à·ƒà·„ user-focused IT undergraduate à¶šà·™à¶±à·™à¶šà·Š.',
       text:
-        'Practical software development, creative design, සහ security-minded thinking එකට එක්කරලා digital experiences ගොඩනගනවා.',
+        'Practical software development, creative design, à·ƒà·„ security-minded thinking à¶‘à¶šà¶§ à¶‘à¶šà·Šà¶šà¶»à¶½à· digital experiences à¶œà·œà¶©à¶±à¶œà¶±à·€à·.',
     },
     education: {
       eyebrow: './education.sh',
-      title: 'අධ්‍යාපන පසුබිම',
+      title: 'à¶…à¶°à·Šâ€à¶ºà·à¶´à¶± à¶´à·ƒà·”à¶¶à·’à¶¸',
       text:
-        'School qualifications, undergraduate IT learning, සහ completed courses/certifications මගේ technical foundation එකට සහාය දක්වයි.',
+        'School qualifications, undergraduate IT learning, à·ƒà·„ completed courses/certifications à¶¸à¶œà·š technical foundation à¶‘à¶šà¶§ à·ƒà·„à·à¶º à¶¯à¶šà·Šà·€à¶ºà·’.',
     },
     skills: {
       eyebrow: './skills.sh',
-      title: 'තාක්ෂණික හැකියාවන්',
+      title: 'à¶­à·à¶šà·Šà·‚à¶«à·’à¶š à·„à·à¶šà·’à¶ºà·à·€à¶±à·Š',
       text:
-        'Development සහ creative work සඳහා මම භාවිතා කරන technical skills, tools, සහ software මෙහි පෙන්වයි.',
+        'Development à·ƒà·„ creative work à·ƒà¶³à·„à· à¶¸à¶¸ à¶·à·à·€à·’à¶­à· à¶šà¶»à¶± technical skills, tools, à·ƒà·„ software à¶¸à·™à·„à·’ à¶´à·™à¶±à·Šà·€à¶ºà·’.',
     },
     projects: {
       eyebrow: './projects.sh',
-      title: 'තෝරාගත් වැඩ',
+      title: 'à¶­à·à¶»à·à¶œà¶­à·Š à·€à·à¶©',
       text:
-        'ශක්තිමත් builds ඉහළින් පෙන්වා, private සහ supporting work වෙනම layout එකකින් පෙන්වා ඇත.',
+        'à·à¶šà·Šà¶­à·’à¶¸à¶­à·Š builds à¶‰à·„à·…à·’à¶±à·Š à¶´à·™à¶±à·Šà·€à·, private à·ƒà·„ supporting work à·€à·™à¶±à¶¸ layout à¶‘à¶šà¶šà·’à¶±à·Š à¶´à·™à¶±à·Šà·€à· à¶‡à¶­.',
     },
     experience: {
       eyebrow: './experience.sh',
-      title: 'Leadership සහ community involvement',
+      title: 'Leadership à·ƒà·„ community involvement',
       text:
-        'Communication සහ coordination skills වර්ධනය කළ programme participation සහ field-based work මගේ පසුබිමට ඇතුළත් වේ.',
+        'Communication à·ƒà·„ coordination skills à·€à¶»à·Šà¶°à¶±à¶º à¶šà·… programme participation à·ƒà·„ field-based work à¶¸à¶œà·š à¶´à·ƒà·”à¶¶à·’à¶¸à¶§ à¶‡à¶­à·”à·…à¶­à·Š à·€à·š.',
     },
     contact: {
       eyebrow: './contact.sh',
-      title: 'සම්බන්ධ වන්න',
-      text: 'Opportunities, collaboration, සහ portfolio discussions සඳහා සම්බන්ධ විය හැක.',
+      title: 'à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à¶±à·Šà¶±',
+      text: 'Opportunities, collaboration, à·ƒà·„ portfolio discussions à·ƒà¶³à·„à· à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à·’à¶º à·„à·à¶š.',
     },
   },
   ui: {
     ...englishContent.ui,
-    terminal: 'ටර්මිනල්',
+    terminal: 'à¶§à¶»à·Šà¶¸à·’à¶±à¶½à·Š',
     languageToggleLabel: 'Switch to English',
-    searchPlaceholder: "grep -i 'සොයන්න...'",
-    searchLabel: 'Portfolio content සොයන්න',
-    nowViewing: 'දැනට බලන්නේ',
-    search: 'සෙවීම',
-    searchResults: 'සෙවීම් ප්‍රතිඵල',
-    noResults: 'ප්‍රතිඵල නැත',
-    noResultsText: 'මෙයට ගැලපෙන කිසිවක් හමු නොවීය',
-    resultsFor: 'ප්‍රතිඵල',
-    resultsText: 'ඔබේ search එකට ගැලපෙන සියලු කොටස් මෙහි දැක්වේ.',
-    matchingSkills: 'ගැලපෙන කුසලතා සහ මෙවලම්',
-    matchingProjects: 'ගැලපෙන ව්‍යාපෘති',
-    matchingExperience: 'ගැලපෙන අත්දැකීම්',
-    matchingLinks: 'ගැලපෙන සබැඳි',
-    more: 'තව',
-    scrollHint: 'තව පහළට',
-    coursesTitle: 'Courses සහ certifications',
-    gradesButton: 'Subjects සහ grades බලන්න',
-    gradesBack: 'Portfolio එකට ආපසු',
+    searchPlaceholder: "grep -i 'à·ƒà·œà¶ºà¶±à·Šà¶±...'",
+    searchLabel: 'Portfolio content à·ƒà·œà¶ºà¶±à·Šà¶±',
+    nowViewing: 'à¶¯à·à¶±à¶§ à¶¶à¶½à¶±à·Šà¶±à·š',
+    search: 'à·ƒà·™à·€à·“à¶¸',
+    searchResults: 'à·ƒà·™à·€à·“à¶¸à·Š à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½',
+    noResults: 'à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½ à¶±à·à¶­',
+    noResultsText: 'à¶¸à·™à¶ºà¶§ à¶œà·à¶½à¶´à·™à¶± à¶šà·’à·ƒà·’à·€à¶šà·Š à·„à¶¸à·” à¶±à·œà·€à·“à¶º',
+    resultsFor: 'à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½',
+    resultsText: 'à¶”à¶¶à·š search à¶‘à¶šà¶§ à¶œà·à¶½à¶´à·™à¶± à·ƒà·’à¶ºà¶½à·” à¶šà·œà¶§à·ƒà·Š à¶¸à·™à·„à·’ à¶¯à·à¶šà·Šà·€à·š.',
+    matchingSkills: 'à¶œà·à¶½à¶´à·™à¶± à¶šà·”à·ƒà¶½à¶­à· à·ƒà·„ à¶¸à·™à·€à¶½à¶¸à·Š',
+    matchingProjects: 'à¶œà·à¶½à¶´à·™à¶± à·€à·Šâ€à¶ºà·à¶´à·˜à¶­à·’',
+    matchingExperience: 'à¶œà·à¶½à¶´à·™à¶± à¶…à¶­à·Šà¶¯à·à¶šà·“à¶¸à·Š',
+    matchingLinks: 'à¶œà·à¶½à¶´à·™à¶± à·ƒà¶¶à·à¶³à·’',
+    more: 'à¶­à·€',
+    scrollHint: 'à¶­à·€ à¶´à·„à·…à¶§',
+    coursesTitle: 'Courses à·ƒà·„ certifications',
+    gradesButton: 'Subjects à·ƒà·„ grades à¶¶à¶½à¶±à·Šà¶±',
+    gradesBack: 'Portfolio à¶‘à¶šà¶§ à¶†à¶´à·ƒà·”',
     gradesEyebrow: './grades.sh',
-    gradesTitle: 'Subjects සහ grades',
+    gradesTitle: 'Subjects à·ƒà·„ grades',
     gradesText:
-      'Main education section එක crowd නොකර, visitors ලට completed subjects සහ results බලන්න වෙනම academic view එකක්.',
-    programmingTitle: 'Programming සහ web',
-    toolsTitle: 'Tools සහ creative software',
+      'Main education section à¶‘à¶š crowd à¶±à·œà¶šà¶», visitors à¶½à¶§ completed subjects à·ƒà·„ results à¶¶à¶½à¶±à·Šà¶± à·€à·™à¶±à¶¸ academic view à¶‘à¶šà¶šà·Š.',
+    programmingTitle: 'Programming à·ƒà·„ web',
+    toolsTitle: 'Tools à·ƒà·„ creative software',
     creativeProfile: 'Creative profile',
     githubEyebrow: 'github activity',
-    githubProfileLink: 'GitHub බලන්න',
-    githubLoading: 'Latest GitHub activity load වෙමින්...',
+    githubProfileLink: 'GitHub à¶¶à¶½à¶±à·Šà¶±',
+    githubLoading: 'Latest GitHub activity load à·€à·™à¶¸à·’à¶±à·Š...',
     githubUnavailable:
-      'Live GitHub contributions පෙන්වීමට backend GitHub API settings configure කළ යුතුයි.',
-    additionalWork: 'අමතර වැඩ',
-    supportingBuilds: 'Supporting සහ private builds',
+      'Live GitHub contributions à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ backend GitHub API settings configure à¶šà·… à¶ºà·”à¶­à·”à¶ºà·’.',
+    additionalWork: 'à¶…à¶¸à¶­à¶» à·€à·à¶©',
+    supportingBuilds: 'Supporting à·ƒà·„ private builds',
     supportingBuildsText:
-      'කුඩා හෝ non-public projects වෙනම group කර ඇති නිසා main work එකට පැහැදිලි first impression එකක් ලැබේ.',
+      'à¶šà·”à¶©à· à·„à· non-public projects à·€à·™à¶±à¶¸ group à¶šà¶» à¶‡à¶­à·’ à¶±à·’à·ƒà· main work à¶‘à¶šà¶§ à¶´à·à·„à·à¶¯à·’à¶½à·’ first impression à¶‘à¶šà¶šà·Š à¶½à·à¶¶à·š.',
   },
 };
 
@@ -880,4 +880,5 @@ export const portfolioContent = {
   en: englishContent,
   si: cleanSinhalaContent,
 };
+
 
