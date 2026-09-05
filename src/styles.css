@@ -35,6 +35,23 @@ html[lang='si'] select {
   font-family: 'Noto Sans Sinhala', 'Nirmala UI', sans-serif;
 }
 
+html[lang='si'] {
+  line-height: 1.75;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 3px;
+}
+
+.page-shell {
+  transition: opacity 180ms ease;
+}
+
+.page-shell--sinhala {
+  letter-spacing: 0;
+}
+
 .portfolio-intro {
   position: fixed;
   z-index: 1000;
@@ -2490,6 +2507,36 @@ button.portfolio-image-tile {
   gap: 1rem;
   width: 100%;
   overflow-wrap: anywhere;
+}
+
+.contact-link-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.contact-link-row .contact-link-item {
+  flex: 1;
+}
+
+.contact-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 3rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.contact-copy-button:hover {
+  color: var(--accent-soft);
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .contact-layout {

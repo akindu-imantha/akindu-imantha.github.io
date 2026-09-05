@@ -87,7 +87,12 @@ export default function ProjectCard({
 
             if (action.disabled || !action.href) {
               return (
-                <span key={action.label} className={actionClassName} aria-disabled="true">
+                <span
+                  key={action.label}
+                  className={actionClassName}
+                  aria-disabled="true"
+                  title={action.disabledMessage ?? 'This link is not publicly available yet.'}
+                >
                   {action.label}
                 </span>
               );

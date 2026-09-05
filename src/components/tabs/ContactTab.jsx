@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Check, Copy, Send } from 'lucide-react';
 import { useState } from 'react';
 import { contactLinks } from '../../data/portfolioData';
 import { trackEvent } from '../../utils/analytics';
@@ -37,12 +37,24 @@ export default function ContactTab({ data = {} }) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const contactApiUrl = getContactApiUrl();
 
   const updateField = (event) => {
     const { name, value } = event.target;
     setForm((currentForm) => ({ ...currentForm, [name]: value }));
+  };
+
+  const copyEmail = async (email) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopiedEmail(true);
+      window.setTimeout(() => setCopiedEmail(false), 2200);
+      trackEvent('contact_email_copy', { label: email });
+    } catch {
+      setStatus({ type: 'error', message: 'Could not copy the email address. Please select it manually.' });
+    }
   };
 
   const sendMessage = async (event) => {
@@ -121,18 +133,31 @@ export default function ContactTab({ data = {} }) {
         <div className="contact-links console-card">
           {links.map((item) => {
             const Icon = item.icon;
+            const isEmail = item.href.startsWith('mailto:');
 
             return (
-              <a
-                key={item.href}
-                href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noreferrer' : undefined}
-                className="contact-link-item"
-                onClick={() => trackEvent('contact_link_click', { label: item.href })}
-              >
-                <Icon size={20} /> {item.label}
-              </a>
+              <div key={item.href} className="contact-link-row">
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
+                  className="contact-link-item"
+                  onClick={() => trackEvent('contact_link_click', { label: item.href })}
+                >
+                  <Icon size={20} /> {item.label}
+                </a>
+                {isEmail ? (
+                  <button
+                    type="button"
+                    className="contact-copy-button"
+                    onClick={() => copyEmail(item.label)}
+                    aria-label={copiedEmail ? 'Email copied' : 'Copy email address'}
+                    title={copiedEmail ? 'Copied' : 'Copy email address'}
+                  >
+                    {copiedEmail ? <Check size={17} /> : <Copy size={17} />}
+                  </button>
+                ) : null}
+              </div>
             );
           })}
         </div>

@@ -169,7 +169,7 @@ function App() {
   const guidePrompt = guidePromptCopy[language] ?? guidePromptCopy.en;
 
   return (
-    <div className="page-shell">
+    <div className={`page-shell${language === 'si' ? ' page-shell--sinhala' : ''}`}>
       <AnimatePresence>
         {showIntro ? (
           <PortfolioIntro
