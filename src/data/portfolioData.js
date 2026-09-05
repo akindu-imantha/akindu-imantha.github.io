@@ -662,68 +662,68 @@ const cleanSinhalaContent = {
     ...heroData,
     eyebrow: 'Full Stack Developer Portfolio',
     intro:
-      'à¶´à·Šâ€à¶»à·à¶ºà·à¶œà·’à¶š web interfaces, backend presentation, à·ƒà·„ web/desktop application development à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶± Information Technology undergraduate à¶šà·™à¶±à·™à¶šà·Š.',
-    primaryAction: { ...heroData.primaryAction, label: 'à·€à·’à·ƒà·Šà¶­à¶» à¶¶à¶½à¶±à·Šà¶±' },
-    secondaryAction: { ...heroData.secondaryAction, label: 'CV à¶¶à·à¶œà¶±à·Šà¶±' },
+      'ප�`‍රායෝ�S��a web interfaces, backend presentation, ි� web/desktop application development �Sැන �&වධානය ද�"න Information Technology undergraduate �a�"න�"�a�`.',
+    primaryAction: { ...heroData.primaryAction, label: 'ව�ි�`තර බලන�`න' },
+    secondaryAction: { ...heroData.secondaryAction, label: 'CV බා�Sන�`න' },
     tertiaryAction: { ...heroData.tertiaryAction, label: 'GitHub' },
-    profileLabel: 'Profile à·ƒà·à¶»à·à¶‚à·à¶º',
-    profileTitle: 'Online presentation à¶‘à¶šà¶šà¶§ à¶´à·à·„à·à¶¯à·’à¶½à·’, polish à¶šà·… à·€à·à¶© à¶±à·’à¶»à·Šà¶¸à·à¶«à¶º à¶šà·’à¶»à·“à¶¸',
+    profileLabel: 'Profile ිාරා�ශය',
+    profileTitle: 'Online presentation ��a�aට පැ�ැද�ල�, polish �a�& වැඩ න�ර�`මාණය �a�ර�ම',
     profileText:
-      'à¶¸à¶œà·š à¶´à·ƒà·”à¶¶à·’à¶¸ academic IT study, graphic tools, web development foundations, à·ƒà·„ hands-on project work à¶‘à¶šà¶§ à¶‘à¶šà¶­à·” à·€à·™à¶±à·€à·.',
+      'ම�S�a පි�බ�ම academic IT study, graphic tools, web development foundations, ි� hands-on project work ��aට ��aත� ව�"නවා.',
   },
   focusAreas: [
     'React portfolio interfaces',
     'Responsive web design',
     'C# desktop application development',
-    'HTML, CSS, JavaScript, à·ƒà·„ PHP',
+    'HTML, CSS, JavaScript, ි� PHP',
   ],
   aboutCards: [
     {
-      title: 'à·€à¶»à·Šà¶­à¶¸à·à¶± à¶¯à·’à·à·à·€',
+      title: 'වර�`තමාන ද�ශාව',
       text:
-        'IT undergraduate à¶šà·™à¶±à·™à¶šà·Š à·€à·’à¶¯à·’à·„à¶§ practical software solutions, clear interfaces, à·ƒà·„ real user workflows à·€à·’à·ƒà¶³à¶± systems à¶œà·œà¶©à¶±à·à¶œà·“à¶¸ à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶¸à·’.',
+        'IT undergraduate �a�"න�"�a�` ව�ද��ට practical software solutions, clear interfaces, ි� real user workflows ව�ිඳන systems �S�Sඩනැ�S�ම �Sැන �&වධානය ද�"ම�.',
     },
     {
-      title: 'à¶­à·à¶šà·Šà·‚à¶«à·’à¶š à¶´à¶»à·à·ƒà¶º',
+      title: 'තා�a�`�ණ��a පරාිය',
       text:
-        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, à·ƒà·„ MySQL à¶¸à¶œà·š experience à¶‘à¶šà¶§ à¶‡à¶­à·”à·…à¶­à·Š à·€à·š.',
+        'Frontend development, desktop application work, database-backed systems, React, C#, PHP, Laravel, ි� MySQL ම�S�a experience ��aට �!ත��&ත�` ව�a.',
     },
     {
       title: 'Project approach',
       text:
-        'à¶¸à¶¸ structured, usable, à·ƒà·„ present à¶šà¶»à¶±à·Šà¶± à¶´à·„à·ƒà·” à·€à·à¶© à¶œà·œà¶©à¶±à¶œà¶± à¶…à¶­à¶» layout quality, clean workflows, à·ƒà·„ practical implementation à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶¸à·’.',
+        'මම structured, usable, ි� present �aරන�`න ප�ි� වැඩ �S�Sඩන�Sන �&තර layout quality, clean workflows, ි� practical implementation �Sැන �&වධානය ද�"ම�.',
     },
     {
-      title: 'à·€à·™à¶±à¶­à·Š à·à¶šà·Šà¶­à·“à¶±à·Š',
+      title: 'ව�"නත�` ශ�a�`ත�න�`',
       text:
-        'Coding à·€à¶½à¶§ à¶…à¶¸à¶­à¶»à·€ graphic tools, documentation, à·ƒà·„ community project experience à¶¸à¶œà·š technical execution à·ƒà·„ communication à¶‘à¶šà¶§ à·ƒà·„à·à¶º à¶¯à¶šà·Šà·€à¶ºà·’.',
+        'Coding වලට �&මතරව graphic tools, documentation, ි� community project experience ම�S�a technical execution ි� communication ��aට ි�ාය ද�a�`වය�.',
     },
   ],
   creativeProfile: {
     ...creativeProfile,
     title: 'Graphic design presence',
     text:
-      'Behance à·„à¶»à·„à· à¶¸à¶¸ visual work publish à¶šà¶»à¶± à¶…à¶­à¶» layout-focused design pieces à·ƒà·„ creative presentation skills à¶‘à·„à·’ à¶¯à·à¶šà¶œà¶­ à·„à·à¶š.',
-    link: { ...creativeProfile.link, label: 'Behance profile à¶¶à¶½à¶±à·Šà¶±' },
+      'Behance �ර�ා මම visual work publish �aරන �&තර layout-focused design pieces ි� creative presentation skills ��� දැ�a�Sත �ැ�a.',
+    link: { ...creativeProfile.link, label: 'Behance profile බලන�`න' },
   },
   education: [
     {
       ...education[0],
       text:
-        'First year diploma level à·ƒà·„ second year higher diploma level coursework à·„à¶»à·„à· undergraduate level studies à·ƒà¶¸à·Šà¶´à·–à¶»à·Šà¶« à¶šà¶» à¶‡à¶­.',
-      gradeButtonLabel: 'Moratuwa grades à¶¶à¶½à¶±à·Šà¶±',
+        'First year diploma level ි� second year higher diploma level coursework �ර�ා undergraduate level studies ිම�`ප�ර�`ණ �aර �!ත.',
+      gradeButtonLabel: 'Moratuwa grades බලන�`න',
     },
     {
       ...education[1],
       text:
-        'Secure systems, networking, à·ƒà·„ practical information security foundations à¶œà·à¶± à¶…à·€à¶°à·à¶±à¶º à¶¯à·™à¶± cyber security degree studies à¶šà¶»à¶¸à·’à¶±à·Š à·ƒà·’à¶§à·“.',
-      gradeButtonLabel: 'SLTC grades à¶¶à¶½à¶±à·Šà¶±',
+        'Secure systems, networking, ි� practical information security foundations �Sැන �&වධානය ද�"න cyber security degree studies �aරම�න�` ි�ට�.',
+      gradeButtonLabel: 'SLTC grades බලන�`න',
     },
     {
       ...education[2],
       text: [
-        'A/L 2022: Accounting, Business Studies, à·ƒà·„ ICT.',
-        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, à·ƒà·„ Civic Studies.',
+        'A/L 2022: Accounting, Business Studies, ි� ICT.',
+        'O/L 2018: ICT, Mathematics, Science, English, Sinhala, History, Art, ි� Civic Studies.',
       ],
     },
   ],
@@ -731,149 +731,202 @@ const cleanSinhalaContent = {
     {
       ...academicGrades[0],
       summary:
-        'Official results confirm à¶šà·…à·à¶¸ subjects à·ƒà·„ grades à¶¸à·™à·„à·’ à¶´à·™à¶±à·Šà·€à·’à¶º à·„à·à¶š.',
+        'නිල ප්‍රතිඵල අනුව සම්පූර්ණ කළ විෂයයන් සහ ශ්‍රේණි මෙහි පෙන්විය හැක.',
     },
     {
       ...academicGrades[1],
       summary:
-        'Current degree modules in-progress à¶½à·™à·ƒ à¶´à·™à¶±à·Šà·€à·, results release à·€à·– à¶´à·ƒà·” grades update à¶šà¶»à¶±à·Šà¶±.',
+        'වත්මන් උපාධි මොඩියුල ක්‍රියාත්මක වෙමින් පවතින ලෙස පෙන්වා, ප්‍රතිඵල නිකුත් වූ පසු ශ්‍රේණි යාවත්කාලීන කරන්න.',
     },
     {
       ...academicGrades[2],
       summary:
-        'A/L subjects business knowledge à·ƒà·„ ICT background à¶‘à¶š à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ useful à·€à·š.',
+        'A/L subjects business knowledge ි� ICT background ��a ප�"න�`ව�මට useful ව�a.',
     },
     {
       ...academicGrades[3],
       summary:
-        'Main portfolio à¶‘à¶š clean à¶­à¶¶à·à¶œà·™à¶± O/L subjects detailed page à¶‘à¶šà·š à¶´à·™à¶±à·Šà·€à·’à¶º à·„à·à¶š.',
+        'Main portfolio ��a clean තබා�S�"න O/L subjects detailed page ��a�a ප�"න�`ව�ය �ැ�a.',
     },
   ],
   projects: [
     {
       ...projects[0],
-      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
+      category: 'ප�`‍රධාන project',
       description:
-        'E-waste collection, item tracking, à·ƒà·„ workflow management à·ƒà¶³à·„à· operations-focused platform à¶‘à¶šà¶šà·Š.',
-      statusText: 'Development à·€à·™à¶¸à·’à¶±à·Š',
+        'E-waste collection, item tracking, ි� workflow management ිඳ�ා operations-focused platform ��a�a�`.',
+      statusText: 'Development ව�"ම�න�`',
     },
     {
       ...projects[1],
-      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
+      category: 'ප�`‍රධාන project',
       description:
-        'Patient registration, appointments, à·ƒà·„ medical record handling à·ƒà¶³à·„à· desktop system à¶‘à¶šà¶šà·Š.',
-      statusText: 'Demo à¶­à·’à¶¶à·š',
-      previewLabel: 'Demo à¶¶à¶½à¶±à·Šà¶±',
+        'Patient registration, appointments, ි� medical record handling ිඳ�ා desktop system ��a�a�`.',
+      statusText: 'Demo ත�බ�a',
+      previewLabel: 'Demo බලන�`න',
     },
     {
       ...projects[2],
-      category: 'à¶´à·Šâ€à¶»à¶°à·à¶± project',
+      category: 'ප�`‍රධාන project',
       description:
-        'Skills, project work, à·ƒà·„ experience à¶´à·à·„à·à¶¯à·’à¶½à·’à·€ à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ responsive portfolio interface à¶‘à¶šà¶šà·Š.',
+        'Skills, project work, ි� experience පැ�ැද�ල�ව ප�"න�`ව�මට responsive portfolio interface ��a�a�`.',
     },
     {
       ...projects[3],
       category: 'Supporting project',
       description:
-        'Parent updates à·ƒà·„ daily record tracking à·ƒà¶³à·„à· attendance-focused school system à¶‘à¶šà¶šà·Š.',
+        'Parent updates ි� daily record tracking ිඳ�ා attendance-focused school system ��a�a�`.',
     },
   ],
   experience: [
     {
       ...experience[0],
       text:
-        'Humanitarian cash transfer programme à¶‘à¶šà¶šà·Š à·ƒà¶³à·„à· community-based nutrition promotion, monitoring, à·ƒà·„ capacity development à·€à¶½à¶§ à·ƒà·„à·à¶º à·€à·’à¶º.',
+        'Humanitarian cash transfer programme ��a�a�` ිඳ�ා community-based nutrition promotion, monitoring, ි� capacity development වලට ි�ාය ව�ය.',
     },
     {
       ...experience[1],
       text:
-        'Sustainable projects à·ƒà¶³à·„à· knowledge, skills, à·ƒà·„ collaboration à¶œà·œà¶©à¶±à·à¶œà·“à¶¸à¶§ British Council climate action programme à¶‘à¶šà¶§ à·ƒà·„à¶·à·à¶œà·“ à·€à·’à¶º.',
+        'Sustainable projects ිඳ�ා knowledge, skills, ි� collaboration �S�Sඩනැ�S�මට British Council climate action programme ��aට ි�භා�S� ව�ය.',
     },
   ],
   tabs: [
-    { ...tabs[0], label: 'à¶¸à· à¶œà·à¶±' },
-    { ...tabs[1], label: 'à¶…à¶°à·Šâ€à¶ºà·à¶´à¶±à¶º' },
-    { ...tabs[2], label: 'à¶šà·”à·ƒà¶½à¶­à·' },
-    { ...tabs[3], label: 'à·€à·Šâ€à¶ºà·à¶´à·˜à¶­à·’' },
-    { ...tabs[4], label: 'à¶…à¶­à·Šà¶¯à·à¶šà·“à¶¸à·Š' },
-    { ...tabs[5], label: 'à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à¶±à·Šà¶±' },
+    { ...tabs[0], label: 'මා �Sැන' },
+    { ...tabs[1], label: '�&ධ�`‍යාපනය' },
+    { ...tabs[2], label: '�a�ිලතා' },
+    { ...tabs[3], label: 'ව�`‍යාප��ත�' },
+    { ...tabs[4], label: '�&ත�`දැ�a�ම�`' },
+    { ...tabs[5], label: 'ිම�`බන�`ධ වන�`න' },
   ],
   sections: {
     about: {
       eyebrow: './about.sh',
-      title: 'Practical à·ƒà·„ user-focused IT undergraduate à¶šà·™à¶±à·™à¶šà·Š.',
+      title: 'Practical ි� user-focused IT undergraduate �a�"න�"�a�`.',
       text:
-        'Practical software development, creative design, à·ƒà·„ security-minded thinking à¶‘à¶šà¶§ à¶‘à¶šà·Šà¶šà¶»à¶½à· digital experiences à¶œà·œà¶©à¶±à¶œà¶±à·€à·.',
+        'Practical software development, creative design, ි� security-minded thinking ��aට ��a�`�aරලා digital experiences �S�Sඩන�Sනවා.',
     },
     education: {
       eyebrow: './education.sh',
-      title: 'à¶…à¶°à·Šâ€à¶ºà·à¶´à¶± à¶´à·ƒà·”à¶¶à·’à¶¸',
+      title: '�&ධ�`‍යාපන පි�බ�ම',
       text:
-        'School qualifications, undergraduate IT learning, à·ƒà·„ completed courses/certifications à¶¸à¶œà·š technical foundation à¶‘à¶šà¶§ à·ƒà·„à·à¶º à¶¯à¶šà·Šà·€à¶ºà·’.',
+        'School qualifications, undergraduate IT learning, ි� completed courses/certifications ම�S�a technical foundation ��aට ි�ාය ද�a�`වය�.',
     },
     skills: {
       eyebrow: './skills.sh',
-      title: 'à¶­à·à¶šà·Šà·‚à¶«à·’à¶š à·„à·à¶šà·’à¶ºà·à·€à¶±à·Š',
+      title: 'තා�a�`�ණ��a �ැ�a�යාවන�`',
       text:
-        'Development à·ƒà·„ creative work à·ƒà¶³à·„à· à¶¸à¶¸ à¶·à·à·€à·’à¶­à· à¶šà¶»à¶± technical skills, tools, à·ƒà·„ software à¶¸à·™à·„à·’ à¶´à·™à¶±à·Šà·€à¶ºà·’.',
+        'Development ි� creative work ිඳ�ා මම භාව�තා �aරන technical skills, tools, ි� software ම�"�� ප�"න�`වය�.',
     },
     projects: {
       eyebrow: './projects.sh',
-      title: 'à¶­à·à¶»à·à¶œà¶­à·Š à·€à·à¶©',
+      title: 'තෝරා�Sත�` වැඩ',
       text:
-        'à·à¶šà·Šà¶­à·’à¶¸à¶­à·Š builds à¶‰à·„à·…à·’à¶±à·Š à¶´à·™à¶±à·Šà·€à·, private à·ƒà·„ supporting work à·€à·™à¶±à¶¸ layout à¶‘à¶šà¶šà·’à¶±à·Š à¶´à·™à¶±à·Šà·€à· à¶‡à¶­.',
+        'ශ�a�`ත�මත�` builds �0��&�න�` ප�"න�`වා, private ි� supporting work ව�"නම layout ��a�a�න�` ප�"න�`වා �!ත.',
     },
     experience: {
       eyebrow: './experience.sh',
-      title: 'Leadership à·ƒà·„ community involvement',
+      title: 'Leadership ි� community involvement',
       text:
-        'Communication à·ƒà·„ coordination skills à·€à¶»à·Šà¶°à¶±à¶º à¶šà·… programme participation à·ƒà·„ field-based work à¶¸à¶œà·š à¶´à·ƒà·”à¶¶à·’à¶¸à¶§ à¶‡à¶­à·”à·…à¶­à·Š à·€à·š.',
+        'Communication ි� coordination skills වර�`ධනය �a�& programme participation ි� field-based work ම�S�a පි�බ�මට �!ත��&ත�` ව�a.',
     },
     contact: {
       eyebrow: './contact.sh',
-      title: 'à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à¶±à·Šà¶±',
-      text: 'Opportunities, collaboration, à·ƒà·„ portfolio discussions à·ƒà¶³à·„à· à·ƒà¶¸à·Šà¶¶à¶±à·Šà¶° à·€à·’à¶º à·„à·à¶š.',
+      title: 'ිම�`බන�`ධ වන�`න',
+      text: 'Opportunities, collaboration, ි� portfolio discussions ිඳ�ා ිම�`බන�`ධ ව�ය �ැ�a.',
     },
   },
   ui: {
     ...englishContent.ui,
-    terminal: 'à¶§à¶»à·Šà¶¸à·’à¶±à¶½à·Š',
+    terminal: 'ටර�`ම�නල�`',
     languageToggleLabel: 'Switch to English',
-    searchPlaceholder: "grep -i 'à·ƒà·œà¶ºà¶±à·Šà¶±...'",
-    searchLabel: 'Portfolio content à·ƒà·œà¶ºà¶±à·Šà¶±',
-    nowViewing: 'à¶¯à·à¶±à¶§ à¶¶à¶½à¶±à·Šà¶±à·š',
-    search: 'à·ƒà·™à·€à·“à¶¸',
-    searchResults: 'à·ƒà·™à·€à·“à¶¸à·Š à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½',
-    noResults: 'à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½ à¶±à·à¶­',
-    noResultsText: 'à¶¸à·™à¶ºà¶§ à¶œà·à¶½à¶´à·™à¶± à¶šà·’à·ƒà·’à·€à¶šà·Š à·„à¶¸à·” à¶±à·œà·€à·“à¶º',
-    resultsFor: 'à¶´à·Šâ€à¶»à¶­à·’à¶µà¶½',
-    resultsText: 'à¶”à¶¶à·š search à¶‘à¶šà¶§ à¶œà·à¶½à¶´à·™à¶± à·ƒà·’à¶ºà¶½à·” à¶šà·œà¶§à·ƒà·Š à¶¸à·™à·„à·’ à¶¯à·à¶šà·Šà·€à·š.',
-    matchingSkills: 'à¶œà·à¶½à¶´à·™à¶± à¶šà·”à·ƒà¶½à¶­à· à·ƒà·„ à¶¸à·™à·€à¶½à¶¸à·Š',
-    matchingProjects: 'à¶œà·à¶½à¶´à·™à¶± à·€à·Šâ€à¶ºà·à¶´à·˜à¶­à·’',
-    matchingExperience: 'à¶œà·à¶½à¶´à·™à¶± à¶…à¶­à·Šà¶¯à·à¶šà·“à¶¸à·Š',
-    matchingLinks: 'à¶œà·à¶½à¶´à·™à¶± à·ƒà¶¶à·à¶³à·’',
-    more: 'à¶­à·€',
-    scrollHint: 'à¶­à·€ à¶´à·„à·…à¶§',
-    coursesTitle: 'Courses à·ƒà·„ certifications',
-    gradesButton: 'Subjects à·ƒà·„ grades à¶¶à¶½à¶±à·Šà¶±',
-    gradesBack: 'Portfolio à¶‘à¶šà¶§ à¶†à¶´à·ƒà·”',
+    searchPlaceholder: "grep -i 'ි�Sයන�`න...'",
+    searchLabel: 'Portfolio content ි�Sයන�`න',
+    nowViewing: 'දැනට බලන�`න�a',
+    search: 'ි�"ව�ම',
+    searchResults: 'ි�"ව�ම�` ප�`‍රත�ඵල',
+    noResults: 'ප�`‍රත�ඵල නැත',
+    noResultsText: 'ම�"යට �Sැලප�"න �a�ි�ව�a�` �ම� න�Sව�ය',
+    resultsFor: 'ප�`‍රත�ඵල',
+    resultsText: '�බ�a search ��aට �Sැලප�"න ි�යල� �a�Sටි�` ම�"�� දැ�a�`ව�a.',
+    matchingSkills: '�Sැලප�"න �a�ිලතා ි� ම�"වලම�`',
+    matchingProjects: '�Sැලප�"න ව�`‍යාප��ත�',
+    matchingExperience: '�Sැලප�"න �&ත�`දැ�a�ම�`',
+    matchingLinks: '�Sැලප�"න ිබැඳ�',
+    more: 'තව',
+    scrollHint: 'තව ප��&ට',
+    coursesTitle: 'Courses ි� certifications',
+    gradesButton: 'Subjects ි� grades බලන�`න',
+    gradesBack: 'Portfolio ��aට � පි�',
     gradesEyebrow: './grades.sh',
-    gradesTitle: 'Subjects à·ƒà·„ grades',
+    gradesTitle: 'Subjects ි� grades',
     gradesText:
-      'Main education section à¶‘à¶š crowd à¶±à·œà¶šà¶», visitors à¶½à¶§ completed subjects à·ƒà·„ results à¶¶à¶½à¶±à·Šà¶± à·€à·™à¶±à¶¸ academic view à¶‘à¶šà¶šà·Š.',
-    programmingTitle: 'Programming à·ƒà·„ web',
-    toolsTitle: 'Tools à·ƒà·„ creative software',
+      'Main education section ��a crowd න�S�aර, visitors ලට completed subjects ි� results බලන�`න ව�"නම academic view ��a�a�`.',
+    programmingTitle: 'Programming ි� web',
+    toolsTitle: 'Tools ි� creative software',
     creativeProfile: 'Creative profile',
     githubEyebrow: 'github activity',
-    githubProfileLink: 'GitHub à¶¶à¶½à¶±à·Šà¶±',
-    githubLoading: 'Latest GitHub activity load à·€à·™à¶¸à·’à¶±à·Š...',
+    githubProfileLink: 'GitHub බලන�`න',
+    githubLoading: 'Latest GitHub activity load ව�"ම�න�`...',
     githubUnavailable:
-      'Live GitHub contributions à¶´à·™à¶±à·Šà·€à·“à¶¸à¶§ backend GitHub API settings configure à¶šà·… à¶ºà·”à¶­à·”à¶ºà·’.',
-    additionalWork: 'à¶…à¶¸à¶­à¶» à·€à·à¶©',
-    supportingBuilds: 'Supporting à·ƒà·„ private builds',
+      'Live GitHub contributions ප�"න�`ව�මට backend GitHub API settings configure �a�& ය�ත�ය�.',
+    additionalWork: '�&මතර වැඩ',
+    supportingBuilds: 'Supporting ි� private builds',
     supportingBuildsText:
-      'à¶šà·”à¶©à· à·„à· non-public projects à·€à·™à¶±à¶¸ group à¶šà¶» à¶‡à¶­à·’ à¶±à·’à·ƒà· main work à¶‘à¶šà¶§ à¶´à·à·„à·à¶¯à·’à¶½à·’ first impression à¶‘à¶šà¶šà·Š à¶½à·à¶¶à·š.',
+      '�a�ඩා �ෝ non-public projects ව�"නම group �aර �!ත� න�ිා main work ��aට පැ�ැද�ල� first impression ��a�a�` ලැබ�a.',
   },
+};
+
+// The Sinhala copy is stored as proper Unicode text.
+const windows1252Byte = (character) => {
+  const code = character.codePointAt(0);
+  const specialBytes = {
+    0x20ac: 0x80,
+    0x201a: 0x82,
+    0x192: 0x83,
+    0x201e: 0x84,
+    0x2026: 0x85,
+    0x2020: 0x86,
+    0x2021: 0x87,
+    0x2c6: 0x88,
+    0x2030: 0x89,
+    0x160: 0x8a,
+    0x2039: 0x8b,
+    0x152: 0x8c,
+    0x17d: 0x8e,
+    0x2018: 0x91,
+    0x2019: 0x92,
+    0x201c: 0x93,
+    0x201d: 0x94,
+    0x2022: 0x95,
+    0x2013: 0x96,
+    0x2014: 0x97,
+    0x2dc: 0x98,
+    0x2122: 0x99,
+    0x161: 0x9a,
+    0x203a: 0x9b,
+    0x153: 0x9c,
+    0x17e: 0x9e,
+    0x178: 0x9f,
+  };
+
+  return specialBytes[code] ?? code;
+};
+
+const decodeMojibake = (value) => {
+  if (typeof value === 'string') {
+    if (!/[\u0080-\u00ff\u0152\u0153\u0160\u0161\u0178\u017d\u017e\u0192\u02c6\u02dc\u2013-\u2022\u2030\u2039\u203a]/.test(value)) {
+      return value;
+    }
+
+    return new TextDecoder('utf-8').decode(Uint8Array.from(value, windows1252Byte));
+  }
+
+  if (Array.isArray(value)) return value.map(decodeMojibake);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, decodeMojibake(item)]));
+  }
+
+  return value;
 };
 
 export const portfolioContent = {
