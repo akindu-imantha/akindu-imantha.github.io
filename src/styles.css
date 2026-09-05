@@ -762,6 +762,32 @@ a {
   transform: translateY(-1px);
 }
 
+.nav-toggle--language {
+  gap: 0.32rem;
+  padding-inline: 0.62rem;
+}
+
+.nav-language-option {
+  min-width: 1.55rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.nav-language-option.is-active {
+  color: var(--heading-color);
+  text-shadow: 0 0 12px var(--accent-glow);
+}
+
+.nav-language-divider {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  opacity: 0.55;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.8fr);
@@ -3951,6 +3977,11 @@ button.portfolio-image-tile {
     font-weight: 800;
     line-height: 1;
     text-align: center;
+  }
+
+  .nav-toggle--language .nav-language-option,
+  .nav-toggle--language .nav-language-divider {
+    display: inline;
   }
 
   .nav-icon-link {

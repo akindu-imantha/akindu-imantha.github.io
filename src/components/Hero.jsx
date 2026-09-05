@@ -192,11 +192,14 @@ export default function Hero({
             type="button"
             className="nav-toggle nav-toggle--language"
             onClick={onLanguageToggle}
+            aria-pressed={language === 'si'}
             aria-label={language === 'en' ? 'Current language: English. Switch to Sinhala' : 'Current language: Sinhala. Switch to English'}
-            title={language === 'en' ? 'English' : 'Sinhala'}
+            title={language === 'en' ? 'Switch to Sinhala' : 'Switch to English'}
           >
             <Globe2 size={16} />
-            <span className="nav-language-code">{language === 'en' ? 'EN' : '\u0dc3\u0dd2\u0d82'}</span>
+            <span className={`nav-language-option${language === 'en' ? ' is-active' : ''}`}>EN</span>
+            <span className="nav-language-divider" aria-hidden="true">/</span>
+            <span className={`nav-language-option${language === 'si' ? ' is-active' : ''}`}>සිං</span>
           </button>
           <button
             type="button"
