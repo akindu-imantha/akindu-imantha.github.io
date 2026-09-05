@@ -656,6 +656,10 @@ const englishContent = {
 };
 
 
+/*
+ * Legacy Sinhala copy retained temporarily for source-history reference only.
+ * It contains irreversible replacement characters and must never be compiled
+ * or used as translation data. The active Sinhala content is defined below.
 const cleanSinhalaContent = {
   ...englishContent,
   heroData: {
@@ -876,6 +880,8 @@ const cleanSinhalaContent = {
   },
 };
 
+*/
+
 // The Sinhala copy is stored as proper Unicode text.
 const windows1252Byte = (character) => {
   const code = character.codePointAt(0);
@@ -929,9 +935,51 @@ const decodeMojibake = (value) => {
   return value;
 };
 
+// Keep translated copy as UTF-8 source text. Do not attempt to repair text at
+// runtime: replacement characters (�) mean the original characters are lost.
+const sinhalaContent = {
+  ...englishContent,
+  heroData: {
+    ...heroData,
+    eyebrow: 'සම්පූර්ණ-ස්ටැක් සංවර්ධක කළඹ',
+    name: 'ආයුබෝවන්, මම අකින්දු ඉමාන්ත',
+    intro: 'ප්‍රායෝගික වෙබ් අතුරුමුහුණත්, බැක්එන්ඩ් ඉදිරිපත් කිරීම සහ වෙබ් හා ඩෙස්ක්ටොප් යෙදුම් සංවර්ධනය කෙරෙහි අවධානය යොමු කරන තොරතුරු තාක්ෂණ උපාධි අපේක්ෂකයෙකි.',
+    primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
+    secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
+    profileLabel: 'පැතිකඩ සාරාංශය',
+    profileTitle: 'අන්තර්ජාලයේ පැහැදිලිව ඉදිරිපත් කළ හැකි, නිමාව ඇති වැඩ නිර්මාණය කිරීම',
+    profileText: 'මගේ පසුබිම අධ්‍යයන IT ඉගෙනීම, ග්‍රැෆික් මෙවලම්, වෙබ් සංවර්ධන පදනම් සහ ප්‍රායෝගික ව්‍යාපෘති අත්දැකීම් එක් කරයි.',
+  },
+  focusAreas: ['React කළඹ අතුරුමුහුණත්', 'ප්‍රතිචාරාත්මක වෙබ් නිර්මාණය', 'C# ඩෙස්ක්ටොප් යෙදුම් සංවර්ධනය', 'HTML, CSS, JavaScript සහ PHP'],
+  aboutCards: [
+    { title: 'වත්මන් දිශාව', text: 'ප්‍රායෝගික මෘදුකාංග විසඳුම්, පැහැදිලි අතුරුමුහුණත් සහ සැබෑ පරිශීලක අවශ්‍යතා විසඳන පද්ධති ගොඩනැගීමට අවධානය යොමු කරමි.' },
+    { title: 'තාක්ෂණික පරාසය', text: 'මගේ අත්දැකීම් ඉදිරිපස සංවර්ධනය, ඩෙස්ක්ටොප් යෙදුම්, දත්ත සමුදා පද්ධති, React, C#, PHP, Laravel සහ MySQL ආවරණය කරයි.' },
+    { title: 'ව්‍යාපෘති ප්‍රවේශය', text: 'මම ව්‍යුහගත, භාවිතයට පහසු සහ ඉදිරිපත් කිරීමට සරල වැඩ ගොඩනඟමි.' },
+    { title: 'පුළුල් ශක්තීන්', text: 'කේතනයට අමතරව, ග්‍රැෆික් මෙවලම්, ලේඛනකරණය සහ ප්‍රජා ව්‍යාපෘති අත්දැකීම් මගේ සන්නිවේදනය ශක්තිමත් කරයි.' },
+  ],
+  creativeProfile: { ...creativeProfile, title: 'ග්‍රැෆික් නිර්මාණ පැවැත්ම', text: 'මම Behance හරහා පිරිසැලසුම්-කේන්ද්‍රිත නිර්මාණ සහ දෘශ්‍ය ඉදිරිපත් කිරීමේ හැකියාවන් පෙන්වන වැඩ ප්‍රකාශයට පත් කරමි.', link: { ...creativeProfile.link, label: 'Behance පැතිකඩ බලන්න' } },
+  tabs: [
+    { ...tabs[0], label: 'මා ගැන' }, { ...tabs[1], label: 'අධ්‍යාපනය' },
+    { ...tabs[2], label: 'කුසලතා' }, { ...tabs[3], label: 'ව්‍යාපෘති' },
+    { ...tabs[4], label: 'අත්දැකීම්' }, { ...tabs[5], label: 'සම්බන්ධ වන්න' },
+  ],
+  sections: {
+    about: { eyebrow: './about.sh', title: 'ප්‍රායෝගික, පරිශීලක-කේන්ද්‍රිත IT උපාධි අපේක්ෂකයෙක්.', text: 'මම ප්‍රායෝගික මෘදුකාංග සංවර්ධනය, නිර්මාණාත්මක සැලසුම සහ ආරක්ෂාව පිළිබඳ සිතුවිලි එකතු කරන ඩිජිටල් අත්දැකීම් ගොඩනඟමි.' },
+    education: { eyebrow: './education.sh', title: 'අධ්‍යාපන පසුබිම', text: 'මගේ අධ්‍යයන පාසල් සුදුසුකම්, උපාධි මට්ටමේ IT ඉගෙනීම සහ තාක්ෂණික පදනමට සහය වන පාඨමාලා එක් කරයි.' },
+    skills: { eyebrow: './skills.sh', title: 'තාක්ෂණික හැකියාවන්', text: 'සංවර්ධන සහ නිර්මාණාත්මක වැඩ සඳහා භාවිත කරන කුසලතා, මෙවලම් සහ මෘදුකාංග.' },
+    projects: { eyebrow: './projects.sh', title: 'තෝරාගත් වැඩ', text: 'ප්‍රධාන ව්‍යාපෘති මුලින්ම ඉදිරිපත් කරන අතර, සහායක සහ පෞද්ගලික වැඩ වෙනම පෙන්වයි.' },
+    experience: { eyebrow: './experience.sh', title: 'නායකත්වය සහ ප්‍රජා සහභාගිත්වය', text: 'සන්නිවේදන සහ සම්බන්ධීකරණ කුසලතා වර්ධනය කළ වැඩසටහන් සහ ක්ෂේත්‍ර අත්දැකීම්.' },
+    contact: { eyebrow: './contact.sh', title: 'සම්බන්ධ වන්න', text: 'අවස්ථා, සහයෝගීතා සහ කළඹ සාකච්ඡා සඳහා සම්බන්ධ වන්න.' },
+  },
+  ui: {
+    ...englishContent.ui,
+    terminal: 'ටර්මිනලය', languageToggleLabel: 'ඉංග්‍රීසි වෙත මාරු වන්න', searchPlaceholder: "grep -i 'සොයන්න...'", searchLabel: 'කළඹ අන්තර්ගතය සොයන්න', nowViewing: 'දැනට බලමින්', search: 'සොයන්න', searchResults: 'සෙවුම් ප්‍රතිඵල', noResults: 'ප්‍රතිඵල හමු නොවීය', noResultsText: 'මෙයට ගැළපෙන අන්තර්ගතයක් හමු නොවීය', resultsFor: 'සඳහා ප්‍රතිඵල', resultsText: 'ඔබගේ සෙවුමට ගැළපෙන සියල්ල මෙහි දැක්වේ.', matchingSkills: 'ගැළපෙන කුසලතා සහ මෙවලම්', matchingProjects: 'ගැළපෙන ව්‍යාපෘති', matchingExperience: 'ගැළපෙන අත්දැකීම්', matchingLinks: 'ගැළපෙන සබැඳි', more: 'තවත්', scrollHint: 'තවත් පහළින්', coursesTitle: 'පාඨමාලා සහ සහතික', gradesButton: 'විෂයයන් සහ ප්‍රතිඵල බලන්න', gradesBack: 'කළඹ වෙත ආපසු', gradesTitle: 'විෂයයන් සහ ප්‍රතිඵල', gradesText: 'ප්‍රධාන අධ්‍යාපන අංශය පිරී නොයන ලෙස විෂයයන් සහ ප්‍රතිඵල සඳහා වෙනම දසුනක්.', programmingTitle: 'ක්‍රමලේඛනය සහ වෙබ්', toolsTitle: 'මෙවලම් සහ නිර්මාණාත්මක මෘදුකාංග', creativeProfile: 'නිර්මාණාත්මක පැතිකඩ', githubProfileLink: 'GitHub බලන්න', githubLoading: 'නවතම GitHub ක්‍රියාකාරකම් පූරණය වෙමින්...', additionalWork: 'අමතර වැඩ', supportingBuilds: 'සහායක සහ පෞද්ගලික ව්‍යාපෘති', supportingBuildsText: 'කුඩා හෝ ප්‍රසිද්ධ නොවන ව්‍යාපෘති වෙනම කාණ්ඩගත කර ඇත.',
+  },
+};
+
 export const portfolioContent = {
   en: englishContent,
-  si: cleanSinhalaContent,
+  si: sinhalaContent,
 };
 
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
 
 :root {
   font-family: 'Space Grotesk', sans-serif;
@@ -22,6 +22,17 @@
   --text-muted: #94a3b8;
   --heading-color: #ffffff;
   --shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+}
+
+/* The primary display fonts do not include Sinhala glyphs. Apply a font with
+   full Sinhala coverage whenever the language switch sets <html lang="si">. */
+html[lang='si'],
+html[lang='si'] *,
+html[lang='si'] button,
+html[lang='si'] input,
+html[lang='si'] textarea,
+html[lang='si'] select {
+  font-family: 'Noto Sans Sinhala', 'Nirmala UI', sans-serif;
 }
 
 .portfolio-intro {
