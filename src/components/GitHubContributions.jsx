@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 
 const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DEFAULT_API_URL = 'https://akindu-portfolio-api.vercel.app/api/github/contributions';
+const CACHE_TTL = 1000 * 60 * 60 * 24;
+const REQUEST_TIMEOUT = 10000;
 
 function getLevel(count) {
   if (count === 0) return 0;
@@ -54,6 +56,46 @@ function getApiUrl(dataApiUrl) {
   return configuredUrl;
 }
 
+function getCacheKey(username, year) {
+  return `portfolio-github-calendar:${username}:${year}`;
+}
+
+function isCalendar(payload) {
+  return Boolean(payload
+    && Number.isFinite(payload.totalContributions)
+    && Array.isArray(payload.weeks));
+}
+
+function readCachedCalendar(username, year) {
+  try {
+    const cached = JSON.parse(localStorage.getItem(getCacheKey(username, year)) ?? 'null');
+    return isCalendar(cached?.calendar) ? cached : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveCachedCalendar(username, year, calendar) {
+  try {
+    localStorage.setItem(getCacheKey(username, year), JSON.stringify({
+      calendar,
+      savedAt: Date.now(),
+      expiresAt: Date.now() + CACHE_TTL,
+    }));
+  } catch {
+    // Storage may be disabled; live data still remains usable for this visit.
+  }
+}
+
+async function fetchCalendar(url, controller) {
+  const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+  if (!response.ok) throw new Error('Contribution request failed');
+
+  const payload = await response.json();
+  if (!isCalendar(payload)) throw new Error('Contribution response was invalid');
+  return payload;
+}
+
 function GitHubCalendarSkeleton() {
   return (
     <div className="github-skeleton" aria-hidden="true">
@@ -71,14 +113,17 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
   const currentYear = new Date().getFullYear();
   const username = data.username ?? 'akindu-imantha';
   const apiUrl = getApiUrl(data.apiUrl);
-  const [calendar, setCalendar] = useState(null);
-  const [status, setStatus] = useState('loading');
+  const [cachedEntry] = useState(() => readCachedCalendar(username, currentYear));
+  const [calendar, setCalendar] = useState(() => cachedEntry?.calendar ?? null);
+  const [status, setStatus] = useState(() => cachedEntry?.calendar ? 'cached' : 'loading');
+  const [lastUpdated, setLastUpdated] = useState(() => cachedEntry?.savedAt ?? null);
+  const hasInitialCalendar = Boolean(cachedEntry?.calendar);
 
   useEffect(() => {
     // The calendar is supplementary. On a slow/data-saver connection, avoid
     // an extra cross-origin request during the first paint.
     if (litePerformanceMode) {
-      setStatus('deferred');
+      setStatus(hasInitialCalendar ? 'cached' : 'deferred');
       return undefined;
     }
 
@@ -87,34 +132,56 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
       return;
     }
 
-    const controller = new AbortController();
     const url = new URL(apiUrl, window.location.origin);
 
     url.searchParams.set('username', username);
     url.searchParams.set('year', String(currentYear));
 
-    setStatus('loading');
+    let disposed = false;
+    let activeController = null;
+    let timeoutId = null;
+    setStatus(hasInitialCalendar ? 'refreshing' : 'loading');
 
-    fetch(url, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Contribution request failed');
+    const load = async () => {
+      // A second attempt handles temporary Vercel cold starts and brief Wi-Fi
+      // drops without making the page wait indefinitely.
+      for (let attempt = 0; attempt < 2 && !disposed; attempt += 1) {
+        activeController = new AbortController();
+        let requestTimedOut = false;
+        timeoutId = window.setTimeout(() => {
+          requestTimedOut = true;
+          activeController?.abort();
+        }, REQUEST_TIMEOUT);
+
+        try {
+          const payload = await fetchCalendar(url, activeController);
+          if (disposed) return;
+          saveCachedCalendar(username, currentYear, payload);
+          setCalendar(payload);
+          setLastUpdated(Date.now());
+          setStatus('ready');
+          return;
+        } catch (error) {
+          if (disposed || (error.name === 'AbortError' && !requestTimedOut)) return;
+          if (attempt === 0) {
+            await new Promise((resolve) => window.setTimeout(resolve, 700));
+          }
+        } finally {
+          window.clearTimeout(timeoutId);
+          timeoutId = null;
         }
+      }
 
-        return response.json();
-      })
-      .then((payload) => {
-        setCalendar(payload);
-        setStatus('ready');
-      })
-      .catch((error) => {
-        if (error.name !== 'AbortError') {
-          setStatus('error');
-        }
-      });
+      if (!disposed) setStatus(hasInitialCalendar ? 'stale' : 'error');
+    };
 
-    return () => controller.abort();
-  }, [apiUrl, currentYear, litePerformanceMode, username]);
+    load();
+    return () => {
+      disposed = true;
+      window.clearTimeout(timeoutId);
+      activeController?.abort();
+    };
+  }, [apiUrl, currentYear, hasInitialCalendar, litePerformanceMode, username]);
 
   const monthMarkers = useMemo(() => getMonthMarkers(calendar?.weeks), [calendar]);
 
@@ -133,14 +200,19 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
         </a>
       </div>
 
-      {status === 'loading' ? (
+      {status === 'loading' && !calendar ? (
         <GitHubCalendarSkeleton />
-      ) : status === 'ready' && calendar ? (
+      ) : calendar ? (
         <>
           <p className="github-total">
             {calendar.totalContributions} contributions in {calendar.year}
           </p>
-          {litePerformanceMode ? (
+          {status === 'stale' ? (
+            <p className="github-state">
+              {ui.githubCached ?? 'Showing your most recently saved activity while the live update is unavailable.'}
+              {lastUpdated ? ` Last updated ${new Date(lastUpdated).toLocaleDateString()}.` : ''}
+            </p>
+          ) : litePerformanceMode ? (
             <p className="github-state">
               {ui.githubLiteMode ?? 'Calendar loaded in performance mode.'}
             </p>

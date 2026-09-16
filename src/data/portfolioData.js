@@ -424,6 +424,9 @@ export const projects = [
       'Operations-focused platform for e-waste collection, item tracking, and workflow management.',
     statusText: 'In development',
     statusTone: 'development',
+    previewImage: './images/highlights/e-waste-management-platform.png',
+    previewAlt: 'E-Waste Management platform displayed on a laptop and phone.',
+    previewLabel: 'Project preview',
     actions: [
       { label: 'Case study soon', disabled: true, variant: 'primary' },
       { label: 'Private build', disabled: true, variant: 'secondary' },
@@ -463,20 +466,24 @@ export const projects = [
     featuredRank: 4,
     description:
       'Responsive portfolio interface for presenting skills, project work, and experience clearly.',
-    statusText: 'Live project',
+    statusText: 'Live · akindu-imantha.github.io',
     statusTone: 'live',
     actions: [
       {
         label: 'Live portfolio',
-        href: 'https://12345akindu.github.io/akindu-portfolio/',
+        href: 'https://akindu-imantha.github.io',
         variant: 'primary',
       },
       {
         label: 'GitHub repository',
-        href: 'https://github.com/12345akindu/akindu-portfolio',
+        href: 'https://github.com/akindu-imantha/akindu-imantha.github.io',
         variant: 'secondary',
       },
     ],
+    previewUrl: 'https://akindu-imantha.github.io',
+    previewImage: './images/projects/portfolio-live-preview.svg',
+    previewAlt: 'Live preview of Akindu Imantha portfolio website.',
+    previewLabel: 'Open live portfolio',
   },
   {
     title: 'Railway Reservation System',
@@ -508,6 +515,9 @@ export const projects = [
       'Attendance-focused school system built for parent updates and daily record tracking.',
     statusText: 'Private project',
     statusTone: 'private',
+    previewImage: './images/projects/school-management-preview.svg',
+    previewAlt: 'School Management System dashboard preview.',
+    previewLabel: 'Project preview',
     actions: [
       { label: 'Private build', disabled: true, variant: 'primary' },
       { label: 'Details on request', disabled: true, variant: 'secondary' },

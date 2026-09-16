@@ -55,23 +55,35 @@ export default function ProjectCard({
         </button>
       </div>
 
-      {variant !== 'compact' && project.previewImage && previewHref ? (
-        <a
-          className="project-preview"
-          href={previewHref}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`${project.title} demo preview`}
-          onClick={() => trackEvent('project_preview_click', { label: project.title })}
-        >
-          <img
-            src={project.previewImage}
-            alt={project.previewAlt ?? `${project.title} preview`}
-            loading="lazy"
-            decoding="async"
-          />
-          <span className="project-preview-badge">{project.previewLabel ?? 'Watch Demo'}</span>
-        </a>
+      {project.previewImage ? (
+        previewHref ? (
+          <a
+            className="project-preview"
+            href={previewHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`${project.title} demo preview`}
+            onClick={() => trackEvent('project_preview_click', { label: project.title })}
+          >
+            <img
+              src={project.previewImage}
+              alt={project.previewAlt ?? `${project.title} preview`}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="project-preview-badge">{project.previewLabel ?? 'Watch Demo'}</span>
+          </a>
+        ) : (
+          <div className="project-preview project-preview--static">
+            <img
+              src={project.previewImage}
+              alt={project.previewAlt ?? `${project.title} preview`}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="project-preview-badge">{project.previewLabel ?? 'Project preview'}</span>
+          </div>
+        )
       ) : null}
 
       {actions.length > 0 ? (

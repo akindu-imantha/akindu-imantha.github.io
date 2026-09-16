@@ -21,6 +21,11 @@ function setCorsHeaders(request, response) {
 }
 
 function sendJson(response, status, data) {
+  // Let the CDN serve a recently successful calendar during a brief GitHub or
+  // serverless outage. The browser still refreshes in the background.
+  if (status >= 200 && status < 300) {
+    response.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
+  }
   response.status(status).json(data);
 }
 
