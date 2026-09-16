@@ -4964,6 +4964,12 @@ button.portfolio-image-tile {
   display: none;
 }
 
+/* The loading intro stays animated even when the rest of the page uses lite
+   performance settings. Without this override, phones skip its progress cue. */
+[data-performance='lite'] .portfolio-intro-progress span {
+  animation: intro-progress 2.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
 [data-performance='lite'] .profile-card:hover .profile-image,
 [data-performance='lite'] .hero-card:hover,
 [data-performance='lite'] .about-card:hover,
