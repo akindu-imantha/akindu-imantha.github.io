@@ -4229,6 +4229,21 @@ button.portfolio-image-tile {
     -webkit-backdrop-filter: none;
   }
 
+  /* The mobile layout intentionally breaks the terminal into stacked panels.
+     Without this theme-specific shell, the light palette loses its outer
+     frame and visually reads as a smaller, disconnected section. */
+  [data-theme='light'] .interactive-console {
+    padding: 0.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
+  }
+
+  [data-theme='light'] .console-content-area {
+    padding: 0.15rem 0 0;
+  }
+
   .console-header {
     justify-content: space-between;
     gap: 0.75rem;
