@@ -1,4 +1,4 @@
-# ඉමන්ත Portfolio
+# අකිඳු ඉමන්ත Portfolio
 
 React + Vite portfolio template prepared for GitHub Pages.
 
