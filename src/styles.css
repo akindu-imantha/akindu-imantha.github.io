@@ -1759,10 +1759,6 @@ button.portfolio-image-tile {
   gap: 1.25rem;
 }
 
-.featured-project-grid > :first-child {
-  grid-column: 1 / -1;
-}
-
 .project-card-header {
   display: flex;
   justify-content: space-between;
