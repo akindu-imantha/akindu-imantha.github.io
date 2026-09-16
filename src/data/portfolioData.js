@@ -460,7 +460,7 @@ export const projects = [
     stack: 'React, Vite, Frontend UI',
     category: 'Featured project',
     featured: true,
-    featuredRank: 3,
+    featuredRank: 4,
     description:
       'Responsive portfolio interface for presenting skills, project work, and experience clearly.',
     statusText: 'Live project',
@@ -475,6 +475,28 @@ export const projects = [
         label: 'GitHub repository',
         href: 'https://github.com/12345akindu/akindu-portfolio',
         variant: 'secondary',
+      },
+    ],
+  },
+  {
+    title: 'Railway Reservation System',
+    stack: 'Java, Data Structures & Algorithms',
+    category: 'Featured project',
+    featured: true,
+    featuredRank: 3,
+    description:
+      'Console-based railway booking system with ticket reservations, cancellations, a waiting queue, undo support, passenger lookup, sorting, and Dijkstra shortest-path routing.',
+    statusText: 'Public repository',
+    statusTone: 'live',
+    previewUrl: 'https://github.com/akindu-imantha/Railway-Reservation-System',
+    previewImage: './images/projects/railway-reservation-preview.svg',
+    previewAlt: 'Railway Reservation System booking dashboard preview.',
+    previewLabel: 'View source',
+    actions: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/akindu-imantha/Railway-Reservation-System',
+        variant: 'primary',
       },
     ],
   },
@@ -777,6 +799,13 @@ const cleanSinhalaContent = {
     },
     {
       ...projects[3],
+      category: 'ප්‍රධාන project',
+      description:
+        'Java console railway reservation system එකක්. Booking, cancellation, waiting list, undo, passenger search, sorting සහ shortest-path routes ඇතුළත් වේ.',
+      statusText: 'Public repository',
+    },
+    {
+      ...projects[4],
       category: 'Supporting project',
       description:
         'Parent updates ි� daily record tracking ිඳ�ා attendance-focused school system ��a�a�`.',
