@@ -162,7 +162,7 @@ export default function Hero({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <div className="brand">අකිඳු ඉමන්ත</div>
+        <div className="brand">{language === 'si' ? 'අකිඳු ඉමන්ත' : 'Akindu Imantha'}</div>
         <div className="nav-links">
           <a
             href="#console"

@@ -93,6 +93,9 @@ function App() {
 
   useEffect(() => {
     document.documentElement.lang = language === 'si' ? 'si' : 'en';
+    document.title = language === 'si'
+      ? 'අකිඳු ඉමන්ත | Software Engineer & Web Developer'
+      : 'Akindu Imantha | Software Engineer & Web Developer';
     localStorage.setItem('portfolio-language', language);
   }, [language]);
 
@@ -180,6 +183,7 @@ function App() {
           <PortfolioIntro
             onComplete={() => setShowIntro(false)}
             litePerformanceMode={litePerformanceMode}
+            language={language}
           />
         ) : null}
       </AnimatePresence>

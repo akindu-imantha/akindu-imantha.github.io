@@ -13,7 +13,7 @@
 
 export const heroData = {
   eyebrow: 'Full Stack Developer Portfolio',
-  name: "Hi, I'm අකිඳු ඉමන්ත",
+  name: "Hi, I'm Akindu Imantha",
   intro:
     'Information Technology undergraduate focused on practical web interfaces, backend presentation, and application building with both web and desktop development experience.',
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
@@ -21,7 +21,7 @@ export const heroData = {
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
   tertiaryAction: { href: 'https://github.com/akindu-imantha', label: 'GitHub' },
   profileImage: './images/profile-hero-cutout.png',
-  profileImageAlt: 'අකිඳු ඉමන්ත',
+  profileImageAlt: 'Akindu Imantha',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
   profileText:
@@ -103,7 +103,7 @@ export const imageBar = {
   items: [
     {
       src: './images/highlights/moratuwa-awards-2025.png',
-      alt: 'අකිඳු ඉමන්ත receiving a Diploma in Information Technology at the University of Moratuwa Awards Ceremony 2025.',
+      alt: 'Akindu Imantha receiving a Diploma in Information Technology at the University of Moratuwa Awards Ceremony 2025.',
       label: 'Moratuwa award',
       href: '#console',
       gallery: [
@@ -130,7 +130,7 @@ export const imageBar = {
     },
     {
       src: './images/highlights/art-cafe-graphic-design.png',
-      alt: 'Art Cafe graphic design agency promotional poster created by අකිඳු ඉමන්ත.',
+      alt: 'Art Cafe graphic design agency promotional poster created by Akindu Imantha.',
       label: 'Graphic design',
       href: 'https://www.behance.net/akinduimantha',
       external: true,
@@ -501,7 +501,7 @@ export const experience = [
     images: [
       {
         src: './images/experience/sarvodaya-animator.jpg',
-      alt: 'අකිඳු ඉමන්ත as Animator at Sarvodaya Rathnapura.',
+      alt: 'Akindu Imantha as Animator at Sarvodaya Rathnapura.',
       },
       {
         src: './images/optimized/unicef-cash-plus-poster-900.jpg',
@@ -516,7 +516,7 @@ export const experience = [
     images: [
       {
         src: './images/optimized/ylca-team-1200.jpg',
-      alt: 'අකිඳු ඉමන්ත with the Youth Leadership for Climate Action team.',
+      alt: 'Akindu Imantha with the Youth Leadership for Climate Action team.',
       },
       {
         src: './images/optimized/ylca-poster-900.jpg',

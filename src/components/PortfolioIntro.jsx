@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 
-export default function PortfolioIntro({ onComplete, litePerformanceMode = false }) {
+export default function PortfolioIntro({ onComplete, litePerformanceMode = false, language = 'en' }) {
+  const displayName = language === 'si' ? 'අකිඳු ඉමන්ත' : 'Akindu Imantha';
   return (
     <motion.section
       className={`portfolio-intro ${litePerformanceMode ? 'portfolio-intro--lite' : ''}`}
-      aria-label="Loading අකිඳු ඉමන්ත portfolio"
+      aria-label={`Loading ${displayName} portfolio`}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: litePerformanceMode ? 0.16 : 0.28, ease: 'easeOut' }}
@@ -20,15 +21,15 @@ export default function PortfolioIntro({ onComplete, litePerformanceMode = false
       </button>
       <div className="portfolio-intro-content">
         <p className="portfolio-intro-command">./initialize-portfolio</p>
-        <div className="portfolio-intro-monogram" aria-label="අකිඳු ඉමන්ත">
+        <div className="portfolio-intro-monogram" aria-label={displayName}>
           <motion.div
             className="portfolio-intro-initial portfolio-intro-initial--a"
             initial={litePerformanceMode ? false : { opacity: 0, x: -76, rotate: -14 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: litePerformanceMode ? 0 : 0.62, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="portfolio-intro-letter portfolio-intro-letter--a">ඉ</span>
-            <span className="portfolio-intro-initial-name">අකිඳු ඉමන්ත</span>
+            <span className="portfolio-intro-letter portfolio-intro-letter--a">{language === 'si' ? 'අ' : 'A'}</span>
+            <span className="portfolio-intro-initial-name">{displayName}</span>
           </motion.div>
         </div>
         <motion.p
