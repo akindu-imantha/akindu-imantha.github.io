@@ -13,7 +13,7 @@
 
 export const heroData = {
   eyebrow: 'Full Stack Developer Portfolio',
-  name: "Hi, I'm Akindu Imantha",
+  name: "Hi, I'm ඉමන්ත",
   intro:
     'Information Technology undergraduate focused on practical web interfaces, backend presentation, and application building with both web and desktop development experience.',
   meta: ['Rathnapura, Sri Lanka', '(+94) 70 110 7126', 'akindu666imantha@gmail.com'],
@@ -21,7 +21,7 @@ export const heroData = {
   secondaryAction: { href: './Akindu-Imantha-CV.pdf', label: 'Download CV' },
   tertiaryAction: { href: 'https://github.com/akindu-imantha', label: 'GitHub' },
   profileImage: './images/profile-hero-cutout.png',
-  profileImageAlt: 'Akindu Imantha',
+  profileImageAlt: 'ඉමන්ත',
   profileLabel: 'Profile Snapshot',
   profileTitle: 'Building polished work that is easy to present online',
   profileText:
@@ -103,7 +103,7 @@ export const imageBar = {
   items: [
     {
       src: './images/highlights/moratuwa-awards-2025.png',
-      alt: 'Akindu Imantha receiving a Diploma in Information Technology at the University of Moratuwa Awards Ceremony 2025.',
+      alt: 'ඉමන්ත receiving a Diploma in Information Technology at the University of Moratuwa Awards Ceremony 2025.',
       label: 'Moratuwa award',
       href: '#console',
       gallery: [
@@ -130,7 +130,7 @@ export const imageBar = {
     },
     {
       src: './images/highlights/art-cafe-graphic-design.png',
-      alt: 'Art Cafe graphic design agency promotional poster created by Akindu Imantha.',
+      alt: 'Art Cafe graphic design agency promotional poster created by ඉමන්ත.',
       label: 'Graphic design',
       href: 'https://www.behance.net/akinduimantha',
       external: true,
@@ -501,7 +501,7 @@ export const experience = [
     images: [
       {
         src: './images/experience/sarvodaya-animator.jpg',
-        alt: 'Akindu Imantha as Animator at Sarvodaya Rathnapura.',
+      alt: 'ඉමන්ත as Animator at Sarvodaya Rathnapura.',
       },
       {
         src: './images/optimized/unicef-cash-plus-poster-900.jpg',
@@ -516,7 +516,7 @@ export const experience = [
     images: [
       {
         src: './images/optimized/ylca-team-1200.jpg',
-        alt: 'Akindu Imantha with the Youth Leadership for Climate Action team.',
+      alt: 'ඉමන්ත with the Youth Leadership for Climate Action team.',
       },
       {
         src: './images/optimized/ylca-poster-900.jpg',
@@ -942,7 +942,7 @@ const sinhalaContent = {
   heroData: {
     ...heroData,
     eyebrow: 'සම්පූර්ණ-ස්ටැක් සංවර්ධක කළඹ',
-    name: 'ආයුබෝවන්, මම අකින්දු ඉමාන්ත',
+    name: 'ආයුබෝවන්, මම ඉමන්ත',
     intro: 'ප්‍රායෝගික වෙබ් අතුරුමුහුණත්, බැක්එන්ඩ් ඉදිරිපත් කිරීම සහ වෙබ් හා ඩෙස්ක්ටොප් යෙදුම් සංවර්ධනය කෙරෙහි අවධානය යොමු කරන තොරතුරු තාක්ෂණ උපාධි අපේක්ෂකයෙකි.',
     primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
     secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
@@ -981,5 +981,4 @@ export const portfolioContent = {
   en: englishContent,
   si: sinhalaContent,
 };
-
 

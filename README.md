@@ -1,4 +1,4 @@
-# Akindu Imantha Portfolio
+# ඉමන්ත Portfolio
 
 React + Vite portfolio template prepared for GitHub Pages.
 

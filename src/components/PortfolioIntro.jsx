@@ -4,7 +4,7 @@ export default function PortfolioIntro({ onComplete, litePerformanceMode = false
   return (
     <motion.section
       className={`portfolio-intro ${litePerformanceMode ? 'portfolio-intro--lite' : ''}`}
-      aria-label="Loading Akindu Imantha portfolio"
+      aria-label="Loading ඉමන්ත portfolio"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: litePerformanceMode ? 0.16 : 0.28, ease: 'easeOut' }}
@@ -20,25 +20,15 @@ export default function PortfolioIntro({ onComplete, litePerformanceMode = false
       </button>
       <div className="portfolio-intro-content">
         <p className="portfolio-intro-command">./initialize-portfolio</p>
-        <div className="portfolio-intro-monogram" aria-label="Akindu Imantha">
+        <div className="portfolio-intro-monogram" aria-label="ඉමන්ත">
           <motion.div
             className="portfolio-intro-initial portfolio-intro-initial--a"
             initial={litePerformanceMode ? false : { opacity: 0, x: -76, rotate: -14 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: litePerformanceMode ? 0 : 0.62, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="portfolio-intro-letter portfolio-intro-letter--a">A</span>
-            <span className="portfolio-intro-initial-name">AKINDU</span>
-          </motion.div>
-          <span className="portfolio-intro-divider" aria-hidden="true" />
-          <motion.div
-            className="portfolio-intro-initial portfolio-intro-initial--i"
-            initial={litePerformanceMode ? false : { opacity: 0, x: 76, rotate: 14 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: litePerformanceMode ? 0 : 0.62, delay: litePerformanceMode ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="portfolio-intro-letter portfolio-intro-letter--i">I</span>
-            <span className="portfolio-intro-initial-name">IMANTHA</span>
+            <span className="portfolio-intro-letter portfolio-intro-letter--a">ඉ</span>
+            <span className="portfolio-intro-initial-name">ඉමන්ත</span>
           </motion.div>
         </div>
         <motion.p

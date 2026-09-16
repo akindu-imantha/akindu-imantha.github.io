@@ -162,7 +162,7 @@ export default function Hero({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <div className="brand">Akindu Imantha</div>
+        <div className="brand">ඉමන්ත</div>
         <div className="nav-links">
           <a
             href="#console"
@@ -319,6 +319,5 @@ export default function Hero({
     </header>
   );
 }
-
 
 
