@@ -2479,12 +2479,13 @@ button.portfolio-image-tile {
 .project-preview {
   position: relative;
   display: block;
+  width: min(100%, 340px);
   margin-top: 0.95rem;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.28);
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
 }
 
 .project-preview img {
