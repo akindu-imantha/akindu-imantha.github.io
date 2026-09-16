@@ -762,30 +762,57 @@ a {
   transform: translateY(-1px);
 }
 
-.nav-toggle--language {
-  gap: 0.32rem;
-  padding-inline: 0.62rem;
+.nav-language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  min-height: 34px;
+  padding: 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-language-icon {
+  width: 16px;
+  height: 16px;
+  margin-inline: 0.3rem 0.12rem;
+  color: var(--text-muted);
 }
 
 .nav-language-option {
-  min-width: 1.55rem;
+  min-width: 2.05rem;
+  min-height: 26px;
+  padding: 0 0.38rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--text-muted);
-  font-size: 0.72rem;
+  font: inherit;
+  font-size: 0.68rem;
   font-weight: 800;
   line-height: 1;
-  text-align: center;
-  transition: color 180ms ease, text-shadow 180ms ease;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.nav-language-option:hover {
+  color: var(--heading-color);
 }
 
 .nav-language-option.is-active {
-  color: var(--heading-color);
-  text-shadow: 0 0 12px var(--accent-glow);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px var(--accent-glow);
 }
 
-.nav-language-divider {
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  opacity: 0.55;
+[data-theme='light'] .nav-language-switch {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme='light'] .nav-language-option:hover {
+  color: #0f172a;
 }
 
 .hero-grid {
@@ -5793,11 +5820,8 @@ select {
   }
 
   .nav-terminal-link {
-    min-height: 32px;
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.72rem;
-    font-weight: 700;
+    /* The bottom section bar already provides navigation on phones. */
+    display: none;
   }
 
   .nav-toggle,
@@ -5806,8 +5830,21 @@ select {
     height: 32px;
   }
 
-  .nav-toggle--language {
-    padding-inline: 0.42rem;
+  .nav-language-switch {
+    min-height: 32px;
+    gap: 0.12rem;
+    padding: 0.16rem;
+  }
+
+  .nav-language-icon {
+    display: none;
+  }
+
+  .nav-language-option {
+    min-width: 1.72rem;
+    min-height: 26px;
+    padding-inline: 0.25rem;
+    font-size: 0.64rem;
   }
 
   .hero-grid {

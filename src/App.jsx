@@ -132,7 +132,12 @@ function App() {
     }
   }, [currentHash]);
 
-  const toggleLanguage = () => {
+  const toggleLanguage = (nextLanguage) => {
+    if (nextLanguage === 'en' || nextLanguage === 'si') {
+      setLanguage(nextLanguage);
+      return;
+    }
+
     setLanguage((currentLanguage) => (currentLanguage === 'en' ? 'si' : 'en'));
   };
 

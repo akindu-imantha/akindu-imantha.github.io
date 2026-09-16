@@ -188,19 +188,27 @@ export default function Hero({
           >
             <BarChart3 size={16} />
           </a>
-          <button
-            type="button"
-            className="nav-toggle nav-toggle--language"
-            onClick={onLanguageToggle}
-            aria-pressed={language === 'si'}
-            aria-label={language === 'en' ? 'Current language: English. Switch to Sinhala' : 'Current language: Sinhala. Switch to English'}
-            title={language === 'en' ? 'Switch to Sinhala' : 'Switch to English'}
-          >
-            <Globe2 size={16} />
-            <span className={`nav-language-option${language === 'en' ? ' is-active' : ''}`}>EN</span>
-            <span className="nav-language-divider" aria-hidden="true">/</span>
-            <span className={`nav-language-option${language === 'si' ? ' is-active' : ''}`}>සිං</span>
-          </button>
+          <div className="nav-language-switch" role="group" aria-label="Choose language">
+            <Globe2 className="nav-language-icon" size={16} aria-hidden="true" />
+            <button
+              type="button"
+              className={`nav-language-option${language === 'en' ? ' is-active' : ''}`}
+              onClick={() => onLanguageToggle('en')}
+              aria-pressed={language === 'en'}
+              title="Switch to English"
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              className={`nav-language-option${language === 'si' ? ' is-active' : ''}`}
+              onClick={() => onLanguageToggle('si')}
+              aria-pressed={language === 'si'}
+              title="Switch to Sinhala"
+            >
+              සිං
+            </button>
+          </div>
           <button
             type="button"
             className="nav-toggle nav-toggle--icon"
@@ -311,7 +319,6 @@ export default function Hero({
     </header>
   );
 }
-
 
 
 
