@@ -75,6 +75,13 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {
+    // The calendar is supplementary. On a slow/data-saver connection, avoid
+    // an extra cross-origin request during the first paint.
+    if (litePerformanceMode) {
+      setStatus('deferred');
+      return undefined;
+    }
+
     if (!apiUrl) {
       setStatus('unconfigured');
       return;
@@ -107,7 +114,7 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
       });
 
     return () => controller.abort();
-  }, [apiUrl, currentYear, username]);
+  }, [apiUrl, currentYear, litePerformanceMode, username]);
 
   const monthMarkers = useMemo(() => getMonthMarkers(calendar?.weeks), [calendar]);
 
@@ -162,7 +169,9 @@ export default function GitHubContributions({ data = {}, ui = {}, className = ''
         </>
       ) : (
         <p className="github-state">
-          {status === 'loading'
+          {status === 'deferred'
+            ? ui.githubLiteMode ?? 'Live activity is paused to keep this page fast on your connection.'
+            : status === 'loading'
             ? ui.githubLoading ?? 'Loading latest GitHub activity...'
             : ui.githubUnavailable ?? 'Live GitHub contributions need the backend GitHub API settings to be configured.'}
         </p>
