@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BarChart3, Github, Globe2, HelpCircle, Moon, Sun, X } from 'lucide-react';
+import { BarChart3, Github, Globe2, HelpCircle, Moon, Sun, Terminal, X } from 'lucide-react';
 import { focusAreas, heroData } from '../data/portfolioData';
 import { trackEvent } from '../utils/analytics';
 import GitHubContributions from './GitHubContributions';
@@ -169,6 +169,7 @@ export default function Hero({
             className="nav-terminal-link"
             onClick={() => trackEvent('nav_click', { label: 'Terminal' })}
           >
+            <Terminal size={14} aria-hidden="true" />
             {ui.terminal ?? 'Terminal'}
           </a>
           <button
