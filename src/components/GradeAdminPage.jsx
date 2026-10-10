@@ -1,8 +1,9 @@
-import { ArrowLeft, GraduationCap, Lock, Plus, RefreshCw, Save, Trash2 } from 'lucide-react';
+import { ArrowLeft, FileText, GraduationCap, Image as ImageIcon, Lock, Plus, RefreshCw, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { academicGrades } from '../data/portfolioData';
 import { fetchAnalyticsSummary } from '../utils/analytics';
 import { fetchStoredAcademicGrades, saveStoredAcademicGrades } from '../utils/grades';
+import { deleteStoredCertificate, fetchStoredCertificates, uploadStoredCertificate } from '../utils/certificates';
 
 const TOKEN_KEY = 'portfolio-analytics-token';
 const gradeOptions = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'E', 'F', 'Pending'];
@@ -53,6 +54,13 @@ export default function GradeAdminPage() {
   const [status, setStatus] = useState(token ? 'loading' : 'locked');
   const [message, setMessage] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [certificates, setCertificates] = useState([]);
+  const [certificateName, setCertificateName] = useState('');
+  const [certificateFile, setCertificateFile] = useState(null);
+  const [certificatePreview, setCertificatePreview] = useState('');
+  const [previewIsPdf, setPreviewIsPdf] = useState(false);
+  const [certificateMessage, setCertificateMessage] = useState('');
+  const [certificateStatus, setCertificateStatus] = useState('idle');
 
   const activeGroupIndex = grades.findIndex((group) => group.id === selectedGroupId);
   const activeGroup = grades[activeGroupIndex] ?? grades[0];
@@ -76,6 +84,16 @@ export default function GradeAdminPage() {
     }
   };
 
+  const loadCertificates = async () => {
+    try {
+      const result = await fetchStoredCertificates();
+      setCertificates(result.certificates ?? []);
+    } catch (error) {
+      setCertificateMessage(error.message);
+      setCertificateStatus('error');
+    }
+  };
+
   const unlockEditor = async (nextToken) => {
     if (!nextToken) {
       setIsUnlocked(false);
@@ -93,6 +111,7 @@ export default function GradeAdminPage() {
       setIsUnlocked(true);
       sessionStorage.setItem(TOKEN_KEY, nextToken);
       await loadGrades();
+      await loadCertificates();
     } catch (error) {
       setIsUnlocked(false);
       sessionStorage.removeItem(TOKEN_KEY);
@@ -125,6 +144,77 @@ export default function GradeAdminPage() {
     event.preventDefault();
     const nextToken = tokenInput.trim();
     unlockEditor(nextToken);
+  };
+
+  const selectCertificateFile = (event) => {
+    const file = event.target.files?.[0];
+    setCertificateFile(null);
+    setCertificatePreview('');
+    setPreviewIsPdf(false);
+    if (!file) return;
+    if (!['application/pdf', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      setCertificateMessage('Choose a PDF, JPG, PNG, or WebP file.');
+      setCertificateStatus('error');
+      event.target.value = '';
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setCertificateMessage('Each certificate must be 10 MB or smaller.');
+      setCertificateStatus('error');
+      event.target.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = String(reader.result ?? '');
+      setCertificateFile({ type: file.type, data: dataUrl.split(',')[1] ?? '' });
+      setCertificatePreview(dataUrl);
+      setPreviewIsPdf(file.type === 'application/pdf');
+      setCertificateName((current) => current.trim() ? current : file.name.replace(/\.[^.]+$/, ''));
+      setCertificateMessage('Preview ready. Upload to publish this certificate.');
+      setCertificateStatus('ready');
+    };
+    reader.onerror = () => {
+      setCertificateMessage('The selected file could not be read.');
+      setCertificateStatus('error');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const uploadCertificate = async (event) => {
+    event.preventDefault();
+    if (!isUnlocked || !certificateFile) return;
+    setCertificateStatus('saving');
+    setCertificateMessage('Uploading certificate…');
+    try {
+      const result = await uploadStoredCertificate(token, certificateName, certificateFile);
+      setCertificates(result.certificates ?? []);
+      setCertificateFile(null);
+      setCertificatePreview('');
+      setPreviewIsPdf(false);
+      setCertificateName('');
+      setCertificateMessage('Certificate uploaded and added to the public Education section.');
+      setCertificateStatus('ready');
+      const fileInput = document.getElementById('certificate-file');
+      if (fileInput) fileInput.value = '';
+    } catch (error) {
+      setCertificateMessage(error.message);
+      setCertificateStatus('error');
+    }
+  };
+
+  const removeCertificate = async (id) => {
+    setCertificateStatus('saving');
+    setCertificateMessage('Removing certificate…');
+    try {
+      const result = await deleteStoredCertificate(token, id);
+      setCertificates(result.certificates ?? []);
+      setCertificateMessage('Certificate removed.');
+      setCertificateStatus('ready');
+    } catch (error) {
+      setCertificateMessage(error.message);
+      setCertificateStatus('error');
+    }
   };
 
   const updateActiveGroup = (field, value) => {
@@ -261,6 +351,10 @@ export default function GradeAdminPage() {
           <a href="#grades" className="secondary-button">
             <GraduationCap size={17} />
             <span>Public grades</span>
+          </a>
+          <a href="#education" className="secondary-button">
+            <ImageIcon size={17} />
+            <span>Education</span>
           </a>
         </div>
         <div>
@@ -407,6 +501,46 @@ export default function GradeAdminPage() {
             </table>
           </div>
         </section>
+      </section>
+
+      <section className="certificate-admin-panel" aria-labelledby="certificate-admin-title">
+        <div className="grade-admin-table-heading">
+          <div>
+            <p className="eyebrow">Academic documents</p>
+            <h2 id="certificate-admin-title">Certificates</h2>
+            <p>Upload a PDF or image (up to 10 MB). Files are stored in the portfolio cloud folder.</p>
+          </div>
+          <button type="button" className="secondary-button" onClick={loadCertificates} disabled={!isUnlocked || certificateStatus === 'saving'}>
+            <RefreshCw size={16} />
+            <span>Load certificates</span>
+          </button>
+        </div>
+        <form className="certificate-upload-form" onSubmit={uploadCertificate}>
+          <label className="grade-admin-sidebar-label" htmlFor="certificate-title">Certificate title</label>
+          <input id="certificate-title" type="text" maxLength={100} value={certificateName} onChange={(event) => setCertificateName(event.target.value)} placeholder="e.g. Web Development Certificate" disabled={!isUnlocked} />
+          <input id="certificate-file" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" onChange={selectCertificateFile} disabled={!isUnlocked} />
+          <label className="certificate-file-label" htmlFor="certificate-file"><Upload size={18} /> Choose PDF or image</label>
+          {certificatePreview ? (
+            <div className="certificate-upload-preview">
+              {previewIsPdf ? <iframe src={certificatePreview} title="Selected certificate preview" /> : <img src={certificatePreview} alt="Selected certificate preview" />}
+            </div>
+          ) : null}
+          <button type="submit" className="primary-button" disabled={!isUnlocked || !certificateFile || certificateStatus === 'saving'}>
+            <Upload size={16} />
+            <span>{certificateStatus === 'saving' ? 'Uploading…' : 'Upload certificate'}</span>
+          </button>
+        </form>
+        {certificateMessage ? <p className={`analytics-state${certificateStatus === 'error' ? ' analytics-state--error' : ''}`} role="status">{certificateMessage}</p> : null}
+        <div className="certificate-admin-list">
+          {certificates.map((certificate) => (
+            <article className="certificate-admin-item" key={certificate.id}>
+              {certificate.type === 'image' ? <img src={certificate.url} alt="" /> : <FileText size={28} aria-hidden="true" />}
+              <div><h3>{certificate.name}</h3><a href={certificate.url} target="_blank" rel="noreferrer">Open certificate</a></div>
+              <button type="button" className="grade-admin-icon-button" onClick={() => removeCertificate(certificate.id)} disabled={certificateStatus === 'saving'} aria-label={`Delete ${certificate.name}`}><Trash2 size={16} /></button>
+            </article>
+          ))}
+          {isUnlocked && certificates.length === 0 ? <p className="analytics-empty">No certificates have been uploaded yet.</p> : null}
+        </div>
       </section>
     </main>
   );

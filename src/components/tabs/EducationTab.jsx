@@ -1,7 +1,9 @@
+import { FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { certifications, education } from '../../data/portfolioData';
 import { fetchStoredAcademicGrades } from '../../utils/grades';
+import { fetchStoredCertificates } from '../../utils/certificates';
 import SectionTitle from '../SectionTitle';
 import { fadeInUp, staggerContainer } from '../motionVariants';
 
@@ -30,6 +32,7 @@ export default function EducationTab({ data = {} }) {
   const educationItems = data.education ?? education;
   const certificationItems = data.certifications ?? certifications;
   const [storedGrades, setStoredGrades] = useState(null);
+  const [storedCertificates, setStoredCertificates] = useState([]);
   const academicGradeItems = storedGrades ?? data.academicGrades ?? [];
   const section = data.sections?.education ?? {
     eyebrow: './education.sh',
@@ -57,6 +60,16 @@ export default function EducationTab({ data = {} }) {
     return () => {
       isActive = false;
     };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+    fetchStoredCertificates()
+      .then((result) => {
+        if (isActive) setStoredCertificates(result.certificates ?? []);
+      })
+      .catch(() => {});
+    return () => { isActive = false; };
   }, []);
 
   return (
@@ -134,6 +147,30 @@ export default function EducationTab({ data = {} }) {
           })}
         </div>
       </motion.article>
+
+      {storedCertificates.length ? (
+        <motion.section variants={fadeInUp} className="education-certificates" aria-labelledby="education-certificates-title">
+          <div className="education-certificates-heading">
+            <p className="project-stack">Academic documents</p>
+            <h2 id="education-certificates-title">Certificates</h2>
+            <p>Certificates and course documents, uploaded from the private admin page.</p>
+          </div>
+          <div className="education-certificate-grid">
+            {storedCertificates.map((certificate) => (
+              <article className="education-certificate-card" key={certificate.id}>
+                <a href={certificate.url} target="_blank" rel="noreferrer" aria-label={`Open ${certificate.name}`}>
+                  {certificate.type === 'image' ? (
+                    <img src={certificate.url} alt={`Preview of ${certificate.name}`} loading="lazy" />
+                  ) : (
+                    <div className="education-certificate-pdf"><FileText size={42} /><span>PDF certificate · Preview / open</span></div>
+                  )}
+                </a>
+                <h3>{certificate.name}</h3>
+              </article>
+            ))}
+          </div>
+        </motion.section>
+      ) : null}
     </motion.div>
   );
 }
