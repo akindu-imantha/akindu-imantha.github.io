@@ -2,7 +2,9 @@ import { hasValidAnalyticsToken } from '../server/analytics-store.js';
 import {
   addStoredCertificate,
   deleteStoredCertificate,
+  getMissingCertificatesStorageSettings,
   getStoredCertificates,
+  isCertificateListingStorageConfigured,
   isCertificatesStorageConfigured,
 } from '../server/certificates-store.js';
 
@@ -20,9 +22,17 @@ export default async function handler(request, response) {
   setCors(request, response);
   if (request.method === 'OPTIONS') return response.status(204).end();
   try {
-    if (request.method === 'GET') return response.status(200).json({ certificates: await getStoredCertificates() });
+    if (request.method === 'GET') {
+      if (!isCertificateListingStorageConfigured()) {
+        return response.status(503).json({ message: 'Certificate listing storage is not configured. Set the Upstash Redis environment variables.' });
+      }
+      return response.status(200).json({ certificates: await getStoredCertificates() ?? [] });
+    }
     if (!hasValidAnalyticsToken(request)) return response.status(401).json({ message: 'Admin token is required.' });
-    if (!isCertificatesStorageConfigured()) return response.status(503).json({ message: 'Certificate storage is not configured.' });
+    if (!isCertificatesStorageConfigured()) {
+      const missing = getMissingCertificatesStorageSettings();
+      return response.status(503).json({ message: `Certificate storage is not configured. Missing: ${missing.join(', ')}.` });
+    }
     if (request.method === 'POST') {
       return response.status(200).json(await addStoredCertificate(request.body?.file, request.body?.name));
     }

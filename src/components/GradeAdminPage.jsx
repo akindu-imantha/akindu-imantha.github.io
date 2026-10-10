@@ -85,9 +85,13 @@ export default function GradeAdminPage() {
   };
 
   const loadCertificates = async () => {
+    setCertificateStatus('saving');
+    setCertificateMessage('Loading certificates…');
     try {
       const result = await fetchStoredCertificates();
       setCertificates(result.certificates ?? []);
+      setCertificateStatus('ready');
+      setCertificateMessage('');
     } catch (error) {
       setCertificateMessage(error.message);
       setCertificateStatus('error');
@@ -539,7 +543,7 @@ export default function GradeAdminPage() {
               <button type="button" className="grade-admin-icon-button" onClick={() => removeCertificate(certificate.id)} disabled={certificateStatus === 'saving'} aria-label={`Delete ${certificate.name}`}><Trash2 size={16} /></button>
             </article>
           ))}
-          {isUnlocked && certificates.length === 0 ? <p className="analytics-empty">No certificates have been uploaded yet.</p> : null}
+          {isUnlocked && certificateStatus === 'ready' && certificates.length === 0 ? <p className="analytics-empty">No certificates have been uploaded yet.</p> : null}
         </div>
       </section>
     </main>

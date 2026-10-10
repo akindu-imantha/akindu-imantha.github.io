@@ -11,14 +11,29 @@ const fileExtensions = {
 
 function getRedisConfig() {
   return {
-    url: process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
   };
 }
 
-export function isCertificatesStorageConfigured() {
+export function getMissingCertificatesStorageSettings() {
   const { url, token } = getRedisConfig();
-  return Boolean(url && token && process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET);
+  const missing = [];
+  if (!url) missing.push('KV_REST_API_URL (or UPSTASH_REDIS_REST_URL)');
+  if (!token) missing.push('KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_TOKEN)');
+  if (!process.env.CLOUDINARY_CLOUD_NAME) missing.push('CLOUDINARY_CLOUD_NAME');
+  if (!process.env.CLOUDINARY_API_KEY) missing.push('CLOUDINARY_API_KEY');
+  if (!process.env.CLOUDINARY_API_SECRET) missing.push('CLOUDINARY_API_SECRET');
+  return missing;
+}
+
+export function isCertificateListingStorageConfigured() {
+  const { url, token } = getRedisConfig();
+  return Boolean(url && token);
+}
+
+export function isCertificatesStorageConfigured() {
+  return getMissingCertificatesStorageSettings().length === 0;
 }
 
 async function redisPipeline(commands) {
@@ -41,7 +56,7 @@ function validCertificates(certificates) {
 }
 
 export async function getStoredCertificates() {
-  if (!isCertificatesStorageConfigured()) return null;
+  if (!isCertificateListingStorageConfigured()) return null;
   const results = await redisPipeline([['GET', CERTIFICATES_KEY]]);
   try {
     const certificates = JSON.parse(results[0]?.result ?? 'null');
