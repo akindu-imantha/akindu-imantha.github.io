@@ -20,7 +20,7 @@ export async function uploadStoredCertificate(token, name, file) {
   const endpoint = getEndpoint();
   const blob = await upload(`certificates/${file.name}`, file, {
     access: 'public',
-    handleUploadUrl: `${endpoint.replace(/\/$/, '')}/upload`,
+    handleUploadUrl: endpoint.replace(/\/certificates\/?$/, '/certificate-upload'),
     clientPayload: JSON.stringify({ adminToken: token, name, mimeType: file.type }),
   });
   return read(await fetch(getEndpoint(), {
