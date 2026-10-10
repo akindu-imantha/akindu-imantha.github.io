@@ -1,6 +1,10 @@
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
+import { randomUUID } from 'node:crypto';
+import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import nodemailer from 'nodemailer';
 import {
   clearAnalyticsSummary,
@@ -22,6 +26,10 @@ import {
 
 const app = express();
 const port = Number(process.env.PORT ?? 5000);
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const certificateDirectory = path.join(projectRoot, 'public', 'upload');
+const certificatesManifest = path.join(projectRoot, 'output', 'certificates.json');
+const allowedCertificateTypes = new Set(['application/pdf', 'image/jpeg', 'image/png', 'image/webp']);
 
 const defaultAllowedOrigins = [
   'http://localhost:5173',
@@ -37,7 +45,79 @@ const allowedOrigin = [
 ].filter((origin, index, origins) => origins.indexOf(origin) === index);
 
 app.use(cors({ origin: allowedOrigin }));
-app.use(express.json({ limit: '4mb' }));
+app.use(express.json({ limit: '15mb' }));
+
+async function readLocalCertificates() {
+  try {
+    const certificates = JSON.parse(await readFile(certificatesManifest, 'utf8'));
+    return Array.isArray(certificates) ? certificates : [];
+  } catch (error) {
+    if (error.code === 'ENOENT') return [];
+    throw error;
+  }
+}
+
+app.get('/api/certificates', async (_request, response) => {
+  try {
+    response.json({ certificates: await readLocalCertificates() });
+  } catch (error) {
+    console.error('Certificates load failed:', error);
+    response.status(500).json({ message: 'Certificates could not be loaded.' });
+  }
+});
+
+app.post('/api/certificates', async (request, response) => {
+  if (!hasValidAnalyticsToken(request)) return response.status(401).json({ message: 'Admin token is required.' });
+  const { name, mimeType, data } = request.body ?? {};
+  if (!allowedCertificateTypes.has(mimeType) || typeof data !== 'string') {
+    return response.status(400).json({ message: 'Choose a PDF, JPG, PNG, or WebP certificate.' });
+  }
+  const match = data.match(/^data:([\w.+-]+\/[\w.+-]+);base64,([A-Za-z0-9+/]+={0,2})$/);
+  if (!match || match[1] !== mimeType) return response.status(400).json({ message: 'Certificate file data is invalid.' });
+  const buffer = Buffer.from(match[2], 'base64');
+  if (!buffer.length || buffer.length > 10 * 1024 * 1024) return response.status(400).json({ message: 'Each certificate must be 10 MB or smaller.' });
+  try {
+    const certificates = await readLocalCertificates();
+    if (certificates.length >= 30) return response.status(400).json({ message: 'You can store up to 30 certificates.' });
+    const extension = ({ 'application/pdf': '.pdf', 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' })[mimeType];
+    const filename = `${randomUUID()}${extension}`;
+    await mkdir(certificateDirectory, { recursive: true });
+    await mkdir(path.dirname(certificatesManifest), { recursive: true });
+    await writeFile(path.join(certificateDirectory, filename), buffer, { flag: 'wx' });
+    const certificate = {
+      id: randomUUID(),
+      name: String(name ?? '').trim().slice(0, 100) || 'Certificate',
+      url: `/upload/${filename}`,
+      type: mimeType === 'application/pdf' ? 'pdf' : 'image',
+      createdAt: new Date().toISOString(),
+    };
+    const nextCertificates = [certificate, ...certificates];
+    await writeFile(certificatesManifest, `${JSON.stringify(nextCertificates, null, 2)}\n`, 'utf8');
+    return response.json({ certificates: nextCertificates });
+  } catch (error) {
+    console.error('Certificate upload failed:', error);
+    return response.status(500).json({ message: 'Certificate could not be saved to public/upload.' });
+  }
+});
+
+app.delete('/api/certificates', async (request, response) => {
+  if (!hasValidAnalyticsToken(request)) return response.status(401).json({ message: 'Admin token is required.' });
+  try {
+    const certificates = await readLocalCertificates();
+    const certificate = certificates.find((item) => item.id === String(request.query.id ?? ''));
+    if (!certificate) return response.status(404).json({ message: 'Certificate not found.' });
+    const filename = path.basename(certificate.url);
+    const nextCertificates = certificates.filter((item) => item.id !== certificate.id);
+    await writeFile(certificatesManifest, `${JSON.stringify(nextCertificates, null, 2)}\n`, 'utf8');
+    await unlink(path.join(certificateDirectory, filename)).catch((error) => {
+      if (error.code !== 'ENOENT') throw error;
+    });
+    return response.json({ certificates: nextCertificates });
+  } catch (error) {
+    console.error('Certificate delete failed:', error);
+    return response.status(500).json({ message: 'Certificate could not be removed.' });
+  }
+});
 
 const requiredEnv = ['SMTP_USER', 'SMTP_PASS', 'CONTACT_TO_EMAIL'];
 const contributionCache = new Map();

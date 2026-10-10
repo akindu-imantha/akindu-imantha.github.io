@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Run the contact email server in a second terminal:
+Run the backend in a second terminal. It handles contact emails, analytics, and local certificate uploads:
 
 ```bash
 npm run server
@@ -28,7 +28,7 @@ npm run build
 
 Open the private editor at `#grade-admin`, unlock it with the existing `ANALYTICS_ADMIN_TOKEN`, and use the Certificates panel. It accepts PDF, JPG, PNG, and WebP files up to 10 MB, shows a preview, and publishes uploaded certificates in the Education section. The app keeps a maximum of 30 certificates.
 
-Certificate files are uploaded directly from the browser to a public Vercel Blob store; Redis stores the public certificate listing. Create a public Blob store in the Vercel project and add its `BLOB_READ_WRITE_TOKEN` to the API host environment, along with the existing Upstash Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`, or the `UPSTASH_REDIS_REST_*` aliases) and `ANALYTICS_ADMIN_TOKEN`. Uploads support PDF, JPG, PNG, and WebP files up to 10 MB. Add the deployed portfolio origin to `CORS_ORIGIN` if it is not already included. `VITE_CERTIFICATES_API_URL` is optional when using the existing portfolio API deployment.
+Certificate files uploaded in the private editor are saved to `public/upload`, with their course names and public URLs stored in `output/certificates.json`. Run both `npm run dev` and `npm run server` while uploading locally. Uploads support PDF, JPG, PNG, and WebP files up to 10 MB, with a 30-certificate limit. These files live on this computer and are not included in a GitHub Pages or Vercel deployment automatically; a deployed site needs a persistent server or object storage for shared uploads.
 
 ## Deploy to GitHub Pages
 

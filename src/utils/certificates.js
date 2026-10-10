@@ -1,6 +1,4 @@
-import { upload } from '@vercel/blob/client';
-
-const DEFAULT_ENDPOINT = 'https://akindu-portfolio-api.vercel.app/api/certificates';
+const DEFAULT_ENDPOINT = '/api/certificates';
 
 function getEndpoint() {
   return import.meta.env.VITE_CERTIFICATES_API_URL || DEFAULT_ENDPOINT;
@@ -18,16 +16,17 @@ export async function fetchStoredCertificates() {
 
 export async function uploadStoredCertificate(token, name, file) {
   const endpoint = getEndpoint();
-  const blob = await upload(`certificates/${file.name}`, file, {
-    access: 'public',
-    handleUploadUrl: endpoint.replace(/\/certificates\/?$/, '/certificate-upload'),
-    clientPayload: JSON.stringify({ adminToken: token, name, mimeType: file.type }),
+  const data = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result ?? ''));
+    reader.onerror = () => reject(new Error('The selected certificate could not be read.'));
+    reader.readAsDataURL(file);
   });
   return read(await fetch(getEndpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ name, url: blob.url, mimeType: file.type }),
-  }), 'Certificate could not be uploaded.');
+    body: JSON.stringify({ name, mimeType: file.type, data }),
+  }), 'Certificate could not be saved to the upload folder.');
 }
 
 export async function deleteStoredCertificate(token, id) {
