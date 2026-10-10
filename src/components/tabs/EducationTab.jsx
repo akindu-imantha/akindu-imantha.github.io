@@ -33,6 +33,7 @@ export default function EducationTab({ data = {} }) {
   const certificationItems = data.certifications ?? certifications;
   const [storedGrades, setStoredGrades] = useState(null);
   const [storedCertificates, setStoredCertificates] = useState([]);
+  const [certificateLoadError, setCertificateLoadError] = useState('');
   const academicGradeItems = storedGrades ?? data.academicGrades ?? [];
   const section = data.sections?.education ?? {
     eyebrow: './education.sh',
@@ -66,9 +67,14 @@ export default function EducationTab({ data = {} }) {
     let isActive = true;
     fetchStoredCertificates()
       .then((result) => {
-        if (isActive) setStoredCertificates(result.certificates ?? []);
+        if (isActive) {
+          setStoredCertificates(result.certificates ?? []);
+          setCertificateLoadError('');
+        }
       })
-      .catch(() => {});
+      .catch((error) => {
+        if (isActive) setCertificateLoadError(error.message || 'Certificates could not be loaded.');
+      });
     return () => { isActive = false; };
   }, []);
 
@@ -147,6 +153,10 @@ export default function EducationTab({ data = {} }) {
           })}
         </div>
       </motion.article>
+
+      {certificateLoadError ? (
+        <p className="analytics-state analytics-state--error" role="status">Uploaded certificates could not be loaded: {certificateLoadError}</p>
+      ) : null}
 
       {storedCertificates.length ? (
         <motion.section variants={fadeInUp} className="education-certificates" aria-labelledby="education-certificates-title">
