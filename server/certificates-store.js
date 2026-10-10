@@ -1,13 +1,8 @@
+import { del } from '@vercel/blob';
+
 const CERTIFICATES_KEY = 'portfolio:certificates';
 const MAX_CERTIFICATES = 30;
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const allowedTypes = new Set(['application/pdf', 'image/jpeg', 'image/png', 'image/webp']);
-const fileExtensions = {
-  'application/pdf': 'pdf',
-  'image/jpeg': 'jpg',
-  'image/png': 'png',
-  'image/webp': 'webp',
-};
 
 function getRedisConfig() {
   return {
@@ -21,9 +16,7 @@ export function getMissingCertificatesStorageSettings() {
   const missing = [];
   if (!url) missing.push('KV_REST_API_URL (or UPSTASH_REDIS_REST_URL)');
   if (!token) missing.push('KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_TOKEN)');
-  if (!process.env.CLOUDINARY_CLOUD_NAME) missing.push('CLOUDINARY_CLOUD_NAME');
-  if (!process.env.CLOUDINARY_API_KEY) missing.push('CLOUDINARY_API_KEY');
-  if (!process.env.CLOUDINARY_API_SECRET) missing.push('CLOUDINARY_API_SECRET');
+  if (!process.env.BLOB_READ_WRITE_TOKEN) missing.push('BLOB_READ_WRITE_TOKEN');
   return missing;
 }
 
@@ -66,42 +59,21 @@ export async function getStoredCertificates() {
   }
 }
 
-async function uploadToCloudinary(file) {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  const timestamp = Math.floor(Date.now() / 1000);
-  const folder = 'portfolio-certificates';
-  const publicId = `certificate-${crypto.randomUUID()}.${fileExtensions[file.mimeType]}`;
-  const signatureSource = `folder=${folder}&public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-  const signature = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(signatureSource));
-  const hexSignature = Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, '0')).join('');
-  const resourceType = file.mimeType === 'application/pdf' ? 'raw' : 'image';
-  const form = new FormData();
-  form.append('file', `data:${file.mimeType};base64,${file.data}`);
-  form.append('api_key', apiKey);
-  form.append('timestamp', String(timestamp));
-  form.append('folder', folder);
-  form.append('public_id', publicId);
-  form.append('signature', hexSignature);
-
-  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, { method: 'POST', body: form });
-  const result = await response.json().catch(() => ({}));
-  if (!response.ok || !result.secure_url) {
-    const error = new Error(result.error?.message || 'Certificate file upload failed.');
-    error.status = 502;
-    throw error;
+function isVercelBlobUrl(url) {
+  try {
+    return new URL(url).hostname.endsWith('.public.blob.vercel-storage.com');
+  } catch {
+    return false;
   }
-  return result.secure_url;
 }
-export async function addStoredCertificate(file, name) {
+export async function addStoredCertificate(url, name, mimeType) {
   if (!isCertificatesStorageConfigured()) {
-    const error = new Error('Certificate storage is not configured. Set the Upstash Redis and Cloudinary environment variables.');
+    const error = new Error('Certificate storage is not configured. Set the Upstash Redis and Vercel Blob environment variables.');
     error.status = 503;
     throw error;
   }
-  if (!file || !allowedTypes.has(file.mimeType) || typeof file.data !== 'string' || !file.data || file.data.length > Math.ceil(MAX_FILE_SIZE * 4 / 3) + 16) {
-    const error = new Error('Choose a PDF, JPG, PNG, or WebP certificate up to 10 MB.');
+  if (typeof url !== 'string' || !isVercelBlobUrl(url) || !allowedTypes.has(mimeType)) {
+    const error = new Error('Upload a PDF, JPG, PNG, or WebP certificate using Vercel Blob.');
     error.status = 400;
     throw error;
   }
@@ -111,16 +83,20 @@ export async function addStoredCertificate(file, name) {
     error.status = 400;
     throw error;
   }
-  const url = await uploadToCloudinary(file);
   const certificate = {
     id: crypto.randomUUID(),
     name: String(name ?? '').trim().slice(0, 100) || 'Certificate',
     url,
-    type: file.mimeType === 'application/pdf' ? 'pdf' : 'image',
+    type: mimeType === 'application/pdf' ? 'pdf' : 'image',
     createdAt: new Date().toISOString(),
   };
   const nextCertificates = [certificate, ...certificates];
-  await redisPipeline([['SET', CERTIFICATES_KEY, JSON.stringify(nextCertificates)]]);
+  try {
+    await redisPipeline([['SET', CERTIFICATES_KEY, JSON.stringify(nextCertificates)]]);
+  } catch (error) {
+    await del(url).catch(() => {});
+    throw error;
+  }
   return { certificates: nextCertificates };
 }
 
@@ -137,6 +113,8 @@ export async function deleteStoredCertificate(id) {
     error.status = 404;
     throw error;
   }
+  const certificate = certificates.find((item) => item.id === id);
+  if (isVercelBlobUrl(certificate.url)) await del(certificate.url);
   await redisPipeline([['SET', CERTIFICATES_KEY, JSON.stringify(nextCertificates)]]);
   return { certificates: nextCertificates };
 }

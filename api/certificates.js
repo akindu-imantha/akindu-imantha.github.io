@@ -34,7 +34,7 @@ export default async function handler(request, response) {
       return response.status(503).json({ message: `Certificate storage is not configured. Missing: ${missing.join(', ')}.` });
     }
     if (request.method === 'POST') {
-      return response.status(200).json(await addStoredCertificate(request.body?.file, request.body?.name));
+      return response.status(200).json(await addStoredCertificate(request.body?.url, request.body?.name, request.body?.mimeType));
     }
     if (request.method === 'DELETE') {
       return response.status(200).json(await deleteStoredCertificate(String(request.query?.id ?? '')));

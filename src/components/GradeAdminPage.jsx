@@ -171,7 +171,7 @@ export default function GradeAdminPage() {
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = String(reader.result ?? '');
-      setCertificateFile({ type: file.type, data: dataUrl.split(',')[1] ?? '' });
+      setCertificateFile(file);
       setCertificatePreview(dataUrl);
       setPreviewIsPdf(file.type === 'application/pdf');
       setCertificateName((current) => current.trim() ? current : file.name.replace(/\.[^.]+$/, ''));

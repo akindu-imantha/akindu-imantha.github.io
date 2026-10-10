@@ -28,7 +28,7 @@ npm run build
 
 Open the private editor at `#grade-admin`, unlock it with the existing `ANALYTICS_ADMIN_TOKEN`, and use the Certificates panel. It accepts PDF, JPG, PNG, and WebP files up to 10 MB, shows a preview, and publishes uploaded certificates in the Education section. The app keeps a maximum of 30 certificates.
 
-For deployed uploads, configure the existing Upstash Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`, or the `UPSTASH_REDIS_REST_*` aliases), the existing `ANALYTICS_ADMIN_TOKEN`, and Cloudinary's `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` in the API host environment. Cloudinary stores files in its `portfolio-certificates` folder; Redis stores the public certificate listing. Add the deployed portfolio origin to `CORS_ORIGIN` if it is not already included. `VITE_CERTIFICATES_API_URL` is optional when using the existing portfolio API deployment.
+Certificate files are uploaded directly from the browser to a public Vercel Blob store; Redis stores the public certificate listing. Create a public Blob store in the Vercel project and add its `BLOB_READ_WRITE_TOKEN` to the API host environment, along with the existing Upstash Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`, or the `UPSTASH_REDIS_REST_*` aliases) and `ANALYTICS_ADMIN_TOKEN`. Uploads support PDF, JPG, PNG, and WebP files up to 10 MB. Add the deployed portfolio origin to `CORS_ORIGIN` if it is not already included. `VITE_CERTIFICATES_API_URL` is optional when using the existing portfolio API deployment.
 
 ## Deploy to GitHub Pages
 

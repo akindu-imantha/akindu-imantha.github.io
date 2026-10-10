@@ -1,3 +1,5 @@
+import { upload } from '@vercel/blob/client';
+
 const DEFAULT_ENDPOINT = 'https://akindu-portfolio-api.vercel.app/api/certificates';
 
 function getEndpoint() {
@@ -15,13 +17,16 @@ export async function fetchStoredCertificates() {
 }
 
 export async function uploadStoredCertificate(token, name, file) {
+  const endpoint = getEndpoint();
+  const blob = await upload(`certificates/${file.name}`, file, {
+    access: 'public',
+    handleUploadUrl: `${endpoint.replace(/\/$/, '')}/upload`,
+    clientPayload: JSON.stringify({ adminToken: token, name, mimeType: file.type }),
+  });
   return read(await fetch(getEndpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      name,
-      file: { mimeType: file.type, data: file.data },
-    }),
+    body: JSON.stringify({ name, url: blob.url, mimeType: file.type }),
   }), 'Certificate could not be uploaded.');
 }
 
