@@ -10,8 +10,19 @@ async function read(response, fallback) {
   return data;
 }
 
+async function request(url, options, fallback) {
+  try {
+    return await read(await fetch(url, options), fallback);
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error('Could not reach the local upload server. Run "npm run server" and use the local site at http://localhost:5173.');
+    }
+    throw error;
+  }
+}
+
 export async function fetchStoredCertificates() {
-  return read(await fetch(getEndpoint()), 'Certificates could not be loaded.');
+  return request(getEndpoint(), undefined, 'Certificates could not be loaded.');
 }
 
 export async function uploadStoredCertificate(token, name, file) {
@@ -22,16 +33,16 @@ export async function uploadStoredCertificate(token, name, file) {
     reader.onerror = () => reject(new Error('The selected certificate could not be read.'));
     reader.readAsDataURL(file);
   });
-  return read(await fetch(getEndpoint(), {
+  return request(getEndpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ name, mimeType: file.type, data }),
-  }), 'Certificate could not be saved to the upload folder.');
+  }, 'Certificate could not be saved to public/upload.');
 }
 
 export async function deleteStoredCertificate(token, id) {
-  return read(await fetch(`${getEndpoint()}?id=${encodeURIComponent(id)}`, {
+  return request(`${getEndpoint()}?id=${encodeURIComponent(id)}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
-  }), 'Certificate could not be deleted.');
+  }, 'Certificate could not be deleted.');
 }

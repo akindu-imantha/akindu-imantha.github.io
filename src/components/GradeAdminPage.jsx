@@ -502,7 +502,7 @@ export default function GradeAdminPage() {
           <div>
             <p className="eyebrow">Academic documents</p>
             <h2 id="certificate-admin-title">Certificates</h2>
-            <p>Upload a PDF or image (up to 10 MB). Files are stored in the portfolio cloud folder.</p>
+            <p>Upload a PDF or image (up to 10 MB). Local uploads are saved in <code>public/upload</code>; keep the Node server running while uploading.</p>
           </div>
           <button type="button" className="secondary-button" onClick={loadCertificates} disabled={!isUnlocked || certificateStatus === 'saving'}>
             <RefreshCw size={16} />
