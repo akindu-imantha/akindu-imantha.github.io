@@ -60,6 +60,7 @@ async function uploadToCloudinary(file) {
   const signatureSource = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;
   const signature = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(signatureSource));
   const hexSignature = Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, '0')).join('');
+  const resourceType = file.mimeType === 'application/pdf' ? 'raw' : 'image';
   const form = new FormData();
   form.append('file', `data:${file.mimeType};base64,${file.data}`);
   form.append('api_key', apiKey);
@@ -68,7 +69,7 @@ async function uploadToCloudinary(file) {
   form.append('public_id', `certificate-${crypto.randomUUID()}.${fileExtensions[file.mimeType]}`);
   form.append('signature', hexSignature);
 
-  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, { method: 'POST', body: form });
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, { method: 'POST', body: form });
   const result = await response.json().catch(() => ({}));
   if (!response.ok || !result.secure_url) {
     const error = new Error(result.error?.message || 'Certificate file upload failed.');

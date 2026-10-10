@@ -424,6 +424,9 @@ export const projects = [
       'Operations-focused platform for e-waste collection, item tracking, and workflow management.',
     statusText: 'In development',
     statusTone: 'development',
+    previewImage: './images/highlights/e-waste-management-platform.png',
+    previewAlt: 'E-Waste Management platform displayed on a laptop and phone.',
+    previewLabel: 'Project preview',
     actions: [
       { label: 'Case study soon', disabled: true, variant: 'primary' },
       { label: 'Private build', disabled: true, variant: 'secondary' },
@@ -460,21 +463,47 @@ export const projects = [
     stack: 'React, Vite, Frontend UI',
     category: 'Featured project',
     featured: true,
-    featuredRank: 3,
+    featuredRank: 4,
     description:
       'Responsive portfolio interface for presenting skills, project work, and experience clearly.',
-    statusText: 'Live project',
+    statusText: 'Live · akindu-imantha.github.io',
     statusTone: 'live',
     actions: [
       {
         label: 'Live portfolio',
-        href: 'https://12345akindu.github.io/akindu-portfolio/',
+        href: 'https://akindu-imantha.github.io',
         variant: 'primary',
       },
       {
         label: 'GitHub repository',
-        href: 'https://github.com/12345akindu/akindu-portfolio',
+        href: 'https://github.com/akindu-imantha/akindu-imantha.github.io',
         variant: 'secondary',
+      },
+    ],
+    previewUrl: 'https://akindu-imantha.github.io',
+    previewImage: './images/projects/portfolio-live-preview.svg',
+    previewAlt: 'Live preview of Akindu Imantha portfolio website.',
+    previewLabel: 'Open live portfolio',
+  },
+  {
+    title: 'Railway Reservation System',
+    stack: 'Java, Data Structures & Algorithms',
+    category: 'Featured project',
+    featured: true,
+    featuredRank: 3,
+    description:
+      'Console-based railway booking system with ticket reservations, cancellations, a waiting queue, undo support, passenger lookup, sorting, and Dijkstra shortest-path routing.',
+    statusText: 'Public repository',
+    statusTone: 'live',
+    previewUrl: 'https://github.com/akindu-imantha/Railway-Reservation-System',
+    previewImage: './images/projects/railway-reservation-preview.svg',
+    previewAlt: 'Railway Reservation System booking dashboard preview.',
+    previewLabel: 'View source',
+    actions: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/akindu-imantha/Railway-Reservation-System',
+        variant: 'primary',
       },
     ],
   },
@@ -486,6 +515,9 @@ export const projects = [
       'Attendance-focused school system built for parent updates and daily record tracking.',
     statusText: 'Private project',
     statusTone: 'private',
+    previewImage: './images/projects/school-management-preview.svg',
+    previewAlt: 'School Management System dashboard preview.',
+    previewLabel: 'Project preview',
     actions: [
       { label: 'Private build', disabled: true, variant: 'primary' },
       { label: 'Details on request', disabled: true, variant: 'secondary' },
@@ -501,7 +533,7 @@ export const experience = [
     images: [
       {
         src: './images/experience/sarvodaya-animator.jpg',
-        alt: 'Akindu Imantha as Animator at Sarvodaya Rathnapura.',
+      alt: 'Akindu Imantha as Animator at Sarvodaya Rathnapura.',
       },
       {
         src: './images/optimized/unicef-cash-plus-poster-900.jpg',
@@ -516,7 +548,7 @@ export const experience = [
     images: [
       {
         src: './images/optimized/ylca-team-1200.jpg',
-        alt: 'Akindu Imantha with the Youth Leadership for Climate Action team.',
+      alt: 'Akindu Imantha with the Youth Leadership for Climate Action team.',
       },
       {
         src: './images/optimized/ylca-poster-900.jpg',
@@ -777,6 +809,13 @@ const cleanSinhalaContent = {
     },
     {
       ...projects[3],
+      category: 'ප්‍රධාන project',
+      description:
+        'Java console railway reservation system එකක්. Booking, cancellation, waiting list, undo, passenger search, sorting සහ shortest-path routes ඇතුළත් වේ.',
+      statusText: 'Public repository',
+    },
+    {
+      ...projects[4],
       category: 'Supporting project',
       description:
         'Parent updates ි� daily record tracking ිඳ�ා attendance-focused school system ��a�a�`.',
@@ -942,7 +981,7 @@ const sinhalaContent = {
   heroData: {
     ...heroData,
     eyebrow: 'සම්පූර්ණ-ස්ටැක් සංවර්ධක කළඹ',
-    name: 'ආයුබෝවන්, මම අකින්දු ඉමාන්ත',
+    name: 'ආයුබෝවන්, මම අකිඳු ඉමන්ත',
     intro: 'ප්‍රායෝගික වෙබ් අතුරුමුහුණත්, බැක්එන්ඩ් ඉදිරිපත් කිරීම සහ වෙබ් හා ඩෙස්ක්ටොප් යෙදුම් සංවර්ධනය කෙරෙහි අවධානය යොමු කරන තොරතුරු තාක්ෂණ උපාධි අපේක්ෂකයෙකි.',
     primaryAction: { ...heroData.primaryAction, label: 'විස්තර බලන්න' },
     secondaryAction: { ...heroData.secondaryAction, label: 'CV බාගන්න' },
@@ -981,5 +1020,3 @@ export const portfolioContent = {
   en: englishContent,
   si: sinhalaContent,
 };
-
-

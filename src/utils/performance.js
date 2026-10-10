@@ -10,10 +10,14 @@ export function shouldUseLitePerformanceMode() {
   if (forcedMode === 'lite') return true;
 
   const hasReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const isSlowConnection = Boolean(
+    connection?.saveData
+      || ['slow-2g', '2g'].includes(connection?.effectiveType),
+  );
 
-  // Device memory and CPU counts are unreliable, and using them made the
-  // opening experience differ between phones and desktops. The intro itself
-  // is now lightweight enough to use everywhere; only an explicit request or
-  // the user's accessibility preference enables the simplified mode.
-  return Boolean(hasReducedMotion);
+  // Do not use device-memory or CPU guesses: they are inconsistent across
+  // browsers. Data Saver and the Network Information API are direct signals
+  // that downloading and painting the full visual treatment would be costly.
+  return Boolean(hasReducedMotion || isSlowConnection);
 }

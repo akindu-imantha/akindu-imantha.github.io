@@ -49,7 +49,9 @@ function App() {
     document.documentElement.dataset.performance = enabled ? 'lite' : 'full';
     return enabled;
   });
-  const [showIntro, setShowIntro] = useState(() => !litePerformanceMode);
+  // The intro is part of the first impression, including on mobile devices.
+  // Lite mode reduces the rest of the page effects but must not skip it.
+  const [showIntro, setShowIntro] = useState(true);
   const [currentHash, setCurrentHash] = useState(() => window.location.hash);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [showGuidePrompt, setShowGuidePrompt] = useState(
@@ -76,11 +78,9 @@ function App() {
   const activeGradeId = currentHash.startsWith('#grades-') ? currentHash.slice('#grades-'.length) : '';
 
   useEffect(() => {
-    if (litePerformanceMode) return undefined;
-
-    const introTimer = window.setTimeout(() => setShowIntro(false), 2400);
+    const introTimer = window.setTimeout(() => setShowIntro(false), 2800);
     return () => window.clearTimeout(introTimer);
-  }, [litePerformanceMode]);
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -93,6 +93,9 @@ function App() {
 
   useEffect(() => {
     document.documentElement.lang = language === 'si' ? 'si' : 'en';
+    document.title = language === 'si'
+      ? 'අකිඳු ඉමන්ත | Software Engineer & Web Developer'
+      : 'Akindu Imantha | Software Engineer & Web Developer';
     localStorage.setItem('portfolio-language', language);
   }, [language]);
 
@@ -132,7 +135,12 @@ function App() {
     }
   }, [currentHash]);
 
-  const toggleLanguage = () => {
+  const toggleLanguage = (nextLanguage) => {
+    if (nextLanguage === 'en' || nextLanguage === 'si') {
+      setLanguage(nextLanguage);
+      return;
+    }
+
     setLanguage((currentLanguage) => (currentLanguage === 'en' ? 'si' : 'en'));
   };
 
@@ -175,6 +183,7 @@ function App() {
           <PortfolioIntro
             onComplete={() => setShowIntro(false)}
             litePerformanceMode={litePerformanceMode}
+            language={language}
           />
         ) : null}
       </AnimatePresence>

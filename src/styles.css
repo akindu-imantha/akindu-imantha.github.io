@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
-
 :root {
   font-family: 'Space Grotesk', sans-serif;
   color: #f8fafc;
@@ -709,6 +707,33 @@ a {
   color: var(--text-muted);
 }
 
+.nav-terminal-link {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: #ede9fe;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.nav-terminal-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(103, 232, 249, 0.65);
+  background: rgba(139, 92, 246, 0.24);
+}
+
+[data-theme='light'] .nav-terminal-link {
+  border-color: rgba(37, 99, 235, 0.24);
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+}
+
 .nav-toggle {
   display: inline-flex;
   align-items: center;
@@ -762,30 +787,57 @@ a {
   transform: translateY(-1px);
 }
 
-.nav-toggle--language {
-  gap: 0.32rem;
-  padding-inline: 0.62rem;
+.nav-language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  min-height: 34px;
+  padding: 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-language-icon {
+  width: 16px;
+  height: 16px;
+  margin-inline: 0.3rem 0.12rem;
+  color: var(--text-muted);
 }
 
 .nav-language-option {
-  min-width: 1.55rem;
+  min-width: 2.05rem;
+  min-height: 26px;
+  padding: 0 0.38rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--text-muted);
-  font-size: 0.72rem;
+  font: inherit;
+  font-size: 0.68rem;
   font-weight: 800;
   line-height: 1;
-  text-align: center;
-  transition: color 180ms ease, text-shadow 180ms ease;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.nav-language-option:hover {
+  color: var(--heading-color);
 }
 
 .nav-language-option.is-active {
-  color: var(--heading-color);
-  text-shadow: 0 0 12px var(--accent-glow);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px var(--accent-glow);
 }
 
-.nav-language-divider {
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  opacity: 0.55;
+[data-theme='light'] .nav-language-switch {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme='light'] .nav-language-option:hover {
+  color: #0f172a;
 }
 
 .hero-grid {
@@ -1734,10 +1786,6 @@ button.portfolio-image-tile {
   gap: 1.25rem;
 }
 
-.featured-project-grid > :first-child {
-  grid-column: 1 / -1;
-}
-
 .project-card-header {
   display: flex;
   justify-content: space-between;
@@ -2526,12 +2574,13 @@ button.portfolio-image-tile {
 .project-preview {
   position: relative;
   display: block;
+  width: min(100%, 340px);
   margin-top: 0.95rem;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.28);
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
 }
 
 .project-preview img {
@@ -3952,6 +4001,10 @@ button.portfolio-image-tile {
     width: 100%;
   }
 
+  .nav-terminal-link {
+    display: none;
+  }
+
   .hero {
     min-height: auto;
   }
@@ -4107,7 +4160,8 @@ button.portfolio-image-tile {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border);
-    overflow: hidden;
+    /* Keep focus rings and the complete edge of the language control visible. */
+    overflow: visible;
   }
 
   [data-theme='light'] .topbar {
@@ -4171,10 +4225,11 @@ button.portfolio-image-tile {
 
   .nav-toggle--language {
     width: auto;
-    min-width: 44px;
-    padding: 0 0.38rem;
-    gap: 0.18rem;
+    min-width: 0;
+    padding: 0 0.42rem;
+    gap: 0.22rem;
     border-radius: 999px;
+    white-space: nowrap;
   }
 
   .nav-toggle svg,
@@ -4187,18 +4242,15 @@ button.portfolio-image-tile {
     display: none;
   }
 
-  .nav-toggle--language .nav-language-code {
-    display: inline;
-    min-width: 1.15rem;
-    font-size: 0.65rem;
-    font-weight: 800;
-    line-height: 1;
-    text-align: center;
-  }
-
   .nav-toggle--language .nav-language-option,
   .nav-toggle--language .nav-language-divider {
     display: inline;
+  }
+
+  .nav-toggle--language .nav-language-option {
+    min-width: 0;
+    font-size: 0.65rem;
+    line-height: 1;
   }
 
   .nav-icon-link {
@@ -4420,6 +4472,21 @@ button.portfolio-image-tile {
     overflow: visible;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  /* The mobile layout intentionally breaks the terminal into stacked panels.
+     Without this theme-specific shell, the light palette loses its outer
+     frame and visually reads as a smaller, disconnected section. */
+  [data-theme='light'] .interactive-console {
+    padding: 0.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
+  }
+
+  [data-theme='light'] .console-content-area {
+    padding: 0.15rem 0 0;
   }
 
   .console-header {
@@ -5120,15 +5187,6 @@ button.portfolio-image-tile {
   display: none;
 }
 
-[data-performance='lite'] *,
-[data-performance='lite'] *::before,
-[data-performance='lite'] *::after {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  scroll-behavior: auto !important;
-  transition-duration: 0.001ms !important;
-}
-
 [data-performance='lite'] .profile-dots {
   display: none;
 }
@@ -5153,6 +5211,21 @@ button.portfolio-image-tile {
 [data-performance='lite'] .scanlines,
 [data-performance='lite'] .profile-glow {
   display: none;
+}
+
+/* Keep the short entrance motion on slow links, but stop effects which need
+   continuous repainting or compositing. This preserves the same feel without
+   the scrolling/frame-rate cost of the full treatment. */
+[data-performance='lite'] .profile-image-container::after,
+[data-performance='lite'] .scroll-hint svg,
+[data-performance='lite'] .guide-target {
+  animation: none;
+}
+
+/* The loading intro stays animated even when the rest of the page uses lite
+   performance settings. Without this override, phones skip its progress cue. */
+[data-performance='lite'] .portfolio-intro-progress span {
+  animation: intro-progress 2.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 [data-performance='lite'] .profile-card:hover .profile-image,
@@ -6011,11 +6084,8 @@ select {
   }
 
   .nav-terminal-link {
-    min-height: 32px;
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.72rem;
-    font-weight: 700;
+    /* The bottom section bar already provides navigation on phones. */
+    display: none;
   }
 
   .nav-toggle,
@@ -6024,8 +6094,21 @@ select {
     height: 32px;
   }
 
-  .nav-toggle--language {
-    min-width: 46px;
+  .nav-language-switch {
+    min-height: 32px;
+    gap: 0.12rem;
+    padding: 0.16rem;
+  }
+
+  .nav-language-icon {
+    display: none;
+  }
+
+  .nav-language-option {
+    min-width: 1.72rem;
+    min-height: 26px;
+    padding-inline: 0.25rem;
+    font-size: 0.64rem;
   }
 
   .hero-grid {

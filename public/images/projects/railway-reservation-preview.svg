@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title description">
+  <title id="title">Railway Reservation System dashboard preview</title>
+  <desc id="description">A dark railway reservation dashboard with a train route, booking details, and confirmed ticket status.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#081427"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#172b4d"/>
+      <stop offset="1" stop-color="#10213d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#background)"/>
+  <path d="M0 565C205 460 300 688 548 556s319-37 652-198V675H0Z" fill="#1e3a8a" opacity=".28"/>
+  <circle cx="1050" cy="75" r="210" fill="#0ea5e9" opacity=".08"/>
+  <rect x="54" y="48" width="1092" height="579" rx="24" fill="#081224" stroke="#3b82f6" stroke-opacity=".35"/>
+  <rect x="54" y="48" width="1092" height="66" rx="24" fill="#111f38"/>
+  <circle cx="89" cy="81" r="7" fill="#fb7185"/><circle cx="113" cy="81" r="7" fill="#fbbf24"/><circle cx="137" cy="81" r="7" fill="#4ade80"/>
+  <text x="176" y="87" fill="#dbeafe" font-family="Arial, sans-serif" font-size="22" font-weight="700">RAILWAY RESERVATION SYSTEM</text>
+  <text x="1034" y="87" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="15">guest@railway</text>
+  <rect x="82" y="142" width="260" height="452" rx="16" fill="#0e1d35" stroke="#334e75"/>
+  <text x="112" y="184" fill="#94a3b8" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">OPERATIONS</text>
+  <rect x="102" y="205" width="220" height="46" rx="10" fill="#1d4ed8" opacity=".55"/>
+  <text x="126" y="234" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="700">+ Book ticket</text>
+  <text x="126" y="288" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">Train schedule</text>
+  <text x="126" y="337" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">Reservations</text>
+  <text x="126" y="386" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">Waiting list</text>
+  <text x="126" y="435" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">Route finder</text>
+  <line x1="102" y1="474" x2="322" y2="474" stroke="#334e75"/>
+  <text x="112" y="516" fill="#64748b" font-family="Arial, sans-serif" font-size="13">DATA STRUCTURES</text>
+  <text x="112" y="546" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="14">Queue · Stack · BST · Graph</text>
+  <text x="384" y="178" fill="#f8fafc" font-family="Arial, sans-serif" font-size="28" font-weight="700">Find your journey</text>
+  <text x="384" y="208" fill="#94a3b8" font-family="Arial, sans-serif" font-size="16">Manage reservations and explore the shortest route.</text>
+  <rect x="384" y="240" width="715" height="146" rx="16" fill="url(#panel)" stroke="#334e75"/>
+  <text x="414" y="275" fill="#94a3b8" font-family="Arial, sans-serif" font-size="12" letter-spacing="1.5">ROUTE</text>
+  <text x="414" y="316" fill="white" font-family="Arial, sans-serif" font-size="22" font-weight="700">Colombo Fort</text>
+  <path d="M591 307h104" stroke="url(#accent)" stroke-width="4" stroke-dasharray="7 7"/>
+  <path d="M684 298l15 9-15 9" fill="none" stroke="#7dd3fc" stroke-width="3"/>
+  <text x="735" y="316" fill="white" font-family="Arial, sans-serif" font-size="22" font-weight="700">Kandy</text>
+  <rect x="905" y="278" width="158" height="48" rx="10" fill="url(#accent)"/>
+  <text x="933" y="308" fill="#061426" font-family="Arial, sans-serif" font-size="15" font-weight="700">Search route</text>
+  <text x="414" y="356" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="14">Yal Devi Express · 115 km · Shortest path available</text>
+  <rect x="384" y="415" width="432" height="179" rx="16" fill="url(#panel)" stroke="#334e75"/>
+  <text x="414" y="451" fill="#94a3b8" font-family="Arial, sans-serif" font-size="12" letter-spacing="1.5">LATEST RESERVATION</text>
+  <text x="414" y="491" fill="white" font-family="Arial, sans-serif" font-size="21" font-weight="700">RSV-1001</text>
+  <text x="414" y="520" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">Passenger: Nimal Perera · Seat 05</text>
+  <rect x="414" y="543" width="124" height="28" rx="14" fill="#14532d"/>
+  <text x="437" y="562" fill="#bbf7d0" font-family="Arial, sans-serif" font-size="13" font-weight="700">CONFIRMED</text>
+  <rect x="847" y="415" width="252" height="179" rx="16" fill="#102540" stroke="#334e75"/>
+  <text x="877" y="451" fill="#94a3b8" font-family="Arial, sans-serif" font-size="12" letter-spacing="1.5">SEAT STATUS</text>
+  <text x="877" y="495" fill="#f8fafc" font-family="Arial, sans-serif" font-size="38" font-weight="700">74</text>
+  <text x="937" y="495" fill="#94a3b8" font-family="Arial, sans-serif" font-size="15">available</text>
+  <path d="M878 536h183" stroke="#334e75" stroke-width="10" stroke-linecap="round"/>
+  <path d="M878 536h128" stroke="url(#accent)" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+</svg>

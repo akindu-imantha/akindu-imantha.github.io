@@ -57,12 +57,12 @@ export default function ProjectsTab({ data = {} }) {
 
       <div className="projects-layout">
         <div ref={featuredProjectsRef} className="featured-project-grid" data-swipe-ignore>
-          {featuredProjects.map((project, index) => (
+          {featuredProjects.map((project) => (
             <ProjectCard
               key={project.title}
               Component={motion.article}
               project={project}
-              variant={index === 0 ? 'lead' : 'featured'}
+              variant="featured"
               variants={fadeInUp}
             />
           ))}
