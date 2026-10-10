@@ -4005,6 +4005,18 @@ button.portfolio-image-tile {
     display: none;
   }
 
+  .certificate-upload-form {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .certificate-upload-form > input[type='text'] {
+    grid-column: 1 / -1;
+  }
+
+  .certificate-upload-form > button {
+    width: 100%;
+  }
+
   .hero {
     min-height: auto;
   }

@@ -57,7 +57,8 @@ async function uploadToCloudinary(file) {
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
   const timestamp = Math.floor(Date.now() / 1000);
   const folder = 'portfolio-certificates';
-  const signatureSource = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;
+  const publicId = `certificate-${crypto.randomUUID()}.${fileExtensions[file.mimeType]}`;
+  const signatureSource = `folder=${folder}&public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
   const signature = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(signatureSource));
   const hexSignature = Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, '0')).join('');
   const resourceType = file.mimeType === 'application/pdf' ? 'raw' : 'image';
@@ -66,7 +67,7 @@ async function uploadToCloudinary(file) {
   form.append('api_key', apiKey);
   form.append('timestamp', String(timestamp));
   form.append('folder', folder);
-  form.append('public_id', `certificate-${crypto.randomUUID()}.${fileExtensions[file.mimeType]}`);
+  form.append('public_id', publicId);
   form.append('signature', hexSignature);
 
   const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, { method: 'POST', body: form });
@@ -78,7 +79,6 @@ async function uploadToCloudinary(file) {
   }
   return result.secure_url;
 }
-
 export async function addStoredCertificate(file, name) {
   if (!isCertificatesStorageConfigured()) {
     const error = new Error('Certificate storage is not configured. Set the Upstash Redis and Cloudinary environment variables.');
