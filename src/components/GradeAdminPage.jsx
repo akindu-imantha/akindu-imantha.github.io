@@ -1,6 +1,6 @@
 import { ArrowLeft, FileText, GraduationCap, Image as ImageIcon, Lock, Plus, RefreshCw, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { academicGrades } from '../data/portfolioData';
+import { academicGrades, certifications } from '../data/portfolioData';
 import { fetchAnalyticsSummary } from '../utils/analytics';
 import { fetchStoredAcademicGrades, saveStoredAcademicGrades } from '../utils/grades';
 import { deleteStoredCertificate, fetchStoredCertificates, uploadStoredCertificate } from '../utils/certificates';
@@ -55,10 +55,7 @@ export default function GradeAdminPage() {
   const [message, setMessage] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [certificates, setCertificates] = useState([]);
-  const [certificateName, setCertificateName] = useState('');
-  const [certificateFile, setCertificateFile] = useState(null);
-  const [certificatePreview, setCertificatePreview] = useState('');
-  const [previewIsPdf, setPreviewIsPdf] = useState(false);
+  const [certificateDrafts, setCertificateDrafts] = useState({});
   const [certificateMessage, setCertificateMessage] = useState('');
   const [certificateStatus, setCertificateStatus] = useState('idle');
 
@@ -150,14 +147,12 @@ export default function GradeAdminPage() {
     unlockEditor(nextToken);
   };
 
-  const selectCertificateFile = (event) => {
+  const selectCertificateFile = (courseName, event) => {
     const file = event.target.files?.[0];
-    setCertificateFile(null);
-    setCertificatePreview('');
-    setPreviewIsPdf(false);
+    setCertificateDrafts((current) => ({ ...current, [courseName]: { file: null, preview: '', isPdf: false } }));
     if (!file) return;
     if (!['application/pdf', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      setCertificateMessage('Choose a PDF, JPG, PNG, or WebP file.');
+      setCertificateMessage(`Choose a PDF, JPG, PNG, or WebP file for ${courseName}.`);
       setCertificateStatus('error');
       event.target.value = '';
       return;
@@ -171,11 +166,8 @@ export default function GradeAdminPage() {
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = String(reader.result ?? '');
-      setCertificateFile(file);
-      setCertificatePreview(dataUrl);
-      setPreviewIsPdf(file.type === 'application/pdf');
-      setCertificateName((current) => current.trim() ? current : file.name.replace(/\.[^.]+$/, ''));
-      setCertificateMessage('Preview ready. Upload to publish this certificate.');
+      setCertificateDrafts((current) => ({ ...current, [courseName]: { file, preview: dataUrl, isPdf: file.type === 'application/pdf' } }));
+      setCertificateMessage(`Preview ready for ${courseName}. Upload it when ready.`);
       setCertificateStatus('ready');
     };
     reader.onerror = () => {
@@ -185,21 +177,19 @@ export default function GradeAdminPage() {
     reader.readAsDataURL(file);
   };
 
-  const uploadCertificate = async (event) => {
+  const uploadCertificate = async (courseName, event) => {
     event.preventDefault();
-    if (!isUnlocked || !certificateFile) return;
+    const draft = certificateDrafts[courseName];
+    if (!isUnlocked || !draft?.file) return;
     setCertificateStatus('saving');
-    setCertificateMessage('Uploading certificate…');
+    setCertificateMessage(`Uploading ${courseName} certificate…`);
     try {
-      const result = await uploadStoredCertificate(token, certificateName, certificateFile);
+      const result = await uploadStoredCertificate(token, courseName, draft.file);
       setCertificates(result.certificates ?? []);
-      setCertificateFile(null);
-      setCertificatePreview('');
-      setPreviewIsPdf(false);
-      setCertificateName('');
-      setCertificateMessage('Certificate uploaded and added to the public Education section.');
+      setCertificateDrafts((current) => ({ ...current, [courseName]: { file: null, preview: '', isPdf: false } }));
+      setCertificateMessage(`${courseName} certificate uploaded and added to the public Education section.`);
       setCertificateStatus('ready');
-      const fileInput = document.getElementById('certificate-file');
+      const fileInput = document.getElementById(`certificate-file-${certifications.findIndex((course) => course.name === courseName)}`);
       if (fileInput) fileInput.value = '';
     } catch (error) {
       setCertificateMessage(error.message);
@@ -519,24 +509,28 @@ export default function GradeAdminPage() {
             <span>Load certificates</span>
           </button>
         </div>
-        <form className="certificate-upload-form" onSubmit={uploadCertificate}>
-          <label className="grade-admin-sidebar-label" htmlFor="certificate-title">Certificate title</label>
-          <input id="certificate-title" type="text" maxLength={100} value={certificateName} onChange={(event) => setCertificateName(event.target.value)} placeholder="e.g. Web Development Certificate" disabled={!isUnlocked} />
-          <input id="certificate-file" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" onChange={selectCertificateFile} disabled={!isUnlocked} />
-          <label className="certificate-file-label" htmlFor="certificate-file"><Upload size={18} /> Choose PDF or image</label>
-          {certificatePreview ? (
-            <div className="certificate-upload-preview">
-              {previewIsPdf ? <iframe src={certificatePreview} title="Selected certificate preview" /> : <img src={certificatePreview} alt="Selected certificate preview" />}
-            </div>
-          ) : null}
-          <button type="submit" className="primary-button" disabled={!isUnlocked || !certificateFile || certificateStatus === 'saving'}>
-            <Upload size={16} />
-            <span>{certificateStatus === 'saving' ? 'Uploading…' : 'Upload certificate'}</span>
-          </button>
-        </form>
+        <div className="certificate-upload-grid">
+          {certifications.map((course, index) => {
+            const existing = certificates.find((certificate) => certificate.name === course.name);
+            const draft = certificateDrafts[course.name];
+            const fileId = `certificate-file-${index}`;
+            return (
+              <form className="certificate-course-upload" key={course.name} onSubmit={(event) => uploadCertificate(course.name, event)}>
+                <div className="certificate-course-heading">
+                  <span className="certificate-course-number">{String(index + 1).padStart(2, '0')}</span>
+                  <div><h3>{course.name}</h3><p>{existing ? 'Certificate uploaded' : 'Certificate placeholder'}</p></div>
+                </div>
+                <input id={fileId} type="file" accept="application/pdf,image/jpeg,image/png,image/webp" onChange={(event) => selectCertificateFile(course.name, event)} disabled={!isUnlocked || certificateStatus === 'saving'} />
+                <label className="certificate-file-label" htmlFor={fileId}><Upload size={17} /> {draft?.file ? 'Choose another file' : 'Choose certificate file'}</label>
+                {draft?.preview ? <div className="certificate-upload-preview">{draft.isPdf ? <iframe src={draft.preview} title={`${course.name} certificate preview`} /> : <img src={draft.preview} alt={`${course.name} certificate preview`} />}</div> : existing ? <a className="certificate-existing-preview" href={existing.url} target="_blank" rel="noreferrer">{existing.type === 'image' ? <img src={existing.url} alt={`${course.name} certificate`} /> : <span><FileText size={30} /> Preview PDF</span>}</a> : <div className="certificate-placeholder"><FileText size={28} /><span>Certificate preview will appear here</span></div>}
+                <button type="submit" className="primary-button" disabled={!isUnlocked || !draft?.file || certificateStatus === 'saving'}><Upload size={16} /><span>Upload certificate</span></button>
+              </form>
+            );
+          })}
+        </div>
         {certificateMessage ? <p className={`analytics-state${certificateStatus === 'error' ? ' analytics-state--error' : ''}`} role="status">{certificateMessage}</p> : null}
         <div className="certificate-admin-list">
-          {certificates.map((certificate) => (
+          {certificates.filter((certificate) => !certifications.some((course) => course.name === certificate.name)).map((certificate) => (
             <article className="certificate-admin-item" key={certificate.id}>
               {certificate.type === 'image' ? <img src={certificate.url} alt="" /> : <FileText size={28} aria-hidden="true" />}
               <div><h3>{certificate.name}</h3><a href={certificate.url} target="_blank" rel="noreferrer">Open certificate</a></div>

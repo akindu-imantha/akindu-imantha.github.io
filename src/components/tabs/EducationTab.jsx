@@ -143,11 +143,15 @@ export default function EducationTab({ data = {} }) {
         <div className="skill-list">
           {certificationItems.map((item) => {
             const Icon = item.icon;
+            const certificate = storedCertificates.find((entry) => entry.name === item.name);
 
             return (
-              <span key={item.name} className="skill-pill">
+              <span key={item.name} className={`skill-pill${certificate ? ' skill-pill--certified' : ''}`}>
                 <Icon size={16} />
                 <span>{item.name}</span>
+                {certificate ? <a className="course-certificate-link" href={certificate.url} target="_blank" rel="noreferrer" aria-label={`Preview ${item.name} certificate`}>
+                  {certificate.type === 'image' ? <img src={certificate.url} alt={`Preview of ${item.name} certificate`} loading="lazy" /> : <span><FileText size={18} /> Preview certificate</span>}
+                </a> : <span className="course-certificate-placeholder"><FileText size={16} /> Certificate coming soon</span>}
               </span>
             );
           })}
