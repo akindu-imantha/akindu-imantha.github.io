@@ -1896,6 +1896,18 @@ button.portfolio-image-tile {
   text-decoration: none;
 }
 
+.education-certificate-empty {
+  display: grid;
+  min-height: 210px;
+  align-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.025);
+}
+
 .education-certificate-card img {
   display: block;
   width: 100%;
@@ -1908,6 +1920,31 @@ button.portfolio-image-tile {
   padding: 0 0.85rem 0.8rem;
   font-size: 1rem;
   overflow-wrap: anywhere;
+}
+
+.education-certificate-meta {
+  padding-top: 0.75rem;
+}
+
+.education-certificate-meta h3 {
+  margin-top: 0;
+  padding-bottom: 0.35rem;
+}
+
+.education-certificate-status {
+  display: inline-flex;
+  margin: 0 0.85rem 0.85rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.education-certificate-status.is-available {
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.08);
 }
 
 .education-certificate-pdf {

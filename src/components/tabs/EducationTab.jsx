@@ -35,6 +35,16 @@ export default function EducationTab({ data = {} }) {
   const [storedCertificates, setStoredCertificates] = useState([]);
   const [certificateLoadError, setCertificateLoadError] = useState('');
   const academicGradeItems = storedGrades ?? data.academicGrades ?? [];
+  const certificateCards = [
+    ...certificationItems.map((item) => ({
+      name: item.name,
+      icon: item.icon,
+      certificate: storedCertificates.find((entry) => entry.name === item.name),
+    })),
+    ...storedCertificates
+      .filter((certificate) => !certificationItems.some((item) => item.name === certificate.name))
+      .map((certificate) => ({ name: certificate.name, icon: FileText, certificate })),
+  ];
   const section = data.sections?.education ?? {
     eyebrow: './education.sh',
     title: 'Academic background',
@@ -138,48 +148,40 @@ export default function EducationTab({ data = {} }) {
         })}
       </div>
 
-      <motion.article variants={fadeInUp} className="about-card console-card" style={{ marginTop: '1.25rem' }}>
-        <h3>{data.ui?.coursesTitle ?? 'Courses and certifications'}</h3>
-        <div className="skill-list">
-          {certificationItems.map((item) => {
-            const Icon = item.icon;
-            const certificate = storedCertificates.find((entry) => entry.name === item.name);
-
-            return (
-              <span key={item.name} className={`skill-pill${certificate ? ' skill-pill--certified' : ''}`}>
-                <Icon size={16} />
-                <span>{item.name}</span>
-                {certificate ? <a className="course-certificate-link" href={certificate.url} target="_blank" rel="noreferrer" aria-label={`Preview ${item.name} certificate`}>
-                  {certificate.type === 'image' ? <img src={certificate.url} alt={`Preview of ${item.name} certificate`} loading="lazy" /> : <span><FileText size={18} /> Preview certificate</span>}
-                </a> : <span className="course-certificate-placeholder"><FileText size={16} /> Certificate coming soon</span>}
-              </span>
-            );
-          })}
-        </div>
-      </motion.article>
-
       {certificateLoadError ? (
         <p className="analytics-state analytics-state--error" role="status">Uploaded certificates could not be loaded: {certificateLoadError}</p>
       ) : null}
 
-      {storedCertificates.length ? (
+      {certificateCards.length ? (
         <motion.section variants={fadeInUp} className="education-certificates" aria-labelledby="education-certificates-title">
           <div className="education-certificates-heading">
             <p className="project-stack">Academic documents</p>
-            <h2 id="education-certificates-title">Certificates</h2>
-            <p>Certificates and course documents, uploaded from the private admin page.</p>
+            <h2 id="education-certificates-title">{data.ui?.coursesTitle ?? 'Courses and certifications'}</h2>
+            <p>Course certificates and previews in one place.</p>
           </div>
           <div className="education-certificate-grid">
-            {storedCertificates.map((certificate) => (
-              <article className="education-certificate-card" key={certificate.id}>
-                <a href={certificate.url} target="_blank" rel="noreferrer" aria-label={`Open ${certificate.name}`}>
-                  {certificate.type === 'image' ? (
-                    <img src={certificate.url} alt={`Preview of ${certificate.name}`} loading="lazy" />
-                  ) : (
-                    <div className="education-certificate-pdf"><FileText size={42} /><span>PDF certificate · Preview / open</span></div>
-                  )}
-                </a>
-                <h3>{certificate.name}</h3>
+            {certificateCards.map(({ name, icon: Icon, certificate }) => (
+              <article className="education-certificate-card" key={name}>
+                {certificate ? (
+                  <a href={certificate.url} target="_blank" rel="noreferrer" aria-label={`Preview ${name} certificate`}>
+                    {certificate.type === 'image' ? (
+                      <img src={certificate.url} alt={`Preview of ${name} certificate`} loading="lazy" />
+                    ) : (
+                      <div className="education-certificate-pdf"><FileText size={38} /><span>Open PDF preview</span></div>
+                    )}
+                  </a>
+                ) : (
+                  <div className="education-certificate-empty" aria-label={`No certificate preview available for ${name}`}>
+                    <Icon size={25} aria-hidden="true" />
+                    <span>Preview coming soon</span>
+                  </div>
+                )}
+                <div className="education-certificate-meta">
+                  <h3>{name}</h3>
+                  <span className={certificate ? 'education-certificate-status is-available' : 'education-certificate-status'}>
+                    {certificate ? 'Certificate available' : 'Certificate pending'}
+                  </span>
+                </div>
               </article>
             ))}
           </div>
