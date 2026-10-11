@@ -1,10 +1,31 @@
 import { upload } from '@vercel/blob/client';
 
 const DEFAULT_ENDPOINT = '/api/certificates';
-const uploadEndpoint = import.meta.env.VITE_CERTIFICATE_UPLOAD_API_URL;
 
 function getEndpoint() {
   return import.meta.env.VITE_CERTIFICATES_API_URL || DEFAULT_ENDPOINT;
+}
+
+function getUploadEndpoint() {
+  const configuredEndpoint = import.meta.env.VITE_CERTIFICATE_UPLOAD_API_URL?.trim();
+  if (configuredEndpoint) return configuredEndpoint;
+
+  // The data-URL fallback is only supported by the local Express server. If
+  // the listing API is hosted remotely, derive its matching Blob token route so
+  // a missing optional upload URL cannot silently select the incompatible API.
+  const endpoint = getEndpoint();
+  try {
+    const url = new URL(endpoint);
+    if (/\/api\/certificates\/?$/.test(url.pathname)) {
+      url.pathname = url.pathname.replace(/\/certificates\/?$/, '/certificate-upload');
+      url.search = '';
+      url.hash = '';
+      return url.toString();
+    }
+  } catch {
+    // Relative endpoints use the local Express data-URL upload route.
+  }
+  return '';
 }
 
 async function read(response, fallback) {
@@ -29,6 +50,7 @@ export async function fetchStoredCertificates() {
 }
 
 export async function uploadStoredCertificate(token, name, file) {
+  const uploadEndpoint = getUploadEndpoint();
   if (uploadEndpoint) {
     const blob = await upload(file.name, file, {
       access: 'public',

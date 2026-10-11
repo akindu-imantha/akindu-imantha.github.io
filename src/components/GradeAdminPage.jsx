@@ -502,7 +502,7 @@ export default function GradeAdminPage() {
           <div>
             <p className="eyebrow">Academic documents</p>
             <h2 id="certificate-admin-title">Certificates</h2>
-            <p>Upload a PDF or image (up to 10 MB). Files go to this project&apos;s <code>public/upload</code> folder when you open the local site at <code>localhost:5173</code> with <code>npm run server</code> running. A live GitHub Pages site cannot write to your computer&apos;s folder.</p>
+            <p>Upload a PDF or image (up to 10 MB). Local uploads use this project&apos;s <code>public/upload</code> folder when <code>npm run server</code> is running; the hosted site uses its configured certificate storage.</p>
           </div>
           <button type="button" className="secondary-button" onClick={loadCertificates} disabled={!isUnlocked || certificateStatus === 'saving'}>
             <RefreshCw size={16} />
