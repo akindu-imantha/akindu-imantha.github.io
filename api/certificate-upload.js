@@ -1,6 +1,7 @@
-﻿import { handleUpload } from '@vercel/blob/client';
+import { handleUpload } from '@vercel/blob/client';
 import { hasValidAnalyticsToken } from '../server/analytics-store.js';
 import {
+  getBlobReadWriteToken,
   getStoredCertificates,
   isCertificateListingStorageConfigured,
   isCertificatesStorageConfigured,
@@ -29,7 +30,7 @@ export default async function handler(request, response) {
     // Pass the configured store token explicitly so token generation always
     // uses the same Blob store as the deployment's BLOB_READ_WRITE_TOKEN.
     const result = await handleUpload({
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: getBlobReadWriteToken(),
       body: request.body,
       request,
       onBeforeGenerateToken: async (_pathname, clientPayload) => {

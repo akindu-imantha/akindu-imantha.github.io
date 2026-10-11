@@ -4,6 +4,10 @@ const CERTIFICATES_KEY = 'portfolio:certificates';
 const MAX_CERTIFICATES = 30;
 const allowedTypes = new Set(['application/pdf', 'image/jpeg', 'image/png', 'image/webp']);
 
+export function getBlobReadWriteToken() {
+  return process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB1_READ_WRITE_TOKEN;
+}
+
 function getRedisConfig() {
   return {
     url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
@@ -16,7 +20,7 @@ export function getMissingCertificatesStorageSettings() {
   const missing = [];
   if (!url) missing.push('KV_REST_API_URL (or UPSTASH_REDIS_REST_URL)');
   if (!token) missing.push('KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_TOKEN)');
-  if (!process.env.BLOB_READ_WRITE_TOKEN) missing.push('BLOB_READ_WRITE_TOKEN');
+  if (!getBlobReadWriteToken()) missing.push('BLOB_READ_WRITE_TOKEN (or BLOB1_READ_WRITE_TOKEN)');
   return missing;
 }
 
@@ -94,7 +98,7 @@ export async function addStoredCertificate(url, name, mimeType) {
   try {
     await redisPipeline([['SET', CERTIFICATES_KEY, JSON.stringify(nextCertificates)]]);
   } catch (error) {
-    await del(url).catch(() => {});
+    await del(url, { token: getBlobReadWriteToken() }).catch(() => {});
     throw error;
   }
   return { certificates: nextCertificates };
@@ -114,7 +118,7 @@ export async function deleteStoredCertificate(id) {
     throw error;
   }
   const certificate = certificates.find((item) => item.id === id);
-  if (isVercelBlobUrl(certificate.url)) await del(certificate.url);
+  if (isVercelBlobUrl(certificate.url)) await del(certificate.url, { token: getBlobReadWriteToken() });
   await redisPipeline([['SET', CERTIFICATES_KEY, JSON.stringify(nextCertificates)]]);
   return { certificates: nextCertificates };
 }
