@@ -28,7 +28,7 @@ npm run build
 
 Open the private editor at `#grade-admin`, unlock it with the existing `ANALYTICS_ADMIN_TOKEN`, and use the Certificates panel. It accepts PDF, JPG, PNG, and WebP files up to 10 MB, shows a preview, and publishes uploaded certificates in the Education section. The app keeps a maximum of 30 certificates.
 
-Certificate files uploaded in the private editor are saved to `public/upload`, with their course names and public URLs stored in `output/certificates.json`. Run both `npm run dev` and `npm run server` while uploading locally. Uploads support PDF, JPG, PNG, and WebP files up to 10 MB, with a 30-certificate limit. These files live on this computer and are not included in a GitHub Pages or Vercel deployment automatically; a deployed site needs a persistent server or object storage for shared uploads.
+For local uploads, run both `npm run dev` and `npm run server`; files are saved to `public/upload` and listed in `output/certificates.json`. For GitHub Pages uploads, set the GitHub Actions variables `VITE_CERTIFICATES_API_URL` (for example, `https://your-api.vercel.app/api/certificates`) and `VITE_CERTIFICATE_UPLOAD_API_URL` (for example, `https://your-api.vercel.app/api/certificate-upload`). Configure `BLOB_READ_WRITE_TOKEN`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`, and `ANALYTICS_ADMIN_TOKEN` in the Vercel API project's environment variables. Redeploy the Pages site after changing its variables. Uploads support PDF, JPG, PNG, and WebP files up to 10 MB, with a 30-certificate limit.
 
 ## Deploy to GitHub Pages
 

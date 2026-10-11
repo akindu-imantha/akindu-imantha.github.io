@@ -1,4 +1,7 @@
+import { upload } from '@vercel/blob/client';
+
 const DEFAULT_ENDPOINT = '/api/certificates';
+const uploadEndpoint = import.meta.env.VITE_CERTIFICATE_UPLOAD_API_URL;
 
 function getEndpoint() {
   return import.meta.env.VITE_CERTIFICATES_API_URL || DEFAULT_ENDPOINT;
@@ -26,6 +29,19 @@ export async function fetchStoredCertificates() {
 }
 
 export async function uploadStoredCertificate(token, name, file) {
+  if (uploadEndpoint) {
+    const blob = await upload(file.name, file, {
+      access: 'public',
+      handleUploadUrl: uploadEndpoint,
+      clientPayload: JSON.stringify({ adminToken: token, name, mimeType: file.type }),
+    });
+    return request(getEndpoint(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ name, mimeType: file.type, url: blob.url }),
+    }, 'Certificate could not be added to the public listing.');
+  }
+
   const endpoint = getEndpoint();
   const data = await new Promise((resolve, reject) => {
     const reader = new FileReader();

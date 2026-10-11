@@ -36,7 +36,8 @@ jobs:
         env:
           VITE_GITHUB_CONTRIBUTIONS_API_URL: ${{ vars.VITE_GITHUB_CONTRIBUTIONS_API_URL }}
           VITE_ANALYTICS_API_URL: ${{ vars.VITE_ANALYTICS_API_URL }}
-          VITE_CERTIFICATES_API_URL: ${{ vars.VITE_CERTIFICATES_API_URL }}
+          VITE_CERTIFICATES_API_URL: https://akindu-portfolio-api.vercel.app/api/certificates
+          VITE_CERTIFICATE_UPLOAD_API_URL: https://akindu-portfolio-api.vercel.app/api/certificate-upload
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
