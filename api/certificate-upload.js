@@ -26,7 +26,10 @@ export default async function handler(request, response) {
   }
 
   try {
+    // Pass the configured store token explicitly so token generation always
+    // uses the same Blob store as the deployment's BLOB_READ_WRITE_TOKEN.
     const result = await handleUpload({
+      token: process.env.BLOB_READ_WRITE_TOKEN,
       body: request.body,
       request,
       onBeforeGenerateToken: async (_pathname, clientPayload) => {
@@ -56,7 +59,13 @@ export default async function handler(request, response) {
     });
     return response.status(200).json(result);
   } catch (error) {
-    return response.status(error.status ?? 400).json({ message: error.message || 'Certificate upload could not be authorized.' });
+    const message = error.message || 'Certificate upload could not be authorized.';
+    if (/access denied|valid token for this resource/i.test(message)) {
+      return response.status(error.status ?? 400).json({
+        message: 'Vercel Blob rejected BLOB_READ_WRITE_TOKEN. In the Vercel project serving this API, connect the intended Blob store, update BLOB_READ_WRITE_TOKEN for this deployment environment, then redeploy.',
+      });
+    }
+    return response.status(error.status ?? 400).json({ message });
   }
 }
 
